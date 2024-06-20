@@ -26,14 +26,14 @@ import com.rays.pro4.Util.ServletUtility;
 /**
 * The Class TimeTableListCtl.
 * 
-*  @author Anish malviya 
+*  @author Anish Malviya
 * 
 */
 @WebServlet(name = "TimeTableListCtl", urlPatterns = {"/ctl/TimeTableListCtl"})
-public class TimetableListCtl extends BaseCtl{
+public class TimeTableListCtl extends BaseCtl{
 
 
-	/* The log. /
+	/** The log. */
 	private static Logger log = Logger.getLogger(TimeTableListCtl.class);
 
 	/* (non-Javadoc)
@@ -43,20 +43,17 @@ public class TimetableListCtl extends BaseCtl{
 
 		CourseModel model = new CourseModel();
 		SubjectModel smodel = new SubjectModel();
-		TimeTableModel tmodel = new TimeTableModel();
+		
 		List<CourseBean> list = null;
 		List<SubjectBean> list2 = null;
-		List<TimeTableBean>list3=null;
 		try {
 			list = model.list();
 			list2 = smodel.list();
-			list3 = tmodel.list();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		request.setAttribute("courseList", list);
 		request.setAttribute("subjectList", list2);
-		request.setAttribute("examtime", list3);
 
 	}
 
@@ -74,14 +71,13 @@ public class TimetableListCtl extends BaseCtl{
 		
 		//bean.setSubjectName(DataUtility.getString(request.getParameter("slist")));
 		
-		bean.setExamDate(DataUtility.getDate(request.getParameter("Exdate")));
-		bean.setExamTime(DataUtility.getString(request.getParameter("elist")));
-
-	//	System.out.println(request.getParameter("Exdate"));
-		
+		bean.setExamDate(DataUtility.getDate(request.getParameter("Exdate"))); 
+		bean.setExamTime(DataUtility.getString(request.getParameter("ExTime")));
+		System.out.println(request.getParameter("Exdate"));
+		 
 		//System.out.println("populate bean==========>>>> " + bean.getExamDate());
 		populateDTO(bean, request);
-		return bean;
+		return bean; 
 	}
     
     /**
@@ -137,9 +133,8 @@ public class TimetableListCtl extends BaseCtl{
 
 		} catch (ApplicationException e) {
 			e.printStackTrace();
-			/*
-			 * log.error(e);
-			 */	ServletUtility.handleException(e, request, response);
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 		}
 	}
     

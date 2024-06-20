@@ -13,7 +13,7 @@
 	<form action="<%=ORSView.ERROR_CTL%>" method="get"> --%>
  	
  	<div align="center">
- 		<img src="<%=ORSView.APP_CONTEXT%>/img/Error.jpg" width="550" height="250">
+ 		<img src="<%=ORSView.APP_CONTEXT%>/img/error_404.jpg" width="550" height="250">
  		<h1 align="center" style="color: red"> Ooops! Something went wrong..</h1>
  		<font style="color: black ; font-size: 25px ">
  		<b>404</b> : Requested Page not available

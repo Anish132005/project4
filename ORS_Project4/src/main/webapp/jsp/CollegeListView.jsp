@@ -64,15 +64,6 @@
                  	<label>City :</label> 
     	             <input type="text" name="city" placeholder="Enter City Name" Size= "25" value="<%=ServletUtility.getParameter("city", request)%>">
                     &nbsp;    
-                    
-                    
-                    
-                  <%--   
-                 	<label>phoneno :</label> 
-    	             <input type="text" name="phoneno" placeholder="Enter phoneno" Size= "25" value="<%=ServletUtility.getParameter("phoneno", request)%>">
-                     --%>
-                    
-                    
         	         <input type="submit" name="operation" value="<%=CollegeListCtl.OP_SEARCH%>">
         	         &nbsp;
         	         <input type="submit" name="operation" value="<%=CollegeListCtl.OP_RESET%>">

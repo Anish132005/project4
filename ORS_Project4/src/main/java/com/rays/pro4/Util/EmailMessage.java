@@ -1,24 +1,20 @@
-
 package com.rays.pro4.Util;
 
 /**
  * Contains Email Message.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 
 public class EmailMessage {
 
 	
-	
 	private String to=null;
 	
 	private String from=null;
 	
 	private String cc=null;
-	
-	
 	
 	private String bcc=null;
 	

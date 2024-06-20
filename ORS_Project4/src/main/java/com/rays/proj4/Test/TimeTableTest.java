@@ -17,7 +17,7 @@ import com.rays.pro4.Model.TimeTableModel;
 /**
  * TimeTable Model Test classes.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class TimeTableTest {
@@ -46,6 +46,7 @@ public static void testadd() {
 		bean.setSemester("5");
 		bean.setExamDate(sdf.parse("22/09/2021"));
 		bean.setExamTime("10 am to 1 pm");
+		bean.setDescription("xyz");
 		bean.setCreatedBy("admin");
 		bean.setModifiedBy("admin");
 		bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
@@ -121,6 +122,7 @@ public static void testlist() throws Exception {
 		System.out.println(bean.getSemester());
 		System.out.println(bean.getExamDate());
 		System.out.println(bean.getExamTime());
+		System.out.println(bean.getDescription());
 		System.out.println(bean.getCreatedBy());
 		System.out.println(bean.getModifiedBy());
 	

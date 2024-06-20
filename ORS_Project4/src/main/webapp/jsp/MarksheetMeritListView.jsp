@@ -63,7 +63,7 @@
                     <td><%=chem%></td>
                     <td><%=maths%></td>
 					<td><%=total %></td>
-					<td style="color:green" ><%=((perc) +"%") %></td>
+					<td><%=((perc) +"%") %></td>
                 </tr>
 
                 <%

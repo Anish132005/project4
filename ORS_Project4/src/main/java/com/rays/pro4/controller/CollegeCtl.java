@@ -24,7 +24,7 @@ import com.rays.pro4.Util.ServletUtility;
 * College functionality Controller. Performs operation for add, update, delete
 * and get College
 * 
-* @author Anish malviya 
+* @author Anish Malviya 
 * 
 */
 
@@ -47,7 +47,7 @@ private static final long serialVersionUID = 1L;
 			request.setAttribute("name", PropertyReader.getValue("error.require", "Name"));
 			pass = false;
 		}else if (!DataValidator.isName(request.getParameter("name"))) {
-			request.setAttribute("name","Name must contains alphabet only");
+			request.setAttribute("name", "First Name contains alphabet only");
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("address"))) {
@@ -59,18 +59,18 @@ private static final long serialVersionUID = 1L;
 			request.setAttribute("state", PropertyReader.getValue("error.require", "State"));
 			pass = false;
 		}else if (!DataValidator.isName(request.getParameter("state"))) {
-			request.setAttribute("state", PropertyReader.getValue("error.name", "State"));
+			request.setAttribute("state", "State Name contains alphabet only");
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("city"))) {
 			request.setAttribute("city", PropertyReader.getValue("error.require", "City"));
 			pass = false;
 		}else if (!DataValidator.isName(request.getParameter("city"))) {
-			request.setAttribute("city", PropertyReader.getValue("error.name", "City"));
+			request.setAttribute("city", "City Name contains alphabet only");
 			pass = false;
 		}
 		else if (!DataValidator.isName(request.getParameter("city"))) {
-	      	  request.setAttribute("city",PropertyReader.getValue("error.name", "Invalid City"));
+	      	  request.setAttribute("city","City Name contains alphabet only");
 	            pass = false;
 			}
 		if (DataValidator.isNull(request.getParameter("phoneNo"))) {

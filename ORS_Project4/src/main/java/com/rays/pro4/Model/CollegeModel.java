@@ -17,12 +17,19 @@ import com.rays.pro4.Util.JDBCDataSource;
 /**
  * JDBC Implementation of CollegeModel.
  * 
- * @author Anish malviya 
- *
+ * @author Anish Malviya
+ * 
  */
+
 public class CollegeModel {
 
 	private static Logger log = Logger.getLogger(CollegeModel.class);
+
+	/**
+	 * Find next PK of College
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public Integer nextPK() throws DatabaseException {
 		log.debug("Modal nextPK Started");
@@ -46,6 +53,14 @@ public class CollegeModel {
 		log.debug("Model nextPK End");
 		return pk + 1;
 	}
+
+	/**
+	 * Add a College
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 *
+	 */
 
 	public long add(CollegeBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("Model add Started");
@@ -91,6 +106,13 @@ public class CollegeModel {
 		return pk;
 	}
 
+	/**
+	 * Delete a College
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
+
 	public void delete(CollegeBean bean) throws ApplicationException {
 		log.debug("Model delete Started");
 		Connection conn = null;
@@ -115,6 +137,14 @@ public class CollegeModel {
 		}
 		log.debug("Modal delete End");
 	}
+
+	/**
+	 * Find User by College
+	 *
+	 * @param login : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
 
 	public CollegeBean findByName(String name) throws ApplicationException {
 		log.debug("Model findByName Started");
@@ -153,6 +183,14 @@ public class CollegeModel {
 		return bean;
 	}
 
+	/**
+	 * Find User by College
+	 *
+	 * @param pk : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
+
 	public CollegeBean findByPK(long pk) throws ApplicationException {
 		log.debug("Model Find BY Pk Stsrted");
 		StringBuffer sql = new StringBuffer("SELECT*FROM ST_COLLEGE WHERE id=?");
@@ -186,6 +224,13 @@ public class CollegeModel {
 		log.debug("Find By PK End");
 		return bean;
 	}
+
+	/**
+	 * Update a College
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
 
 	public void update(CollegeBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("Model update Started");
@@ -233,9 +278,27 @@ public class CollegeModel {
 		log.debug("Model update End");
 	}
 
+	/**
+	 * Search College
+	 *
+	 * @param bean : Search Parameters
+	 * @throws DatabaseException
+	 */
+
 	public List search(CollegeBean bean) throws ApplicationException {
 		return search(bean, 0, 0);
 	}
+
+	/**
+	 * Search College with pagination
+	 *
+	 * @return list : List of College
+	 * @param bean     : Search Parameters
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public List search(CollegeBean bean, int pageNo, int PageSize) throws ApplicationException {
 		log.debug("model search Started");
@@ -302,9 +365,25 @@ public class CollegeModel {
 		return list;
 	}
 
+	/**
+	 * Get List of College
+	 *
+	 * @return list : List of College
+	 * @throws DatabaseException
+	 */
+
 	public List list() throws ApplicationException {
 		return list(0, 0);
 	}
+
+	/**
+	 * Get List of College with pagination
+	 *
+	 * @return list : List of College
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 * @throws DatabaseException
+	 */
 
 	public List list(int pageNo, int pageSize) throws ApplicationException {
 		log.debug("Model list Started");

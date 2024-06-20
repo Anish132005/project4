@@ -14,7 +14,7 @@ import com.rays.pro4.Model.BaseModel;
 /**
  *  HTML Utility class to produce HTML contents like Dropdown List.
  *  
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class HTMLUtility {
@@ -23,7 +23,7 @@ public class HTMLUtility {
             HashMap<String, String> map) {
 
         StringBuffer sb = new StringBuffer(
-                "<select style='width: 203px;  height: 23px;' class='form-control' name='" + name + "'>");
+                "<select style='width: 211px;  height: 25px;' class='form-control' name='" + name + "'>");
 
         Set<String> keys = map.keySet();
         String val = null;
@@ -31,7 +31,7 @@ public class HTMLUtility {
         boolean select=true;
         if (select)
         {
-        	sb.append("<option style='width: 203px;  height: 30px;' selected value=''>--------------Select---------------------`</option>");
+        	sb.append("<option style='width: 175px;  height: 30px;' selected value=''>--------------Select-------------------</option>");
         }
 
         for (String key : keys) {
@@ -59,12 +59,12 @@ public class HTMLUtility {
  public static String getList(String name, String selectedVal, List list) {
 
         Collections.sort(list);       
-        StringBuffer sb = new StringBuffer("<select style='width: 203px;  height: 23px;' class='form-control' name='" + name + "'>");
+        StringBuffer sb = new StringBuffer("<select style='width: 210px;  height: 23px;' class='form-control' name='" + name + "'>");
 
         boolean select=true;
         if (select)
         {
-        	sb.append("<option style='width: 203px;  height: 30px;' selected value=''>--------------Select-----------------`</option>");
+        	sb.append("<option style='width: 210px;  height: 30px;' selected value=''>--------------Select---------------</option>");
         }
 
         

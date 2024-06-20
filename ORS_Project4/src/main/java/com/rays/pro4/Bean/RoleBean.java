@@ -3,10 +3,10 @@ package com.rays.pro4.Bean;
 /**
  * Role JavaBean encapsulates Role attributes.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
-public class RoleBean extends BaseBean{
+public class RoleBean extends BaseBean {
 
 	public static final int ADMIN = 1;
 	public static final int STUDENT = 2;
@@ -37,7 +37,7 @@ public class RoleBean extends BaseBean{
 	@Override
 	public String getkey() {
 		// TODO Auto-generated method stub
-		return id+" ";
+		return id + "";
 	}
 
 	@Override
@@ -45,6 +45,5 @@ public class RoleBean extends BaseBean{
 		// TODO Auto-generated method stub
 		return name;
 	}
-	
-	
+
 }

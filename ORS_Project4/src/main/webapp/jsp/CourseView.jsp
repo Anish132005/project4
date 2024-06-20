@@ -47,7 +47,7 @@
 <table>
 	<tr>
 	<th align="left">Course Name <span style="color: red">*</span> :</th>
-	<td><input type="text" name ="name" placeholder="Enter Course Name" size="25" value="<%=DataUtility.getStringData(bean.getName()) %>">
+	<td><input type="text" name ="name" placeholder="Enter Course Name" size="26" value="<%=DataUtility.getStringData(bean.getName()) %>">
 	</td><td style="position: fixed"><font  color="red"><%=ServletUtility.getErrorMessage("name", request) %></font>
 	</td>
 	</tr>
@@ -76,7 +76,7 @@
 <tr><th style="padding: 3px"></th></tr>	
 	<tr>
 	<th align="left">Description <span style="color: red" >*</span> :</th>
-	<td><input type="text" name ="description" placeholder="Enter Description" size="25" value="<%=DataUtility.getStringData(bean.getDescription())%>">
+	<td><input type="text" name ="description" placeholder="Enter Description" size="26" value="<%=DataUtility.getStringData(bean.getDescription())%>">
 	</td><td style="position: fixed"  ><font color="red"><%=ServletUtility.getErrorMessage("description", request) %></font>
 	</td>
 	</tr>

@@ -20,7 +20,7 @@ import com.rays.pro4.Util.PropertyReader;
 import com.rays.pro4.Util.ServletUtility;
 
 /**
- *  @author Anish malviya 
+ *  @author Anish Malviya
  *
  */
 @ WebServlet(name="RoleCtl",urlPatterns={"/ctl/RoleCtl"})
@@ -46,8 +46,8 @@ public class RoleCtl extends BaseCtl{
 	                    PropertyReader.getValue("error.require", "Name"));
 	            pass = false;
 	        }else if (!DataValidator.isName(request.getParameter("name"))) {
-	        	 request.setAttribute("name",
-	                     PropertyReader.getValue("error.name", "Name"));
+	        	 request.setAttribute("name","Role Name contains alphabet only"
+	                     );
 	             pass = false;
 			}
 

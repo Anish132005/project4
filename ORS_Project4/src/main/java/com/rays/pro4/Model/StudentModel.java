@@ -18,12 +18,18 @@ import com.rays.pro4.Util.JDBCDataSource;
 /**
  * JDBC Implementation of Student Model.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class StudentModel {
 
 	private static Logger log = Logger.getLogger(StudentModel.class);
+
+	/**
+	 * Find next PK of Student
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public Integer nextPK() throws DatabaseException {
 
@@ -52,6 +58,13 @@ public class StudentModel {
 
 	}
 
+	/**
+	 * Add a Student
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 *
+	 */
 	public long add(StudentBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("Model add Started");
 		System.out.println("add started");
@@ -110,6 +123,12 @@ public class StudentModel {
 		return pk;
 	}
 
+	/**
+	 * Delete a Student
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
 	public void delete(StudentBean bean) throws ApplicationException {
 
 		log.debug("Model delete Started");
@@ -135,6 +154,14 @@ public class StudentModel {
 		}
 		log.debug("Model delete End");
 	}
+
+	/**
+	 * Find User by Student
+	 *
+	 * @param Email : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
 
 	public StudentBean findByEmailId(String Email) throws ApplicationException {
 		log.debug("Model findBy Email Started");
@@ -174,6 +201,14 @@ public class StudentModel {
 		return bean;
 	}
 
+	/**
+	 * Find Student by PK
+	 *
+	 * @param pk : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
+
 	public StudentBean findByPK(long pk) throws ApplicationException {
 		log.debug("Model findByPK Started");
 		StringBuffer sql = new StringBuffer("SELECT * FROM ST_STUDENT WHERE ID=?");
@@ -209,6 +244,13 @@ public class StudentModel {
 		log.debug("Model findByPK End");
 		return bean;
 	}
+
+	/**
+	 * Update a Student
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
 
 	public void Update(StudentBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("Model Update Started");
@@ -261,9 +303,27 @@ public class StudentModel {
 		log.debug("Model update End");
 	}
 
+	/**
+	 * Search Student
+	 *
+	 * @param bean : Search Parameters
+	 * @throws DatabaseException
+	 */
+
 	public List search(StudentBean bean) throws ApplicationException {
 		return search(bean, 0, 0);
 	}
+
+	/**
+	 * Search Student with pagination
+	 *
+	 * @return list : List of Students
+	 * @param bean     : Search Parameters
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public List search(StudentBean bean, int pageNo, int pageSize) throws ApplicationException {
 		log.debug("Model search Started");
@@ -289,13 +349,13 @@ public class StudentModel {
 				sql.append(" AND EMAIL_ID like '" + bean.getEmail() + "%'");
 			}
 			if (bean.getCollegeName() != null && bean.getCollegeName().length() > 0) {
-				sql.append(" AND COLLEGE_NAME = '" + bean.getCollegeName()+"%'");
+				sql.append(" AND COLLEGE_NAME = '" + bean.getCollegeName() + "%'");
 			}
 			if (bean.getCollegeName() != null && bean.getCollegeName().length() > 0) {
-				sql.append(" AND COLLEGE_NAME = '" + bean.getCollegeName()+"%'");
+				sql.append(" AND COLLEGE_NAME = '" + bean.getCollegeName() + "%'");
 			}
 			if (bean.getCollegeId() > 0) {
-				sql.append(" AND COLLEGE_ID = '" + bean.getCollegeId()+"%'");
+				sql.append(" AND COLLEGE_ID = '" + bean.getCollegeId() + "%'");
 			}
 
 		}
@@ -342,9 +402,25 @@ public class StudentModel {
 		return list;
 	}
 
+	/**
+	 * Get List of Student
+	 *
+	 * @return list : List of Student
+	 * @throws DatabaseException 
+	 */
+
 	public List list() throws ApplicationException {
 		return list(0, 0);
-	}
+	} 
+
+	/**
+	 * Get List of Student with pagination
+	 *
+	 * @return list : List of Student
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 * @throws DatabaseException
+	 */
 
 	public List list(int pageNo, int pageSize) throws ApplicationException {
 		log.debug("Model list Started");

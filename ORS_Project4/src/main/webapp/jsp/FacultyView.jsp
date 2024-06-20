@@ -89,7 +89,7 @@
 					</th>
 					</th>
 					<td><input type="text" name="firstname"
-						placeholder=" Enter First Name" size="25"
+						placeholder=" Enter First Name" size="26"
 						value="<%=DataUtility.getStringData(bean.getFirstName())%>"></td>
 					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("firstname", request)%></font>
 					</td>
@@ -102,7 +102,7 @@
 					<th align="left">Last Name <span style="color: red">*</span> :
 					</th>
 					<td><input type="text" name="lastname"
-						placeholder=" Enter last Name" size="25"
+						placeholder=" Enter last Name" size="26"
 						value="<%=DataUtility.getStringData(bean.getLastName())%>">
 					</td>
 					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("lastname", request)%></font>
@@ -172,7 +172,7 @@
                        
                         <tr>
                     <th align="left">Date Of Birth <span style="color: red">*</span> :</th>
-                    <td><input type="text" name="dob" placeholder="Enter Date Of Birth" size= "25" readonly="readonly" id="date" value="<%=DataUtility.getDateString(bean.getDob())%>"></td>
+                    <td><input type="text" name="dob" placeholder="Enter Date Of Birth" size= "26" readonly="readonly" id="date" value="<%=DataUtility.getDateString(bean.getDob())%>"></td>
                       <td style="position: fixed;">	<font color="red"> <%=ServletUtility.getErrorMessage("dob", request)%></font></td>
                 </tr>
                 <tr>
@@ -183,7 +183,7 @@
 					<th align="left">LoginId <span style="color: red">*</span> :
 					</th>
 					<td><input type="text" name="loginid"
-						placeholder=" Enter Login Id" size="25"
+						placeholder=" Enter Login Id" size="26"
 						value="<%=DataUtility.getStringData(bean.getEmailId())%>">
 					</td>
 					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("loginid", request)%></font>
@@ -196,7 +196,7 @@
 				<tr>
 					<th align="left">MobileNo <span style="color: red">*</span> :
 					</th>
-					<td><input type="text" name="mobileno" size="25"
+					<td><input type="text" name="mobileno" size="26"
 						maxlength="10" placeholder=" Enter Mobile No"
 						value="<%=DataUtility.getStringData(bean.getMobileNo())%>">
 					</td>

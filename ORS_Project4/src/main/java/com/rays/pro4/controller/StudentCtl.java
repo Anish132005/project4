@@ -26,7 +26,7 @@ import com.rays.pro4.Util.ServletUtility;
 * Student functionality Controller. Performs operation for add, update, delete
 * and get Student
 * 
-*  @author Anish malviya 
+*  @author Anish Malviya
 */
 @WebServlet(name="StudentCtl", urlPatterns = {"/ctl/StudentCtl"})
 public class StudentCtl extends BaseCtl{
@@ -62,14 +62,14 @@ public class StudentCtl extends BaseCtl{
             request.setAttribute("firstname",PropertyReader.getValue("error.require", "First Name"));
             pass = false;
         }else if (!DataValidator.isName(request.getParameter("firstname"))) {
-        	  request.setAttribute("firstname",PropertyReader.getValue("error.name", "First name"));
+        	  request.setAttribute("firstname","First Name contains alphabet only");
               pass = false;
 		}
         if (DataValidator.isNull(request.getParameter("lastname"))) {
             request.setAttribute("lastname",PropertyReader.getValue("error.require", "Last Name"));
             pass = false;
         }else if (!DataValidator.isName(request.getParameter("lastname"))) {
-      	  request.setAttribute("lastname",PropertyReader.getValue("error.name", "Last name"));
+      	  request.setAttribute("lastname","Last Name contains alphabet only");
           pass = false;
 	}
         if (DataValidator.isNull(request.getParameter("mobile"))) {
@@ -83,7 +83,7 @@ public class StudentCtl extends BaseCtl{
             request.setAttribute("email", PropertyReader.getValue("error.require", "Email "));
             pass = false;
         } else if (!DataValidator.isEmail(request.getParameter("email"))) {
-            request.setAttribute("email", PropertyReader.getValue("error.email", "Login Id"));
+            request.setAttribute("email", "loginId is invalid EmailId");
             pass = false;
         }
         if (DataValidator.isNull(request.getParameter("dob"))) {

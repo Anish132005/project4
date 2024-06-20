@@ -1,26 +1,22 @@
-
-<%@page import="com.rays.pro4.controller.ChangePasswordCtl"%>
+ <%@page import="com.rays.pro4.controller.ChangePasswordCtl"%>
 <%@page import="com.rays.pro4.Util.DataUtility"%>
-<%@page import="com.rays.pro4.Util.ServletUtility"%>
+<%@page import="com.rays.pro4.Util.ServletUtility"%> 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <html>
 <head>
 <title>Change Password</title>
-<link rel="icon" type="image/png"
-	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16"/>
 </head>
 <body>
-	<form action="<%=ORSView.CHANGE_PASSWORD_CTL%>" method="post">
+ <form action="<%=ORSView.CHANGE_PASSWORD_CTL%>" method="post">
 
-		<%@ include file="Header.jsp"%>
+<%@ include file="Header.jsp"%>
 
-		<jsp:useBean id="bean" class="com.rays.pro4.Bean.UserBean"
-			scope="request"></jsp:useBean>
+<jsp:useBean id="bean" class="com.rays.pro4.Bean.UserBean" scope="request"></jsp:useBean>
 		<div align="center">
 
-			<h1 align="center" style="margin-bottom: -15">Change
-				Password</h1>
+<h1 align="center" style="margin-bottom: -15; color: navy">Change Password</h1>
 			<div style="height: 15px; margin-bottom: 12px">
 				<H3 align="center">
 					<font color="green"> <%=ServletUtility.getSuccessMessage(request)%>
@@ -53,9 +49,7 @@
 					: DataUtility.getString(request.getParameter("oldPassword")))%>></td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("oldPassword", request)%></font></td>
 				</tr>
-				<tr>
-					<th style="padding: 3px"></th>
-				</tr>
+
 				<tr>
 					<th align="left">New Password<span style="color: red">*</span></th>
 					<td align="center"><input type="password" name="newPassword"
@@ -64,9 +58,7 @@
 					: DataUtility.getString(request.getParameter("newPassword")))%>></td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("newPassword", request)%></font></td>
 				</tr>
-				<tr>
-					<th style="padding: 3px"></th>
-				</tr>
+
 				<tr>
 					<th align="left">Confirm Password<span style="color: red">*</span></th>
 					<td align="center"><input type="password"

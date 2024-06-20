@@ -18,12 +18,18 @@ import com.rays.pro4.Util.JDBCDataSource;
 /**
  * JDBC Implementation of Marksheet Model.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class MarksheetModel {
 
 	Logger log = Logger.getLogger(MarksheetModel.class);
+
+	/**
+	 * Find next PK
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public Integer nextPK() throws DatabaseException {
 		log.debug("Modal nextPK Stsrted");
@@ -32,6 +38,7 @@ public class MarksheetModel {
 		try {
 			conn = JDBCDataSource.getConnection();
 			System.out.println("Connection Succesfully Establidh");
+			;
 
 			PreparedStatement pstmt = conn.prepareStatement("select max(ID) from ST_MARKSHEET");
 
@@ -51,6 +58,13 @@ public class MarksheetModel {
 		return pk + 1;
 	}
 
+	/**
+	 * Add a Marksheet
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 *
+	 */
 	public long add(MarksheetBean bean) throws ApplicationException, DuplicateRecordException {
 
 		StudentModel sModel = new StudentModel();
@@ -86,7 +100,7 @@ public class MarksheetModel {
 			pstmt.setTimestamp(11, bean.getModifiedDatetime());
 			pstmt.executeUpdate();
 			conn.commit();
-			
+
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,6 +117,13 @@ public class MarksheetModel {
 		log.debug("Model add End");
 		return pk;
 	}
+
+	/**
+	 * Delete a Marksheet
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
 
 	public void delete(MarksheetBean bean) throws ApplicationException {
 		log.debug("Model delete Started");
@@ -133,6 +154,14 @@ public class MarksheetModel {
 		}
 		log.debug("Model delete End");
 	}
+
+	/**
+	 * Finds Marksheet by Roll No
+	 *
+	 * @param rollNo : get parameter
+	 * @return bean
+	 * @throws DuplicateRecordException
+	 */
 
 	public MarksheetBean findByRollNo(String rollNo) throws ApplicationException {
 		log.debug("Model findByRollNo Started");
@@ -173,6 +202,14 @@ public class MarksheetModel {
 		return bean;
 	}
 
+	/**
+	 * Finds Marksheet by PK
+	 *
+	 * @param pk : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
+
 	public MarksheetBean findByPK(Long pk) throws ApplicationException {
 		log.debug("Model findByPK Started");
 
@@ -209,6 +246,13 @@ public class MarksheetModel {
 		log.debug("Model findByPK End");
 		return bean;
 	}
+
+	/**
+	 * Updates a Marksheet
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
 
 	public void update(MarksheetBean bean) throws ApplicationException, DuplicateRecordException {
 
@@ -262,16 +306,24 @@ public class MarksheetModel {
 		log.debug("Model update End");
 	}
 
-	public List search
-	
-	(MarksheetBean bean, int pageNo, int pageSize) throws ApplicationException {
+	/**
+	 * Searches Marksheet with pagination
+	 *
+	 * @return list : List of Marksheets
+	 * @param bean     : Search Parameters
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 *
+	 * @throws DatabaseException
+	 */
+
+	public List search(MarksheetBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		log.debug("Model  search Started");
 
-		StringBuffer sql = new StringBuffer("select * from ST_MARKSHEET where true");
+		StringBuffer sql = new StringBuffer("select * from ST_MARKSHEET where 1=1");
 
 		if (bean != null) {
-			
 			System.out.println("service" + bean.getName());
 			if (bean.getId() > 0) {
 				sql.append(" AND id = " + bean.getId());
@@ -280,7 +332,6 @@ public class MarksheetModel {
 				sql.append(" AND roll_no like '" + bean.getRollNo() + "%'");
 			}
 			if (bean.getName() != null && bean.getName().length() > 0) {
-				
 				sql.append(" AND name like '" + bean.getName() + "%'");
 			}
 			if (bean.getPhysics() != null && bean.getPhysics() > 0) {
@@ -290,8 +341,12 @@ public class MarksheetModel {
 				sql.append(" AND chemistry = " + bean.getChemistry());
 			}
 			if (bean.getMaths() != null && bean.getMaths() > 0) {
-				sql.append(" AND maths = '" + bean.getMaths());
+				sql.append(" AND maths = " + bean.getMaths());
 			}
+			/*
+			 * if (bean.getTotal() != null && bean.getTotal() > 0) {
+			 * sql.append(" AND (physics + chemistry + maths) = " + bean.getTotal()); }
+			 */
 
 		}
 
@@ -304,8 +359,6 @@ public class MarksheetModel {
 			// sql.append(" limit " + pageNo + "," + pageSize);
 		}
 
-		
-		
 		ArrayList list = new ArrayList();
 		Connection conn = null;
 		try {
@@ -339,6 +392,15 @@ public class MarksheetModel {
 		return list;
 	}
 
+	/**
+	 * get List of Marksheet with pagination
+	 *
+	 * @return list : List of Marksheets
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 * @throws DatabaseException
+	 */
+
 	public List list(int pageNo, int pageSize) throws ApplicationException {
 
 		log.debug("Model  list Started");
@@ -346,7 +408,7 @@ public class MarksheetModel {
 		ArrayList list = new ArrayList();
 		StringBuffer sql = new StringBuffer("select * from ST_MARKSHEET");
 		// if page size is greater than zero then apply pagination
-		if (pageSize > 0) { 
+		if (pageSize > 0) {
 			// Calculate start record index
 			pageNo = (pageNo - 1) * pageSize;
 			sql.append(" limit " + pageNo + "," + pageSize);
@@ -386,12 +448,21 @@ public class MarksheetModel {
 
 	}
 
+	/**
+	 * get Merit List of Marksheet with pagination
+	 *
+	 * @return list : List of Marksheets
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 * @throws DatabaseException
+	 */
+
 	public List getMeritList(int pageNo, int pageSize) throws ApplicationException {
 		log.debug("model MeritList Started");
 
 		ArrayList list = new ArrayList();
 		StringBuffer sql = new StringBuffer(
-				"SELECT ID,ROLL_NO,NAME,PHYSICS,CHEMISTRY,MATHS,(PHYSICS+CHEMISTRY+MATHS) as total from ST_MARKSHEET ORDER BY TOTAL DESC");
+				"SELECT ID,ROLL_NO,NAME,PHYSICS,CHEMISTRY,MATHS,(PHYSICS+CHEMISTRY+MATHS) as total from ST_MARKSHEET WHERE PHYSICS>=33 AND CHEMISTRY>=33 AND MATHS>=33 ORDER BY TOTAL DESC");
 
 		if (pageSize > 0) {
 			pageNo = (pageNo - 1) * pageSize;
@@ -404,7 +475,7 @@ public class MarksheetModel {
 
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
- 
+
 				MarksheetBean bean = new MarksheetBean();
 				bean.setId(rs.getInt(1));
 				bean.setRollNo(rs.getString(2));

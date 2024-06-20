@@ -25,7 +25,7 @@ import com.rays.pro4.Util.ServletUtility;
 /**
  * The Class UserCtl.
  * 
- * @author Dheeraj Haryani
+ * @author Anish Malviya
  * 
  */
 @WebServlet(name = "UserCtl", urlPatterns = { "/ctl/UserCtl" })
@@ -71,7 +71,7 @@ public class UserCtl extends BaseCtl {
 			request.setAttribute("firstName", PropertyReader.getValue("error.require", "First Name"));
 			pass = false;
 		} else if (!DataValidator.isName(request.getParameter("firstName"))) {
-			request.setAttribute("firstName","First name must contains alphabet only");
+			request.setAttribute("firstName", "First Name contains alphabet only");
 			pass = false;
 		}
 
@@ -79,7 +79,7 @@ public class UserCtl extends BaseCtl {
 			request.setAttribute("lastName", PropertyReader.getValue("error.require", "Last Name"));
 			pass = false;
 		} else if (!DataValidator.isName(request.getParameter("lastName"))) {
-			request.setAttribute("lastName", "Last name must contains alphabet only");
+			request.setAttribute("lastName", " Last Name contains alphabet only");
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("login"))) {
@@ -87,7 +87,7 @@ public class UserCtl extends BaseCtl {
 			pass = false;
 		} else if (DataValidator.isNotNull(request.getParameter("login"))
 				&& !DataValidator.isEmail(request.getParameter("login"))) {
-			request.setAttribute("login", PropertyReader.getValue("error.email", "Login Id"));
+			request.setAttribute("login", "LoginId is invalid emailId");
 			pass = false;
 		}
 
@@ -198,21 +198,20 @@ public class UserCtl extends BaseCtl {
 	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		log.debug("UserCtl Method doGet Started");
-		System.out.println("u ctl do get 1111111");
+
 		String op = DataUtility.getString(request.getParameter("operation"));
 		// get model
 		UserModel model = new UserModel();
 		long id = DataUtility.getLong(request.getParameter("id"));
-		if (id > 0 || op != null) {
+		System.out.println("User Edit Id >= " + id);
+		if (id != 0 && id > 0) {
 			System.out.println("in id > 0  condition");
 			UserBean bean;
 			try {
 				bean = model.findByPK(id);
-				System.out.println("Ankit11111111111");
 				System.out.println(bean);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
@@ -221,9 +220,9 @@ public class UserCtl extends BaseCtl {
 				return;
 			}
 		}
-		log.debug("UserCtl Method doGet Ended");
+
 		ServletUtility.forward(getView(), request, response);
-	
+		log.debug("UserCtl Method doGet Ended");
 	}
 
 	/*
@@ -265,7 +264,7 @@ public class UserCtl extends BaseCtl {
 					// ServletUtility.setBean(bean, request);
 
 					ServletUtility.setSuccessMessage("User is successfully Added", request);
-					//ServletUtility.forward(getView(), request, response);
+					ServletUtility.forward(getView(), request, response);
 					bean.setId(pk);
 				}
 				/*
@@ -300,13 +299,12 @@ public class UserCtl extends BaseCtl {
 		} else if (OP_CANCEL.equalsIgnoreCase(op)) {
 			System.out.println(" U  ctl Do post 77777");
 
-			ServletUtility.redirect(ORSView.USER_LIST_CTL, request, response);
+			ServletUtility.redirect(ORSView.USER_CTL, request, response);
 			return;
 		}
-		log.debug("UserCtl Method doPostEnded");
 		ServletUtility.forward(getView(), request, response);
 
-
+		log.debug("UserCtl Method doPostEnded");
 	}
 
 	/*

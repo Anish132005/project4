@@ -72,7 +72,7 @@
 				</tr>
 				<tr>
 					<th align="left">Phone No<span style="color: red">*</span></th>
-					<td><input type="number" name="phoneNo" maxlength="10"
+					<td><input type="text" name="phoneNo" maxlength="10"
 						placeholder="Enter Phone No."
 						value="<%=DataUtility.getStringData(bean.getPhoneNo())%>"></td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("phoneNo", request)%></font></td>

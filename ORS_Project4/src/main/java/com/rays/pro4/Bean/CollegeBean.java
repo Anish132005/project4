@@ -2,7 +2,7 @@ package com.rays.pro4.Bean;
 
 /**
  * College JavaBean encapsulates College attributes.
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class CollegeBean extends BaseBean{
@@ -11,9 +11,7 @@ public class CollegeBean extends BaseBean{
 	private String address;
 	private String state;
 	private String city;
-	private String phoneNo;
-	
-	
+	private String phoneNo;	
 	
 	public String getName() {
 		return name;

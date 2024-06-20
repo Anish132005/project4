@@ -23,8 +23,7 @@
     $( "#udatee" ).datepicker({
       changeMonth: true,
       changeYear: true,
-	  yearRange:'1980:2002',
-	  //dateFormat:'yy-mm-dd'
+	  yearRange:'1980:2020',
     });
   } );
   </script>
@@ -68,7 +67,7 @@
             <table>
                 <tr>
                     <th align="left">First Name <span style="color: red">*</span> :</th>
-                    <td><input type="text" name="firstName" placeholder="Enter First Name" size="25"  value="<%=DataUtility.getStringData(bean.getFirstName())%>"></td>
+                    <td><input type="text" name="firstName" placeholder="Enter First Name" size="26"  value="<%=DataUtility.getStringData(bean.getFirstName())%>"></td>
                     <td style="position: fixed "><font color="red"><%=ServletUtility.getErrorMessage("firstName", request)%></font></td> 
                     
                 </tr>
@@ -77,14 +76,14 @@
               
               <tr>
                     <th align="left">Last Name <span style="color: red">*</span> :</th>
-                    <td><input type="text" name="lastName" placeholder="Enter Last Name" size="25" value="<%=DataUtility.getStringData(bean.getLastName())%>"></td>
+                    <td><input type="text" name="lastName" placeholder="Enter Last Name" size="26" value="<%=DataUtility.getStringData(bean.getLastName())%>"></td>
                      <td style="position: fixed"><font  color="red"> <%=ServletUtility.getErrorMessage("lastName", request)%></font></td>
                 </tr>
     <tr><th style="padding: 3px"></th></tr>          
 
                 <tr>
                     <th align="left">LoginId <span style="color: red">*</span> :</th>
-                    <td><input type="text" name="login" placeholder="Enter EmailId" size="25" value="<%=DataUtility.getStringData(bean.getLogin())%>"
+                    <td><input type="text" name="login" placeholder="Enter EmailId" size="26" value="<%=DataUtility.getStringData(bean.getLogin())%>"
                         <%=(bean.getId() > 0) ? "readonly" : ""%>> </td>
                        <td style="position: fixed"> <font  color="red"> <%=ServletUtility.getErrorMessage("login", request)%></font></td>
                 </tr>
@@ -101,14 +100,14 @@
 
                 <tr>
                     <th align="left">Password <span style="color: red">*</span> :</th>
-                    <td><input type="password" name="password" placeholder="Enter Password" size="25"value="<%=DataUtility.getStringData(bean.getPassword())%>"></td>
+                    <td><input type="password" name="password" placeholder="Enter Password" size="26"value="<%=DataUtility.getStringData(bean.getPassword())%>"></td>
                        <td style="position: fixed"> <font  color="red"> <%=ServletUtility.getErrorMessage("password", request)%></font></td>
                 </tr>
     <tr><th style="padding: 3px"></th></tr>          
 
                 <tr>
                     <th align="left" >Confirm Password <span style="color: red">*</span> :</th>
-                    <td><input type="password" name="confirmPassword" placeholder="Re-Enter Password" size="25" value="<%=DataUtility.getStringData(bean.getConfirmPassword())%>"></td>
+                    <td><input type="password" name="confirmPassword" placeholder="Re-Enter Password" size="26" value="<%=DataUtility.getStringData(bean.getConfirmPassword())%>"></td>
                       <td style="position: fixed" ><font color="red"> <%=ServletUtility.getErrorMessage("confirmPassword", request)%></font></td>
                 </tr>
                 <%} %>
@@ -139,7 +138,7 @@
                 
                 <tr>
                     <th align="left">Date Of Birth <span style="color: red">*</span> :</th>
-                    <td><input type="text" name="dob" placeholder="Enter Date Of Birth" size= "25" readonly="readonly" id="udatee" value="<%=DataUtility.getDateString(bean.getDob())%>"></td>
+                    <td><input type="text" name="dob" placeholder="Enter Date Of Birth" size= "26" readonly="readonly" id="udatee" value="<%=DataUtility.getDateString(bean.getDob())%>"></td>
                       <td style="position: fixed;">	<font color="red"> <%=ServletUtility.getErrorMessage("dob", request)%></font></td>
                 </tr>
                 <tr>
@@ -147,7 +146,7 @@
                 
                 <tr>
                     <th align="left">Mobile No <span style="color: red">*</span> :</th>
-                    <td><input type="number" style="width:212px" name="mobileNo" maxlength="10" placeholder="Enter Mobile No" size= "25" value="<%=DataUtility.getStringData(bean.getMobileNo())%>"></td>
+                    <td><input type="text" name="mobileNo" maxlength="10" placeholder="Enter Mobile No" size= "26" value="<%=DataUtility.getStringData(bean.getMobileNo())%>"></td>
                     <td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("mobileNo", request)%></font></td>
                 </tr>
     <tr><th style="padding: 3px"></th></tr>          

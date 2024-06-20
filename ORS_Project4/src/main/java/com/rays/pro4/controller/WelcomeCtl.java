@@ -11,13 +11,15 @@ import org.apache.log4j.Logger;
 
 import com.rays.pro4.Util.ServletUtility;
 
+
+//TODO: Auto-generated Javadoc
 /**
 * Welcome functionality Controller. Performs operation for Show Welcome page
 * 
-*  @author Anish malviya 
+*  @author Anish Malviya
 */
 
-@WebServlet(name = "WelcomeCtl", urlPatterns = { "/WelcomeCtl" })
+@WebServlet(name = "WelcomeCtl", urlPatterns = {"/WelcomeCtl"})
 public class WelcomeCtl extends BaseCtl {
 	
 
@@ -33,7 +35,7 @@ public class WelcomeCtl extends BaseCtl {
 		 * @param request  the request
 		 * @param response the response
 		 * @throws ServletException the servlet exception
-		 * @throws IOException      Signals that an I/O exception has occurred.
+		 * @throws IOException Signals that an I/O exception has occurred.
 		 */
 
 		protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,7 +55,7 @@ public class WelcomeCtl extends BaseCtl {
 		protected String getView() {
 			return ORSView.WELCOME_VIEW;
 		}
-		
+
 	}
 
 

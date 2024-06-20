@@ -12,10 +12,28 @@
 <head>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16*16" />
+
 <title>User List</title>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 
 <script src="<%=ORSView.APP_CONTEXT%>/js/jquery.min.js"></script>
 <script src="<%=ORSView.APP_CONTEXT%>/js/Checkbox11.js"></script>
+
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$(function() {
+		$("#udate").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			yearRange : '1980:2002',
+		//  mindefaultDate : "01-01-1962"
+		});
+	});
+</script>
 
 </head>
 <body>
@@ -69,12 +87,21 @@
 					</label> <input type="text" name="loginid" placeholder="Enter Login-Id"
 						value="<%=ServletUtility.getParameter("login", request)%>">
 						&emsp; <label>Role</font> :
-					</label> <%=HTMLUtility.getList("roleid", String.valueOf(bean.getRoleId()), rlist) %>
+					</label> <%=HTMLUtility.getList("roleid", String.valueOf(bean.getRoleId()), rlist)%>
 						&nbsp; <%-- <%=HTMLUtility.getList("loginid", String.valueOf(bean.getRoleId()), ulist)%>
- --%> &nbsp; <input type="submit" name="operation"
+ --%> &nbsp; <%-- <label>MobileNo</font> :</label>
+ 					 <input
+						type="number" name="mobile" placeholder="Enter mobile no"
+						value="<%=ServletUtility.getParameter("mobile", request)%>"> --%>
+
+						<label>dob</font> :
+					</label><input type="text" name="dob" id="udate" readonly="readonly"
+						size="25" placeholder="Enter Dob "
+						value="<%=ServletUtility.getParameter("dob", request)%>">
+
+						<input type="submit" name="operation"
 						value="<%=UserListCtl.OP_SEARCH%>"> &nbsp; <input
 						type="submit" name="operation" value="<%=UserListCtl.OP_RESET%>">
-
 					</td>
 				</tr>
 			</table>
@@ -149,17 +176,6 @@
 						value="<%=UserListCtl.OP_DELETE%>"></td>
 					<td><input type="submit" name="operation"
 						value="<%=UserListCtl.OP_NEW%>"></td>
-
-					<%--  <%	UserModel model = new UserModel();
-                     %>
-                     
-                     <% if(list.size() < pageSize || model.nextPK()-1 == bean.getId() ){%>
-
-                     		<td align="right"><input type="submit" name="operation" disabled="disabled" value="<%=UserListCtl.OP_NEXT%>"></td>
-                     <% }else{%>
-                     		<td align="right"><input type="submit" name="operation" value="<%=UserListCtl.OP_NEXT%>"></td>
-                     <%} %>
-        --%>
 					<td align="right"><input type="submit" name="operation"
 						value="<%=UserListCtl.OP_NEXT%>"
 						<%=(list.size() < pageSize || next == 0) ? "disabled" : ""%>></td>

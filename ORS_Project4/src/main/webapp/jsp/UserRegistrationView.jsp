@@ -66,11 +66,11 @@
 						:
 					</th>
 					<td><input type="text" name="firstName"
-						placeholder="Enter First Name" size="25"
+						placeholder="Enter First Name" size="26"
 						value="<%=DataUtility.getStringData(bean.getFirstName())%>"></td>
 
 
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("firstName", request)%></font></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("firstName", request)%></font></td>
 				</tr>
 
 				<tr>
@@ -82,9 +82,9 @@
 					<th align="left">Last Name <span style="color: red">*</span> :
 					</th>
 					<td><input type="text" name="lastName"
-						placeholder="Enter last Name" size="25"
+						placeholder="Enter last Name" size="26"
 						value="<%=DataUtility.getStringData(bean.getLastName())%>"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("lastName", request)%></font></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("lastName", request)%></font></td>
 				</tr>
 
 				<tr>
@@ -96,9 +96,9 @@
 					<th align="left">LoginId <span style="color: red">*</span> :
 					</th>
 					<td><input type="text" name="login"
-						placeholder="Enter valid Email-Id" size="25"
+						placeholder="Enter valid Email-Id" size="26"
 						value="<%=DataUtility.getStringData(bean.getLogin())%>"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("login", request)%></font></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("login", request)%></font></td>
 				</tr>
 
 				<tr>
@@ -132,9 +132,9 @@
 						:
 					</th>
 					<td><input type="text" name="dob" id="udate"
-						readonly="readonly" size="25" placeholder="Enter Dob "
+						readonly="readonly" size="26" placeholder="Enter Dob "
 						value="<%=DataUtility.getDateString(bean.getDob())%>"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("dob", request)%></font></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("dob", request)%></font></td>
 				</tr>
 
 				<tr>
@@ -146,9 +146,9 @@
 					<th align="left">Mobile No <span style="color: red">*</span> :
 					</th>
 					<td><input type="text" name="mobileNo"
-						placeholder="Enter Mobile No" size="25" maxlength="10"
+						placeholder="Enter Mobile No" size="26" maxlength="10"
 						value="<%=DataUtility.getStringData(bean.getMobileNo())%>"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("mobileNo", request)%></font></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("mobileNo", request)%></font></td>
 				</tr>
 
 				<tr>
@@ -160,9 +160,9 @@
 					<th align="left">Password <span style="color: red">*</span> :
 					</th>
 					<td><input type="password" name="password"
-						placeholder="Enter Password" size="25"
+						placeholder="Enter Password" size="26"
 						value="<%=DataUtility.getStringData(bean.getPassword())%>"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("password", request)%></font></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("password", request)%></font></td>
 				</tr>
 
 				<tr>
@@ -175,9 +175,9 @@
 						:
 					</th>
 					<td><input type="password" name="confirmPassword"
-						placeholder="Re-Enter password" size="25"
+						placeholder="Re-Enter password" size="26"
 						value="<%=DataUtility.getStringData(bean.getConfirmPassword())%>"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("confirmPassword", request)%></font></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("confirmPassword", request)%></font></td>
 				</tr>
 
 				<tr>

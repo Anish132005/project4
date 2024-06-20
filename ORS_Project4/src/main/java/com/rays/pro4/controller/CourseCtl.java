@@ -22,7 +22,7 @@ import com.rays.pro4.Util.ServletUtility;
 //TODO: Auto-generated Javadoc
 /**
 * The Class CourseCtl.
-*  @author Anish malviya 
+*  @author Anish Malviya
 */
 @WebServlet(name="CourseCtl", urlPatterns={"/ctl/CourseCtl"})
 public class CourseCtl extends BaseCtl{
@@ -44,7 +44,7 @@ public class CourseCtl extends BaseCtl{
 			request.setAttribute("name", PropertyReader.getValue("error.require", "Course Name"));
 			 pass = false ;
 		}else if (!DataValidator.isName(request.getParameter("name"))) {
-			request.setAttribute("name", PropertyReader.getValue("error.name", "Course name"));
+			request.setAttribute("name", " Course Name contains alphabet only");
 			 pass = false ;
 		}
 		if (DataValidator.isNull(request.getParameter("duration"))) {

@@ -25,7 +25,7 @@ import com.rays.pro4.Util.ServletUtility;
  * User registration functionality Controller. Performs operation for User
  * Registration
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  */
 @WebServlet(name = "UserRegistrationCtl", urlPatterns = { "/UserRegistrationCtl" })
 public class UserRegistrationCtl extends BaseCtl {
@@ -56,7 +56,7 @@ public class UserRegistrationCtl extends BaseCtl {
 			request.setAttribute("firstName", PropertyReader.getValue("error.require", "First Name"));
 			pass = false;
 		} else if (!DataValidator.isName(request.getParameter("firstName"))) {
-			request.setAttribute("firstName", "First name must contains alphabet only");
+			request.setAttribute("firstName", "First Name Contains Alphabets only");
 			pass = false;
 		}
 
@@ -64,7 +64,7 @@ public class UserRegistrationCtl extends BaseCtl {
 			request.setAttribute("lastName", PropertyReader.getValue("error.require", "Last Name"));
 			pass = false;
 		} else if (!DataValidator.isName(request.getParameter("lastName"))) {
-			request.setAttribute("lastName", "Last name must contains alphabet only");
+			request.setAttribute("lastName", "Last Name Contains Alphabets only");
 			pass = false;
 		}
 		// System.out.println(login+"sssssssssssssssssssssssssss");
@@ -109,8 +109,11 @@ public class UserRegistrationCtl extends BaseCtl {
 			pass = false;
 		}
 
-		if (!request.getParameter("password").equals(request.getParameter("confirmPassword"))
-				&& !"".equals(request.getParameter("confirmPassword"))) {
+		String password = request.getParameter("password");
+		String confirmPassword = request.getParameter("confirmPassword");
+
+		if (!password.equals(confirmPassword) && !"".equals(confirmPassword)) {
+			System.out.println("check pass>>>>>>>");
 			request.setAttribute("confirmPassword", "Password and Confirm Password Must be Same");
 			pass = false;
 		}
@@ -190,7 +193,7 @@ public class UserRegistrationCtl extends BaseCtl {
 			try {
 				long pk = model.registerUser(bean);
 
-				bean.setId(pk);
+				// bean.setId(pk);
 				// request.getSession().setAttribute("UserBean", bean);
 				ServletUtility.setSuccessMessage("User Successfully Register", request);
 				ServletUtility.forward(getView(), request, response);

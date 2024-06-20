@@ -24,7 +24,7 @@ import com.rays.pro4.Util.ServletUtility;
 /**
  * Servlet implementation class LoginCtl
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  */
 @WebServlet(name = "LoginCtl", urlPatterns = { "/LoginCtl" })
 public class LoginCtl extends BaseCtl {
@@ -48,15 +48,13 @@ public class LoginCtl extends BaseCtl {
 			return pass;
 		}
 
-		String login = request.getParameter("login");
-
-		if (DataValidator.isNull(login)) {
+		if (DataValidator.isNull(request.getParameter("login"))) {
 			System.out.println("loginctl 11");
 			request.setAttribute("login", PropertyReader.getValue("error.require", "Login Id"));
 			pass = false;
-		} else if (!DataValidator.isEmail(login)) {
+		} else if (!DataValidator.isEmail(request.getParameter("login"))) {
 			System.out.println("loginctl 22");
-			request.setAttribute("login", PropertyReader.getValue("error.email", "Login Id"));
+			request.setAttribute("login", PropertyReader.getValue("error.email", "Login "));
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("password"))) {
@@ -84,7 +82,6 @@ public class LoginCtl extends BaseCtl {
 
 		log.debug("LoginCtl Method populatebean Ended");
 
-		
 		return bean;
 	}
 
@@ -115,7 +112,6 @@ public class LoginCtl extends BaseCtl {
 	 * Submitting or login action performing
 	 *
 	 */
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -137,8 +133,7 @@ public class LoginCtl extends BaseCtl {
 
 				bean = model.authenticate(bean.getLogin(), bean.getPassword());
 
-				String uri = request.getParameter("URI");
-				System.out.println("uri in do post" + uri);
+				String str = request.getParameter("URI");
 
 				if (bean != null) {
 					session.setAttribute("user", bean);
@@ -150,16 +145,16 @@ public class LoginCtl extends BaseCtl {
 						session.setAttribute("role", rolebean.getName());
 					}
 
-					if ("null".equalsIgnoreCase(uri)) {
+					if ("null".equalsIgnoreCase(str)) {
 						ServletUtility.redirect(ORSView.WELCOME_CTL, request, response);
 						return;
 					} else {
-						ServletUtility.redirect(uri, request, response);
+						ServletUtility.redirect(str, request, response);
 						return;
 					}
 
-				} else {
-					System.out.println(" Lctl Dp post 33");
+				} else if (bean == null) {
+					System.out.println(" Lctl Dp pghjkiuygost 33");
 					bean = (UserBean) populateBean(request);
 					ServletUtility.setBean(bean, request);
 					ServletUtility.setErrorMessage("Invalid LoginId And Password", request);
@@ -172,8 +167,6 @@ public class LoginCtl extends BaseCtl {
 			}
 
 		} /*
-			 * 
-			 * 
 			 * else if (OP_LOG_OUT.equals(op)) { System.out.println(" Lctl Do post 44");
 			 * 
 			 * session = request.getSession(); session.invalidate();
@@ -183,9 +176,7 @@ public class LoginCtl extends BaseCtl {
 			 * return;
 			 * 
 			 * }
-			 */ else if (OP_SIGN_UP.equalsIgnoreCase(op))
-
-		{
+			 */ else if (OP_SIGN_UP.equalsIgnoreCase(op)) {
 			System.out.println("L ctl Do post 55");
 
 			ServletUtility.redirect(ORSView.USER_REGISTRATION_CTL, request, response);

@@ -11,17 +11,17 @@
     width:100%; 
     bottom:0;
     background-color:white;
-    color:black;
-   
-   
-   text-align:center;
+    color:black;    
+    text-align:center;
+
 }
 </style>
  
 </head>
-<body>
+<body> 
+
 <div id ="footer">
-<CENTER><hr>
+<CENTER><hr>    
     <H3>&copy; Copyrights RAYS Technologies</H3>
 </CENTER>
 </div>

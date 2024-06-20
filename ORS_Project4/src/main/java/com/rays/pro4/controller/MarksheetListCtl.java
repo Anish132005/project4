@@ -1,9 +1,8 @@
-package com.rays.pro4.controller;
+	package com.rays.pro4.controller;
 
 import java.io.IOException;
 import java.util.List;
 
-import javax.naming.MalformedLinkException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,7 @@ import com.rays.pro4.Util.ServletUtility;
 
 /**
 * Servlet implementation class MarksheetlistCtl
-*  @author  Anish malviya 
+*  @author  Anish Malviya
 */
 @WebServlet(name = "MarksheetListCtl", urlPatterns = { "/ctl/MarksheetListCtl" })
 public class MarksheetListCtl extends BaseCtl {
@@ -69,12 +68,14 @@ public class MarksheetListCtl extends BaseCtl {
 		bean.setId(DataUtility.getLong(request.getParameter("rollNo123")));
 		// bean.setRollNo(DataUtility.getString(request.getParameter("rollNo")));
 		bean.setName(DataUtility.getString(request.getParameter("name")));
+	//	bean.setMaths(DataUtility.getInt(request.getParameter("maths"))); 
+		 
 		return bean;
 	}
 
 	/**
 	 * ContainsDisplaylogics.
-	 *
+	 * 
 	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
@@ -134,15 +135,14 @@ public class MarksheetListCtl extends BaseCtl {
 		log.debug("MarksheetListCtl doPost Start");
 
 		List list = null;
+		List nextList = null; 
 
-		List nextList = null;
 		String op = DataUtility.getString(request.getParameter("operation"));
 
 		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
 		int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
 
 		pageNo = (pageNo == 0) ? 1 : pageNo;
-
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
 		MarksheetBean bean = (MarksheetBean) populateBean(request);
@@ -162,7 +162,7 @@ public class MarksheetListCtl extends BaseCtl {
 
 		else if (OP_NEW.equalsIgnoreCase(op)) {
 			ServletUtility.redirect(ORSView.MARKSHEET_CTL, request, response);
-			return;
+			return; 
 		}
 
 		else if (OP_RESET.equalsIgnoreCase(op) || OP_BACK.equalsIgnoreCase(op)) {

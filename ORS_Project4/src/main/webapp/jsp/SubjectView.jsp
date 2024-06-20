@@ -60,14 +60,14 @@
 	 <tr><th style="padding: 3px"></th></tr>    
 	
 	<th align="left">Subject Name <span style="color: red">*</span> :</th>
-	<td><input type="text" name="name" placeholder="Enter Subject Name" size="25" value="<%=DataUtility.getStringData(bean.getSubjectName())%>">
+	<td><input type="text" name="name" placeholder="Enter Subject Name" size="26" value="<%=DataUtility.getStringData(bean.getSubjectName())%>">
 	</td><td style="position: fixed"><font  color="red"><%=ServletUtility.getErrorMessage("name",request) %>
 	</font>	</td></th></tr>
 	
 	 <tr><th style="padding: 3px"></th></tr> 
 	    
 	<th align="left">Description <span style="color: red">*</span> :</th>
-	<td><input type="text" name="description" placeholder="Enter Description" size="25" value="<%=DataUtility.getStringData(bean.getDescription())%>">
+	<td><input type="text" name="description" placeholder="Enter Description" size="26" value="<%=DataUtility.getStringData(bean.getDescription())%>">
 	</td><td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("description",request) %>
 	</font></td></th></tr>
 	
@@ -87,7 +87,7 @@
 	<td>
 	 &nbsp;  &emsp;
 	<input type="submit" name="operation" value="<%=SubjectCtl.OP_SAVE %>">
-	 &nbsp;  &nbsp;
+	 &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp;
 	<input type="submit" name="operation" value="<%=SubjectCtl.OP_RESET %>">	
 	</td>
 	<%} %>

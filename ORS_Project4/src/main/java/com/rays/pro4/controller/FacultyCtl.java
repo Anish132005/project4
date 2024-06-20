@@ -30,7 +30,7 @@ import com.rays.pro4.Util.ServletUtility;
 //TODO: Auto-generated Javadoc
 /**
 * The Class FacultyCtl.
-*  @author Anish malviya 
+*  @author Anish Malviya
 */
 @WebServlet(name = "FacultyCtl", urlPatterns = { "/ctl/FacultyCtl" })
 public class FacultyCtl extends BaseCtl{
@@ -66,7 +66,7 @@ public class FacultyCtl extends BaseCtl{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+		 
 		try {
 			colist = comodel.list();
 			request.setAttribute("CollegeList", colist);
@@ -99,14 +99,14 @@ public class FacultyCtl extends BaseCtl{
 			request.setAttribute("firstname", PropertyReader.getValue("error.require", "FirstName"));
 			pass = false;
 		} else if (!DataValidator.isName(request.getParameter("firstname"))) {
-			request.setAttribute("firstname", PropertyReader.getValue("error.name", "First Name"));
+			request.setAttribute("firstname", "First Name contains alphabet only");
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("lastname"))) {
 			request.setAttribute("lastname", PropertyReader.getValue("error.require", "LastName"));
 			pass = false;
 		} else if (!DataValidator.isName(request.getParameter("lastname"))) {
-			request.setAttribute("lastname", PropertyReader.getValue("error.name", "Last Name"));
+			request.setAttribute("lastname", "Last Name contains alphabet only");
 			pass = false;
 
 		}
@@ -119,7 +119,7 @@ public class FacultyCtl extends BaseCtl{
 			request.setAttribute("loginid", PropertyReader.getValue("error.require", "LoginId"));
 			pass = false;
 		} else if (!DataValidator.isEmail(request.getParameter("loginid"))) {
-			request.setAttribute("loginid", PropertyReader.getValue("error.email", "LoginId"));
+			request.setAttribute("loginid", "LoginId is invalid EmailId");
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("mobileno"))) {
@@ -161,6 +161,7 @@ public class FacultyCtl extends BaseCtl{
 	 * @see in.co.rays.ors.controller.BaseCtl#populateBean(javax.servlet.http.
 	 * HttpServletRequest)
 	 */
+	
 	protected BaseBean populateBean(HttpServletRequest request) {
 		log.debug("populate bean faculty ctl started");
 		System.out.println(" populate bean ctl  in ");
@@ -173,12 +174,12 @@ public class FacultyCtl extends BaseCtl{
 		bean.setEmailId(DataUtility.getString(request.getParameter("loginid")));
 		bean.setMobileNo(DataUtility.getString(request.getParameter("mobileno")));
         bean.setDob(DataUtility.getDate(request.getParameter("dob")));
-		bean.setCollegeId(DataUtility.getLong(request.getParameter("collegeid")));
-		//bean.setCollegeName(DataUtility.getString(request.getParameter("collegeName")));
-		bean.setCourseId(DataUtility.getLong(request.getParameter("courseid")));
-		//bean.setCourseName(DataUtility.getString(request.getParameter("courseName")));
-		bean.setSubjectId(DataUtility.getLong(request.getParameter("subjectid")));
-		//bean.setSubjectName(DataUtility.getString(request.getParameter("subjectName")));
+		//bean.setCollegeId(DataUtility.getLong(request.getParameter("collegeid")));
+		bean.setCollegeName(DataUtility.getString(request.getParameter("collegeid"))); 
+		//bean.setCourseId(DataUtility.getLong(request.getParameter("courseid")));
+		bean.setCourseName(DataUtility.getString(request.getParameter("courseid")));
+		//bean.setSubjectId(DataUtility.getLong(request.getParameter("subjectid")));
+		bean.setSubjectName(DataUtility.getString(request.getParameter("subjectid"))); 
 
 		// bean.setCourseName(DataUtility.getString(request.getParameter("courseid")));
 		// bean.setSubjectName(DataUtility.getString(request.getParameter("subjectid")));

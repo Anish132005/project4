@@ -26,12 +26,18 @@ import com.rays.pro4.Util.JDBCDataSource;
 /**
  * JDBC Implementation of UserModel.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 
 public class UserModel {
 	private static Logger log = Logger.getLogger(UserModel.class);
+
+	/**
+	 * Find next PK of User
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public int nextPK() throws DatabaseException {
 
@@ -59,6 +65,14 @@ public class UserModel {
 
 	}
 
+	/**
+	 * Add a User
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 *
+	 */
+
 	public long add(UserBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("Model add Started");
 
@@ -67,7 +81,7 @@ public class UserModel {
 		Connection conn = null;
 		int pk = 0;
 
-		UserBean existbean = findByLogin(bean.getLogin());                               
+		UserBean existbean = findByLogin(bean.getLogin());
 		if (existbean != null) {
 			throw new DuplicateRecordException("login Id already exists");
 
@@ -86,7 +100,7 @@ public class UserModel {
 			pstmt.setString(4, bean.getLogin());
 			pstmt.setString(5, bean.getPassword());
 			// date of birth caste by sql date
-			pstmt.setDate(6, new Date(bean.getDob().getTime()));
+			pstmt.setDate(6, new java.sql.Date(bean.getDob().getTime()));
 			pstmt.setString(7, bean.getMobileNo());
 			pstmt.setLong(8, bean.getRoleId());
 			pstmt.setInt(9, bean.getUnSuccessfulLogin());
@@ -126,6 +140,12 @@ public class UserModel {
 
 	}
 
+	/**
+	 * Delete a User
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
 	public void delete(UserBean bean) throws ApplicationException {
 		log.debug("Model delete start");
 		String sql = "DELETE FROM ST_USER WHERE ID=?";
@@ -151,8 +171,17 @@ public class UserModel {
 		log.debug("Model Delete End");
 	}
 
+	/**
+	 * Find User by Login
+	 *
+	 * @param login : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
+
 	public UserBean findByLogin(String login) throws ApplicationException {
 		log.debug("Model findByLohin Started");
+		System.out.println("find by login start");
 		String sql = "SELECT * FROM ST_USER WHERE login=?";
 		UserBean bean = null;
 		Connection conn = null;
@@ -192,8 +221,17 @@ public class UserModel {
 			JDBCDataSource.closeConnection(conn);
 		}
 		log.debug("Model findby login end");
+		System.out.println("find by login end");
 		return bean;
 	}
+
+	/**
+	 * Find User by PK
+	 *
+	 * @param pk : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
 
 	public UserBean findByPK(long pk) throws ApplicationException {
 		log.debug("Model findBy PK start");
@@ -239,6 +277,13 @@ public class UserModel {
 		return bean;
 	}
 
+	/**
+	 * Update a user
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
+
 	public void update(UserBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("Model Update Start");
 		String sql = "UPDATE ST_USER SET FIRST_NAME=?,LAST_NAME=?,LOGIN=?,PASSWORD=?,DOB=?,MOBILE_NO=?,ROLE_ID=?,UNSUCCESSEFUL_LOGIN=?,GENDER=?,LAST_LOGIN=?,USER_LOCK=?,REGISTERED_IP=?,LAST_LOGIN_IP=?,CREATED_BY=?,MODIFIED_BY=?,CREATED_DATETIME=?,MODIFIED_DATETIME=?  WHERE ID=?";
@@ -269,7 +314,8 @@ public class UserModel {
 			pstmt.setTimestamp(16, bean.getModifiedDatetime());
 			pstmt.setTimestamp(17, bean.getModifiedDatetime());
 			pstmt.setLong(18, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
+			System.out.println("update user>> " + i);
 			conn.commit();
 			pstmt.close();
 		} catch (Exception e) {
@@ -287,14 +333,33 @@ public class UserModel {
 		log.debug("Model Update End ");
 	}
 
+	/**
+	 * Search User
+	 *
+	 * @param bean : Search Parameters
+	 * @throws DatabaseException
+	 */
+
 	public List search(UserBean bean) throws ApplicationException {
 		return search(bean, 0, 0);
 	}
+
+	/**
+	 * Search User with pagination
+	 *
+	 * @return list : List of Users
+	 * @param bean     : Search Parameters
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public List search(UserBean bean, int pageNo, int pageSize) throws ApplicationException {
 		log.debug("Model Search Start");
 		StringBuffer sql = new StringBuffer("SELECT * FROM ST_USER WHERE 1=1");
 		if (bean != null) {
+
 			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
 				sql.append(" AND FIRST_NAME like '" + bean.getFirstName() + "%'");
 			}
@@ -314,9 +379,10 @@ public class UserModel {
 			if (bean.getPassword() != null && bean.getPassword().length() > 0) {
 				sql.append(" AND PASSWORD like '" + bean.getPassword() + "%'");
 			}
-			if (bean.getDob() != null && bean.getDob().getDate() > 0) {
-				Date d = new Date(bean.getDob().getDate());
-				sql.append(" AND DOB = " + DataUtility.getDateString(d));
+			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
+				Date d = new Date(bean.getDob().getTime());
+				sql.append(" AND DOB = '" + d + "'");
+				System.out.println("done");
 			}
 			if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
 				sql.append(" AND MOBILE_NO = " + bean.getMobileNo());
@@ -327,12 +393,6 @@ public class UserModel {
 			if (bean.getGender() != null && bean.getGender().length() > 0) {
 				sql.append(" AND GENDER like '" + bean.getGender() + "%'");
 			}
-
-			/*
-			 * if (bean.getDob() != null && bean.getDob().getTime() > 0) { Date d = new
-			 * Date(bean.getDob().getTime()); sql.append("AND DOB = '" +
-			 * DataUtility.getDateString(d) + "'"); }
-			 */
 		}
 		// if page size is greater than zero then apply pagination
 		if (pageSize > 0) {
@@ -342,8 +402,7 @@ public class UserModel {
 			sql.append(" Limit " + pageNo + ", " + pageSize);
 			// sql.append(" limit " + pageNo + "," + pageSize);
 		}
-
-		System.out.println(sql);
+		System.out.println("sql query search >>= " + sql.toString());
 		List list = new ArrayList();
 		Connection conn = null;
 		try {
@@ -385,6 +444,14 @@ public class UserModel {
 		return list;
 
 	}
+
+	/**
+	 * Get User Roles
+	 *
+	 * @return List : User Role List
+	 * @param bean
+	 * @throws ApplicationException
+	 */
 
 	public List getRoles(UserBean bean) throws ApplicationException {
 		log.debug("Model GetRoles Start");
@@ -431,6 +498,13 @@ public class UserModel {
 
 	}
 
+	/**
+	 * @param id  : long id
+	 * @param old password : String oldPassword
+	 * @param new password : String newPassword
+	 * @throws DatabaseException
+	 */
+
 	public UserBean authenticate(String login, String password) throws ApplicationException {
 		log.debug("Model authenticate Started");
 		StringBuffer sql = new StringBuffer("SELECT * FROM ST_USER WHERE LOGIN =? AND PASSWORD =?");
@@ -476,9 +550,25 @@ public class UserModel {
 
 	}
 
+	/**
+	 * Get List of User
+	 *
+	 * @return list : List of User
+	 * @throws DatabaseException
+	 */
+
 	public List list() throws ApplicationException {
 		return list(0, 0);
 	}
+
+	/**
+	 * Get List of User with pagination
+	 *
+	 * @return list : List of users
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 * @throws DatabaseException
+	 */
 
 	public List list(int pageNo, int pageSize) throws ApplicationException {
 		log.debug("Model list Started");
@@ -531,6 +621,13 @@ public class UserModel {
 		return list;
 	}
 
+	/**
+	 * @param id          : long id
+	 * @param old         password : String oldPassword
+	 * @param newpassword : String newPassword
+	 * @throws DatabaseException
+	 */
+
 	public boolean changePassword(Long id, String oldPassword, String newPassword)
 			throws ApplicationException, RecordNotFoundException {
 
@@ -574,6 +671,14 @@ public class UserModel {
 		return flag;
 	}
 
+	/**
+	 * Register a user
+	 *
+	 * @param bean
+	 * @throws ApplicationException
+	 * @throws DuplicateRecordException : throws when user already exists
+	 */
+
 	public long registerUser(UserBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("Model add Started");
 		long pk = add(bean);
@@ -594,6 +699,15 @@ public class UserModel {
 		return pk;
 	}
 
+	/**
+	 * Send the password of User to his Email
+	 *
+	 * @return boolean : true if success otherwise false
+	 * @param login : User Login
+	 * @throws ApplicationException
+	 * @throws RecordNotFoundException : if user not found
+	 */
+
 	public boolean forgetPassword(String login) throws ApplicationException, RecordNotFoundException {
 		UserBean userData = findByLogin(login);
 		boolean flag = false;
@@ -607,6 +721,9 @@ public class UserModel {
 		map.put("password", userData.getPassword());
 		map.put("firstName", userData.getFirstName());
 		map.put("lastName", userData.getLastName());
+
+		System.out.println("Login = " + userData.getLogin());
+		System.out.println("Pwd = " + userData.getPassword());
 
 		String message = EmailBuilder.getForgetPasswordMessage(map);
 

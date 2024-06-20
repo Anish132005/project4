@@ -1,7 +1,6 @@
-<%@page import="java.util.LinkedHashMap"%>
-<%@page import="com.rays.pro4.controller.TimetableListCtl"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="com.rays.pro4.Model.TimeTableModel"%>
-<%@page import="com.rays.pro4.controller.TimetableListCtl"%>
+<%@page import="com.rays.pro4.controller.TimeTableListCtl"%>
 <%@page import="com.rays.pro4.Util.DataUtility"%>
 <%@page import="com.rays.pro4.Util.HTMLUtility"%>
 <%@page import="com.rays.pro4.Bean.TimeTableBean"%>
@@ -51,7 +50,7 @@
 // Disable for Sunday
 		  beforeShowDay : disableSunday,		  
 // Disable for back date
-		  minDate : 0   
+		    
 	  });
   } );
   </script>
@@ -81,9 +80,6 @@
 	
 		List sList = (List) request.getAttribute("subjectList"); 
 		
-		List eList = (List) request.getAttribute("examtime"); 
-
-		
 		int next=DataUtility.getInt(request.getAttribute("nextlist").toString());
 
 		
@@ -108,31 +104,24 @@
 		
 		<label>Subject Name :</label>
 		<%=HTMLUtility.getList("slist", String.valueOf(bean.getSubjectId()), sList) %>
-		
-		<%-- <label>Exam Date</label>
-		<input type="text" name="Exdate" id="abcd" placeholder="Enter Exam Date" <%=ServletUtility.getParameter("Exdate", request) %>>
-				 --%>
-		<%-- 		 
-		<label>Exam Time</label>		 
-	 <%
-		LinkedHashMap<String , String > map1 = new LinkedHashMap<String  ,String >();
-		map1.put("08:00 AM to 11:00 AM","08:00 AM to 11:00 AM");
-		map1.put("12:00 PM to 03:00 PM","12:00 PM to 03:00 PM");
-		map1.put("04:00 PM to 07:00 PM","04:00 PM to 07:00 PM");
-	
-		String htmlList1 = HTMLUtility.getList("elist", bean.getExamTime(), map1);
-	%>
-	<%=htmlList1 %> --%>
-	
-	
-	
-	 <%-- <label> Exam Time :</font></label> 
-     <input type="text" name="elist" placeholder="Enter exam time" value="<%=ServletUtility.getParameter("elist", request)%>"> --%>
-				 
 				
-			<input type="submit" name="operation" value="<%=TimetableListCtl.OP_SEARCH%>">
+		<%-- <label>Date Of Exam :</label>
+		<input type ="date"  name="Exdate"  placeholder="Select Date" value="<%=ServletUtility.getParameter("Exdate", request) %>">		
+		&nbsp; --%>
+		
+		<%-- <lable>Exam Time :</lable>
+		 
+		<% HashMap map = new HashMap();
+			map.put("08:00 AM to 11:00 AM", "08:00 AM to 11:00 AM");
+			map.put("12:00 PM to 03:00 PM", "12:00 PM to 03:00 PM"); 
+			map.put("04:00 PM to 07:00 PM", "04:00 PM to 07:00 PM");
+			
+			String htmlList1 = HTMLUtility.getList("ExTime", bean.getExamTime(), map);
+	%><%=htmlList1 %>
+ --%>		
+		<input type="submit" name="operation" value="<%=TimeTableListCtl.OP_SEARCH%>">
 		&nbsp;
-		<input type="submit" name="operation" value="<%=TimetableListCtl.OP_RESET %>">
+		<input type="submit" name="operation" value="<%=TimeTableListCtl.OP_RESET %>">
 		
 		</td>	
 		</tr>
@@ -173,14 +162,14 @@
 	<table width = "100%">
 		<tr><th></th>
 			<%if(pageNo==1){ %>
-			<td align="left"><input type="submit" name="operation" disabled="disabled" value="<%=TimetableListCtl.OP_PREVIOUS%>" ></td>
+			<td align="left"><input type="submit" name="operation" disabled="disabled" value="<%=TimeTableListCtl.OP_PREVIOUS%>" ></td>
 			<%}else{ %>
-			<td align="left"><input type="submit" name="operation" value="<%=TimetableListCtl.OP_PREVIOUS%>" ></td>
+			<td align="left"><input type="submit" name="operation" value="<%=TimeTableListCtl.OP_PREVIOUS%>" ></td>
 			<%} 
 			%>
 			
-			<td><input type="submit" name="operation" value="<%=TimetableListCtl.OP_DELETE%>"></td>
-			<td><input type="submit" name="operation" value="<%=TimetableListCtl.OP_NEW%>"></td>	
+			<td><input type="submit" name="operation" value="<%=TimeTableListCtl.OP_DELETE%>"></td>
+			<td><input type="submit" name="operation" value="<%=TimeTableListCtl.OP_NEW%>"></td>	
 			
 				<%
 					TimeTableModel model = new TimeTableModel();
@@ -196,13 +185,13 @@
 			<td align="right"><input typeRR="submit" name="operation" value="<%=TimeTableListCtl.OP_NEXT%>" ></td>
 			<%} %> --%>
 			
-			<td align="right"><input type="submit"  name="operation" value="<%=TimetableListCtl.OP_NEXT%>" <%=(list.size()<pageSize||next==0)?"disabled":"" %>> </td>
+			<td align="right"><input type="submit"  name="operation" value="<%=TimeTableListCtl.OP_NEXT%>" <%=(list.size()<pageSize||next==0)?"disabled":"" %>> </td>
 			
 		</tr>
 	</table>
 	
 					<%}if(list.size() == 0){ %>
-            		<td align="center"><input type="submit" name="operation" value="<%=TimetableListCtl.OP_BACK%>"></td>	
+            		<td align="center"><input type="submit" name="operation" value="<%=TimeTableListCtl.OP_BACK%>"></td>	
             		<% } %>
             
 	

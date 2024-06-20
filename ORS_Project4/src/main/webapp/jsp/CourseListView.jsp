@@ -28,7 +28,9 @@
   <%@include file="Header.jsp"%>
 
     <%
-		List<CourseBean> courselist = (List<CourseBean>)request.getAttribute("CourseList"); 
+		List<CourseBean> courselist = (List<CourseBean>)request.getAttribute("CourseList");
+    
+    	List<CourseBean> deslist = (List<CourseBean>) request.getAttribute("dname");
     
         int next=DataUtility.getInt(request.getAttribute("nextlist").toString());
 
@@ -63,6 +65,11 @@
                  	<%=HTMLUtility.getList("cname", String.valueOf(bean.getId()), courselist) %>
                  <%-- 	<input type="text" name="cname" placeholder="Enter Course Name" Size= "25" value="<%=DataUtility.getStringData(bean.getName()) %>">
 					 --%>&nbsp;
+					 
+				
+				<%-- <label>Description </font> :</label>
+					<%=HTMLUtility.getList("dname", String.valueOf(bean.getId()), deslist) %> 
+				 --%>	 
                      <input type="submit" name="operation" value="<%=CourseListCtl.OP_SEARCH%>">
         	         &nbsp;
         	         <input type="submit" name="operation" value="<%=CourseListCtl.OP_RESET%>">
@@ -115,7 +122,13 @@
                      <td><input type="submit" name="operation" value="<%=CourseListCtl.OP_DELETE%>"> </td>
                     <td> <input type="submit" name="operation" value="<%=CourseListCtl.OP_NEW%>"></td>
                     
-
+                 <%--  <% CourseModel model = new CourseModel();                  
+                  %>  
+                  <% if(list.size() < pageSize || model.nextPk()-1 == bean.getId()){ %>
+                  <td align="right"> <input type="submit" name="operation" disabled="disabled" value="<%=CourseListCtl.OP_NEXT%>"></td>
+  					<%}else{ %>                   
+  				  <td align="right"> <input type="submit" name="operation"  value="<%=CourseListCtl.OP_NEXT%>"></td>
+   					<%} %>   --%>   
    					
    					<td align="right"><input type="submit"  name="operation" value="<%=CourseListCtl.OP_NEXT%>" <%=(list.size()<pageSize||next==0)?"disabled":"" %>> </td>
 			            

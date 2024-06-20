@@ -2,16 +2,13 @@ package com.rays.pro4.Util;
 
 import java.util.ResourceBundle;
 
-
 /**
  * Read the property values from application properties file using Resource
  * Bundle.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
-
-
 public class PropertyReader {
 
 	private static ResourceBundle rb = ResourceBundle.getBundle("com.rays.proj4.resourcesB.System");
@@ -22,8 +19,7 @@ public class PropertyReader {
 	 * @param key
 	 * @return
 	 */
-	
-	
+
 	public static String getValue(String key) {
 
 		String val = null;
@@ -51,19 +47,13 @@ public class PropertyReader {
 		return msg;
 	}
 
-	
 	/**
 	 * Gets String after placing params values
 	 *
-	 *
-	 *jh
 	 * @param key
 	 * @param params
 	 * @return
 	 */
-	
-	
-	
 	public static String getValue(String key, String[] params) {
 		String msg = getValue(key);
 		for (int i = 0; i < params.length; i++) {

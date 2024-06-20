@@ -25,7 +25,7 @@
     $( "#udate4" ).datepicker({
       changeMonth: true,
       changeYear: true,
-	  yearRange:'1980:2002', 
+	  yearRange:'1980:2020', 
 	  
     });
   } );
@@ -80,7 +80,7 @@
 		
 		<tr>
 		<th align="left">FirstName <span style="color: red">*</span> :</th>
-		<td><input type="text" name="firstname" placeholder="Enter First Name" size="25" value="<%=DataUtility.getStringData(bean.getFirstName())%>"></td>
+		<td><input type="text" name="firstname" placeholder="Enter First Name" size="26" value="<%=DataUtility.getStringData(bean.getFirstName())%>"></td>
 		<td style="position: fixed"><font  color="red"><%=ServletUtility.getErrorMessage("firstname", request)%></font>
 		</td>
 		</tr>
@@ -89,7 +89,7 @@
 		
 		<tr>
 		<th align="left" >LastName <span style="color: red">*</span> :</th>
-		<td><input type="text" name="lastname" placeholder="Enter Last Name" size="25" value="<%=DataUtility.getStringData(bean.getLastName())%>"></td>
+		<td><input type="text" name="lastname" placeholder="Enter Last Name" size="26" value="<%=DataUtility.getStringData(bean.getLastName())%>"></td>
 		<td style="position: fixed"><font  color="red"><%=ServletUtility.getErrorMessage("lastname", request)%></font>
 		</td>
 		</tr>
@@ -98,7 +98,7 @@
 		
 		 <tr>
 		  <th align="left">Date Of Birth <span style="color: red">*</span> :</th>
-          <td><input type="text" name="dob" id="udate4" readonly="readonly" placeholder=" Date of Birth" size="25"  value="<%=DataUtility.getDateString(bean.getDob())%>"></td> 
+          <td><input type="text" name="dob" id="udate4" readonly="readonly" placeholder=" Date of Birth" size="26"  value="<%=DataUtility.getDateString(bean.getDob())%>"></td> 
          <td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("dob", request)%></font></td>
                 </tr>
    
@@ -106,7 +106,7 @@
 	
 		<tr>
 		<th align="left">MobileNo <span style="color: red">*</span> :</th>
-		<td><input type="text" name="mobile" maxlength="10" placeholder="Enter Mobile No" size="25" value="<%=DataUtility.getStringData(bean.getMobileNo())%>"></td>
+		<td><input type="text" name="mobile" maxlength="10" placeholder="Enter Mobile No" size="26" value="<%=DataUtility.getStringData(bean.getMobileNo())%>"></td>
 		<td style="position: fixed" ><font color="red"><%=ServletUtility.getErrorMessage("mobile", request)%></font>
 		</td>
 		</tr>
@@ -115,7 +115,7 @@
 	
 		<tr>
 		<th align="left">Email-Id <span style="color: red">*</span> :</th>
-		<td><input type="text" name="email" placeholder="Enter Email_Id" size="25" value="<%=DataUtility.getStringData(bean.getEmail())%>"></td>
+		<td><input type="text" name="email" placeholder="Enter Email_Id" size="26" value="<%=DataUtility.getStringData(bean.getEmail())%>"></td>
 		<td style="position: fixed" ><font color="red"><%=ServletUtility.getErrorMessage("email", request)%></font>
 		</td>
 		</tr>

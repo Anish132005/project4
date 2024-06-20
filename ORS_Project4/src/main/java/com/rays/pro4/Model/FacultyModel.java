@@ -17,17 +17,21 @@ import com.rays.pro4.Exception.DatabaseException;
 import com.rays.pro4.Exception.DuplicateRecordException;
 import com.rays.pro4.Util.JDBCDataSource;
 
-
-
 /**
- *  * JDBC Implementation of FacultyModel.
+ * JDBC Implementation of FacultyModel.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class FacultyModel {
 
 	private static Logger log = Logger.getLogger(FacultyModel.class);
+
+	/**
+	 * Find next PK of Faculty
+	 * 
+	 * @throws DatabaseException
+	 */
 
 	private Integer nextPK() throws DatabaseException {
 		log.debug("Model nextpk Started");
@@ -52,80 +56,94 @@ public class FacultyModel {
 		log.debug("Model next pk End");
 		return pk = pk + 1;
 	}
-	
+
+	/**
+	 * Add a Faculty
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 *
+	 */
+
 	public long add(FacultyBean bean) throws ApplicationException, DuplicateRecordException {
-		//   log.debug("Model add Started");
-		   Connection conn=null;
-		   int pk=0;
-		   
-		   
-		   CollegeModel collegeModel = new CollegeModel();	
-			CollegeBean collegeBean = collegeModel.findByPK(bean.getCollegeId());
-			bean.setCollegeName(collegeBean.getName());
-			
-			CourseModel courseModel = new CourseModel();	
-			CourseBean courseBean = courseModel.FindByPK(bean.getCourseId());
-			bean.setCourseName(courseBean.getName());
-			
-			SubjectModel subjectModel = new SubjectModel();
-			SubjectBean subjectBean = subjectModel.FindByPK(bean.getSubjectId());
-			bean.setSubjectName(subjectBean.getSubjectName());
-			
-			FacultyBean beanExist = findByEmailId(bean.getEmailId());
-			if (beanExist != null) { 
-				  throw new DuplicateRecordException("Email already exists"); 
-				  }
+		// log.debug("Model add Started");
+		Connection conn = null;
+		int pk = 0;
+
+		CollegeModel collegeModel = new CollegeModel();
+		CollegeBean collegeBean = collegeModel.findByPK(bean.getCollegeId());
+		bean.setCollegeName(collegeBean.getName());
+
+		CourseModel courseModel = new CourseModel();
+		CourseBean courseBean = courseModel.FindByPK(bean.getCourseId());
+		bean.setCourseName(courseBean.getName());
+
+		SubjectModel subjectModel = new SubjectModel();
+		SubjectBean subjectBean = subjectModel.FindByPK(bean.getSubjectId());
+		bean.setSubjectName(subjectBean.getSubjectName());
+
+		FacultyBean beanExist = findByEmailId(bean.getEmailId());
+		if (beanExist != null) {
+			throw new DuplicateRecordException("Email already exists");
+		}
 		/*
 		 * FacultyBean duplicatefacultyName = findByName(bean.getFirstName());
 		 * if(duplicatefacultyName != null) { throw new
 		 * DuplicateRecordException("course already exist"); }
 		 */
-			 
-		   
-		   
-		   try {
-			   conn = JDBCDataSource.getConnection();
-			   pk=nextPK();
-			   conn.setAutoCommit(false);
-			   System.out.println("666666666666");
-			   PreparedStatement pstmt = conn.prepareStatement("INSERT INTO ST_FACULTY VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			   	pstmt.setInt(1, pk);
-			   	pstmt.setString(2, bean.getFirstName());
-			    pstmt.setString(3, bean.getLastName());
-			    pstmt.setString(4, bean.getGender());
-			    pstmt.setString(5, bean.getEmailId());
-			    pstmt.setString(6, bean.getMobileNo());
-			    pstmt.setLong(7, bean.getCollegeId());
-			    pstmt.setString(8, bean.getCollegeName());
-			    pstmt.setLong(9, bean.getCourseId());
-			    pstmt.setString(10, bean.getCourseName());
-			    pstmt.setDate(11, new java.sql.Date(bean.getDob().getTime()));
-			    pstmt.setLong(12,bean.getSubjectId());
-			    pstmt.setString(13, bean.getSubjectName());
-			    pstmt.setString(14, bean.getCreatedBy());
-			    pstmt.setString(15, bean.getModifiedBy());
-			    pstmt.setTimestamp(16, bean.getCreatedDatetime());
-			    pstmt.setTimestamp(17, bean.getModifiedDatetime());
-			   	pstmt.executeUpdate();
-			   	conn.commit();
-			   	pstmt.close();
-			   	conn.close();
-		   }catch(Exception e) {
-		//	   log.error("Database Exception....",e);
-			   try {
-				   conn.rollback();
-			   }catch(Exception ex) {
-				   ex.printStackTrace();
-				 //  throw new ApplicationException("Excetion : add rollback Exception " +ex.getMessage());
-			   }
-			 //  throw new ApplicationException("Exception : Exception in add course" );
-		   }finally {
-			   JDBCDataSource.closeConnection(conn);
-		   }
-		//   log.debug("Model add End");
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			pk = nextPK();
+			conn.setAutoCommit(false);
+			System.out.println("666666666666");
+			PreparedStatement pstmt = conn
+					.prepareStatement("INSERT INTO ST_FACULTY VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			pstmt.setInt(1, pk);
+			pstmt.setString(2, bean.getFirstName());
+			pstmt.setString(3, bean.getLastName());
+			pstmt.setString(4, bean.getGender());
+			pstmt.setString(5, bean.getEmailId());
+			pstmt.setString(6, bean.getMobileNo());
+			pstmt.setLong(7, bean.getCollegeId());
+			pstmt.setString(8, bean.getCollegeName());
+			pstmt.setLong(9, bean.getCourseId());
+			pstmt.setString(10, bean.getCourseName());
+			pstmt.setDate(11, new java.sql.Date(bean.getDob().getTime()));
+			pstmt.setLong(12, bean.getSubjectId());
+			pstmt.setString(13, bean.getSubjectName());
+			pstmt.setString(14, bean.getCreatedBy());
+			pstmt.setString(15, bean.getModifiedBy());
+			pstmt.setTimestamp(16, bean.getCreatedDatetime());
+			pstmt.setTimestamp(17, bean.getModifiedDatetime());
+			pstmt.executeUpdate();
+			conn.commit();
+			pstmt.close();
+			conn.close();
+		} catch (Exception e) {
+			// log.error("Database Exception....",e);
+			try {
+				conn.rollback();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				// throw new ApplicationException("Excetion : add rollback Exception "
+				// +ex.getMessage());
+			}
+			// throw new ApplicationException("Exception : Exception in add course" );
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+		// log.debug("Model add End");
 		return pk;
-		  
-	   }
+
+	}
+
+	/**
+	 * Delete a Faculty
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
 
 	public void delete(FacultyBean bean) throws ApplicationException {
 
@@ -152,6 +170,13 @@ public class FacultyModel {
 		}
 		log.debug("Model delete End");
 	}
+
+	/**
+	 * Update a Faculty
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
 
 	public void update(FacultyBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("model update Started");
@@ -205,6 +230,14 @@ public class FacultyModel {
 		log.debug("Model update End");
 	}
 
+	/**
+	 * Find Faculty by PK
+	 *
+	 * @param pk : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
+
 	public FacultyBean findByPK(long pk) throws ApplicationException {
 		log.debug("Model findByPK Started");
 		StringBuffer sql = new StringBuffer("SELECT * FROM ST_FACULTY WHERE ID=?");
@@ -246,6 +279,14 @@ public class FacultyModel {
 		return bean;
 	}
 
+	/**
+	 * Find Faculty by EmailId
+	 *
+	 * @param login : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
+
 	public FacultyBean findByEmailId(String Email) throws ApplicationException {
 		log.debug("Model findBy Email Started");
 		StringBuffer sql = new StringBuffer("SELECT * FROM ST_FACULTY WHERE EMAIL_id=?");
@@ -258,7 +299,7 @@ public class FacultyModel {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				bean = new FacultyBean();
-				bean.setId(rs.getLong(1));
+				bean.setId(rs.getLong(1)); 
 				bean.setFirstName(rs.getString(2));
 				bean.setLastName(rs.getString(3));
 				bean.setGender(rs.getString(4));
@@ -288,9 +329,25 @@ public class FacultyModel {
 		return bean;
 	}
 
+	/**
+	 * Get List of Faculty
+	 *
+	 * @return list : List of Faculty
+	 * @throws DatabaseException
+	 */
+
 	public List list() throws ApplicationException {
 		return list(0, 0);
 	}
+
+	/**
+	 * Get List of Faculty with pagination
+	 *
+	 * @return list : List of Faculty
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 * @throws DatabaseException
+	 */
 
 	public List list(int pageNo, int pageSize) throws ApplicationException {
 		log.debug("Model list Started");
@@ -341,16 +398,34 @@ public class FacultyModel {
 		return list;
 	}
 
+	/**
+	 * Search Faculty
+	 *
+	 * @param bean : Search Parameters
+	 * @throws DatabaseException
+	 */
+
 	public List search(FacultyBean bean) throws ApplicationException {
 		return search(bean, 0, 0);
 	}
+
+	/**
+	 * Search Faculty with pagination
+	 *
+	 * @return list : List of Faculty
+	 * @param bean     : Search Parameters
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public List search(FacultyBean bean, int pageNo, int pageSize) throws ApplicationException {
 		log.debug("model search started");
 
 		StringBuffer sql = new StringBuffer("select * from ST_FACULTY WHERE 1=1");
-		if (bean!=null) {
-			if (bean.getId()>0) {
+		if (bean != null) {
+			if (bean.getId() > 0) {
 				sql.append(" AND id = " + bean.getId());
 			}
 			if (bean.getCollegeId() > 0) {
@@ -362,33 +437,32 @@ public class FacultyModel {
 			if (bean.getLastName() != null && bean.getLastName().trim().length() > 0) {
 				sql.append(" AND LAST_NAME like '" + bean.getLastName() + "%'");
 			}
-			
-			if (bean.getEmailId()!=null && bean.getEmailId().length()>0) {
+
+			if (bean.getEmailId() != null && bean.getEmailId().length() > 0) {
 				sql.append(" AND Email_Id like '" + bean.getEmailId() + "%'");
 			}
-			
-			if (bean.getGender()!=null && bean.getGender().length()>0) {
+
+			if (bean.getGender() != null && bean.getGender().length() > 0) {
 				sql.append(" AND Gender like '" + bean.getGender() + "%'");
 			}
-	
-		
-			if (bean.getMobileNo()!=null && bean.getMobileNo().length()>0) {
+
+			if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
 				sql.append(" AND Mobile_No like '" + bean.getMobileNo() + "%'");
 			}
-			
-			if (bean.getCollegeName()!=null && bean.getCollegeName().length()>0) {
+
+			if (bean.getCollegeName() != null && bean.getCollegeName().length() > 0) {
 				sql.append(" AND college_Name like '" + bean.getCollegeName() + "%'");
 			}
 			if (bean.getCourseId() > 0) {
 				sql.append(" AND course_Id = " + bean.getCourseId());
 			}
-			if (bean.getCourseName()!=null && bean.getCourseName().length()>0) {
+			if (bean.getCourseName() != null && bean.getCourseName().length() > 0) {
 				sql.append(" AND course_Name like '" + bean.getCourseName() + "%'");
 			}
 			if (bean.getSubjectId() > 0) {
 				sql.append(" AND Subject_Id = " + bean.getSubjectId());
 			}
-			if (bean.getSubjectName()!=null && bean.getSubjectName().length()>0) {
+			if (bean.getSubjectName() != null && bean.getSubjectName().length() > 0) {
 				sql.append(" AND subject_Name like '" + bean.getSubjectName() + "%'");
 			}
 		}
@@ -429,12 +503,12 @@ public class FacultyModel {
 			rs.close();
 		} catch (Exception e) {
 			log.error("Database Exception .....", e);
-			//throw new ApplicationException("Exception in the search" + e.getMessage());
+			// throw new ApplicationException("Exception in the search" + e.getMessage());
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
 		log.debug("Model search End ");
 		return list;
 	}
-	
+
 }

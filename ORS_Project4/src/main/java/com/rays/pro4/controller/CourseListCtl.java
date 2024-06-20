@@ -25,7 +25,7 @@ import com.rays.pro4.Util.ServletUtility;
 /**
  * The Class CourseListCtl.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  */
 @WebServlet(name = "CourseListCtl", urlPatterns = { "/ctl/CourseListCtl" })
 
@@ -44,9 +44,13 @@ public class CourseListCtl extends BaseCtl {
 
 		CourseModel model = new CourseModel();
 		List<CourseBean> clist = null;
+		List<CourseBean> dlist = null;
+
 
 		try {
 			clist = model.list();
+			
+			dlist = model.list();
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -54,6 +58,7 @@ public class CourseListCtl extends BaseCtl {
 			e.printStackTrace();
 		}
 		request.setAttribute("CourseList", clist);
+		request.setAttribute("dname", dlist);
 	}
 
 	/*

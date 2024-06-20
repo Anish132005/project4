@@ -102,14 +102,14 @@
 	<tr>
 		<td><input type = "checkbox" class="checkbox" name="ids" value="<%=bean.getId() %>"></td>
 		<td><%=index++%></td>
-		<td><%=bean.getFirstName() %></td>
-		<td><%=bean.getLastName() %></td>
-		<td><%=bean.getEmailId() %></td>
-		<td><%=bean.getCollegeName() %></td>
-		<td><%=bean.getCourseName() %></td>
-		<td><%=bean.getSubjectName() %></td>
-		<td><%=bean.getDob() %></td>
-		<td><%=bean.getMobileNo() %></td>
+		<td><%=bean.getFirstName()%></td>
+		<td><%=bean.getLastName()%></td>
+		<td><%=bean.getEmailId()%></td>
+		<td><%=bean.getCollegeName()%></td>
+		<td><%=bean.getCourseName()%></td>
+		<td><%=bean.getSubjectName()%></td>
+		<td><%=bean.getDob()%></td>
+		<td><%=bean.getMobileNo()%></td>
 		<td><a href="FacultyCtl?id=<%=bean.getId()%>">Edit </a></td>
 	
 	</tr>

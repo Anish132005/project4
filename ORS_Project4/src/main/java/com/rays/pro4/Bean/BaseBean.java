@@ -3,15 +3,14 @@ package com.rays.pro4.Bean;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-
-
-
 /**
  * * Parent class of all Beans in application. It contains generic attributes.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
+
+ 
 
 public abstract class BaseBean implements Serializable, DropdownListBean, Comparable<BaseBean> {
 

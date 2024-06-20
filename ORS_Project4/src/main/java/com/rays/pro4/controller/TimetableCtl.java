@@ -27,16 +27,16 @@ import com.rays.pro4.Util.ServletUtility;
 //TODO: Auto-generated Javadoc
 /**
 * The Class TimeTableCtl.
-**  @author Anish malviya 
+**  @author Anish Malviya
 */
 @WebServlet(name = "TimeTableCtl", urlPatterns = {"/ctl/TimeTableCtl"})
-public class TimetableCtl extends BaseCtl{
+public class TimeTableCtl extends BaseCtl{
 
 	
-	/* The Constant serialVersionUID. /
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/* The log. /
+	/** The log. */
 	private static Logger log = Logger.getLogger(TimeTableCtl.class);
 
 	/* (non-Javadoc)
@@ -49,16 +49,11 @@ public class TimetableCtl extends BaseCtl{
 		List<SubjectBean> slist = new ArrayList<SubjectBean>();
 		try {
 			clist = cmodel.list();
-			request.setAttribute("CourseList", clist);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
 			slist = smodel.list();
-			request.setAttribute("SubjectList", slist);				
+			request.setAttribute("CourseList", clist);
+			request.setAttribute("SubjectList", slist);
 		} catch (Exception e) {
 			e.printStackTrace();
-			
 		}
 	}
 
@@ -66,9 +61,8 @@ public class TimetableCtl extends BaseCtl{
 	 * @see in.co.rays.ors.controller.BaseCtl#validate(javax.servlet.http.HttpServletRequest)
 	 */
 	protected boolean validate(HttpServletRequest request) {
-		/*
-		 * log.debug("validate method of TimeTable Ctl started");
-		 */boolean pass = true;
+		log.debug("validate method of TimeTable Ctl started");
+		boolean pass = true;
 
 		if (DataValidator.isNull(request.getParameter("courseId"))) {
 			request.setAttribute("courseId", PropertyReader.getValue("error.require", "Course"));
@@ -92,18 +86,16 @@ public class TimetableCtl extends BaseCtl{
 		}
 		
 		
-		/*
-		 * log.debug("validate method of TimeTable Ctl End");
-		 */return pass;
+		log.debug("validate method of TimeTable Ctl End");
+		return pass;
 	}
 
 	/* (non-Javadoc)
 	 * @see in.co.rays.ors.controller.BaseCtl#populateBean(javax.servlet.http.HttpServletRequest)
 	 */
 	protected TimeTableBean populateBean(HttpServletRequest request) {
-		/*
-		 * log.debug("populateBean method of TimeTable Ctl start");
-		 */	TimeTableBean bean = new TimeTableBean();
+		log.debug("populateBean method of TimeTable Ctl start");
+		TimeTableBean bean = new TimeTableBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
 		
@@ -120,9 +112,8 @@ public class TimetableCtl extends BaseCtl{
 		System.out.println(request.getParameter("ExDate"));
 		System.out.println("<<<<<<__________>>>>>>>>");
 */		populateDTO(bean, request);
-		/*
-		 * log.debug("populateBean method of TimeTable Ctl End");
-		 */	return bean;
+		log.debug("populateBean method of TimeTable Ctl End");
+		return bean;
 	}
     
     /**
@@ -136,9 +127,8 @@ public class TimetableCtl extends BaseCtl{
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*
-		 * log.debug("do Get method of TimeTable Ctl Started");
-		 *///System.out.println("Timetable ctl .do get started........>>>>>");
+		log.debug("do Get method of TimeTable Ctl Started");
+	//System.out.println("Timetable ctl .do get started........>>>>>");
 
 //		String op = DataUtility.getString(request.getParameter("operation"));
 		long id = DataUtility.getLong(request.getParameter("id"));
@@ -151,15 +141,13 @@ public class TimetableCtl extends BaseCtl{
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
 				e.printStackTrace();
-				/*
-				 * log.error(e);
-				 */	ServletUtility.handleException(e, request, response);
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 			}
 		}
 
-		/*
-		 * log.debug("do Get method of TimeTable Ctl End");
-		 */	System.out.println("Timetable ctl .do get End........>>>>>");
+		log.debug("do Get method of TimeTable Ctl End");
+		System.out.println("Timetable ctl .do get End........>>>>>");
 		ServletUtility.forward(getView(), request, response);
 	}
     
@@ -174,9 +162,8 @@ public class TimetableCtl extends BaseCtl{
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*
-		 * log.debug("do post method of TimeTable Ctl start");
-		 */
+		log.debug("do post method of TimeTable Ctl start");
+
 		List list;
 		String op = DataUtility.getString(request.getParameter("operation"));
 		long id = DataUtility.getLong(request.getParameter("id"));
@@ -205,9 +192,8 @@ public class TimetableCtl extends BaseCtl{
 				ServletUtility.setSuccessMessage(" TimeTable is Successfully Saved", request);
 				*/
 			}catch (ApplicationException e) {
-				/*
-				 * log.error(e);
-				 */	e.printStackTrace();
+				log.error(e);
+				e.printStackTrace();
 				ServletUtility.handleException(e, request, response);
 			} catch (DuplicateRecordException e) {
 				// TODO Auto-generated catch block
@@ -238,4 +224,3 @@ public class TimetableCtl extends BaseCtl{
 	}
 	
 }
-

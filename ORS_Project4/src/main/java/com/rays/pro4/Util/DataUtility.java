@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Data Utility class to format data from one format to another
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 
@@ -17,7 +17,6 @@ public class DataUtility {
 	 * Application Date Format
 	 */
 	public static final String APP_DATE_FORMAT = "MM/dd/yyyy";
-	//dd/mm/yyyy
 
 	public static final String APP_TIME_FORMAT = "MM/dd/yyyy HH:mm:ss";
 

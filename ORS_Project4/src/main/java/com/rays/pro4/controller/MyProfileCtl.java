@@ -24,7 +24,7 @@ import com.rays.pro4.Util.ServletUtility;
  * My Profile functionality Controller. Performs operation for update your
  * Profile
  *
- * @author Anish malviya 
+ * @author Anish Malviya
  */
 @ WebServlet(name="MyProfileCtl",urlPatterns={"/ctl/MyProfileCtl"})
 public class MyProfileCtl extends BaseCtl{
@@ -61,13 +61,11 @@ public class MyProfileCtl extends BaseCtl{
         }
 
         if (DataValidator.isNull(request.getParameter("gender"))) {
-            request.setAttribute("gender",
-                    PropertyReader.getValue("error.require", "Gender"));
+            request.setAttribute("gender", PropertyReader.getValue("error.require", "Gender"));
             pass = false;
         }
         if (DataValidator.isNull(request.getParameter("mobileNo"))) {
-            request.setAttribute("mobileNo",
-                    PropertyReader.getValue("error.require", "MobileNo"));
+            request.setAttribute("mobileNo", PropertyReader.getValue("error.require", "MobileNo"));
             pass = false;
         }
 
@@ -91,10 +89,9 @@ public class MyProfileCtl extends BaseCtl{
 
         bean.setId(DataUtility.getLong(request.getParameter("id")));
 
-        bean.setLogin(DataUtility.getString(request.getParameter("login")));
+        bean.setLogin(DataUtility.getString(request.getParameter("login"))); 
 
-        bean.setFirstName(DataUtility.getString(request
-                .getParameter("firstName")));
+        bean.setFirstName(DataUtility.getString(request.getParameter("firstName")));
 
         bean.setLastName(DataUtility.getString(request.getParameter("lastName")));
 
@@ -165,7 +162,6 @@ public class MyProfileCtl extends BaseCtl{
                     UserBean.setMobileNo(bean.getMobileNo());
                     UserBean.setDob(bean.getDob());
                     model.update(UserBean);
-
                 }
                 ServletUtility.setBean(bean, request);
                 ServletUtility.setSuccessMessage(

@@ -23,7 +23,7 @@ import com.rays.pro4.Util.ServletUtility;
 /**
 * Get Marksheet functionality Controller. Performs operation for Get Marksheet
 * 
-* @author Anish malviya 
+* @author Anish Malviya
 */
 @WebServlet(name = "GetMarksheetCtl", urlPatterns = { "/ctl/GetMarksheetCtl" })
 public class GetMarksheetCtl extends BaseCtl{
@@ -112,10 +112,8 @@ public class GetMarksheetCtl extends BaseCtl{
 
 	            try {
 	                bean = model.findByRollNo(bean.getRollNo());
-	        //        ServletUtility.setList(list, request);
-	                
-	             
-	      
+	        //        ServletUtility.setList(list, request);  
+	             	      
 	                if (bean != null) {
 	                    ServletUtility.setBean(bean, request);
 	                }else {

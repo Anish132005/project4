@@ -21,12 +21,18 @@ import com.rays.pro4.Util.JDBCDataSource;
 /**
  * The Class TimeTableModel.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class TimeTableModel {
 
 	private static Logger log = Logger.getLogger(TimeTableModel.class);
+
+	/**
+	 * Find next PK of TimeTable
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public Integer nextPK() throws DatabaseException {
 		log.debug("Model nextPK Started");
@@ -51,6 +57,13 @@ public class TimeTableModel {
 		return pk + 1;
 	}
 
+	/**
+	 * Add a TimeTable
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 *
+	 */
 	public long add(TimeTableBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("Model add Started");
 		Connection conn = null;
@@ -78,7 +91,7 @@ public class TimeTableModel {
 			conn = JDBCDataSource.getConnection();
 			pk = nextPK();
 			conn.setAutoCommit(false);
-			PreparedStatement pstmt = conn.prepareStatement("INSERT st_timetable values(?,?,?,?,?,?,?,?,?,?,?,?)");
+			PreparedStatement pstmt = conn.prepareStatement("INSERT st_timetable values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setInt(1, pk);
 			pstmt.setLong(2, bean.getCourseId());
 			pstmt.setString(3, bean.getCourseName());
@@ -88,10 +101,11 @@ public class TimeTableModel {
 			pstmt.setDate(7, new java.sql.Date(bean.getExamDate().getTime()));
 			System.out.println("Date______________________________________________" + bean.getExamDate());
 			pstmt.setString(8, bean.getExamTime());
-			pstmt.setString(9, bean.getCreatedBy());
-			pstmt.setString(10, bean.getModifiedBy());
-			pstmt.setTimestamp(11, bean.getCreatedDatetime());
-			pstmt.setTimestamp(12, bean.getModifiedDatetime());
+			pstmt.setString(9, bean.getDescription());
+			pstmt.setString(10, bean.getCreatedBy());
+			pstmt.setString(11, bean.getModifiedBy());
+			pstmt.setTimestamp(12, bean.getCreatedDatetime());
+			pstmt.setTimestamp(13, bean.getModifiedDatetime());
 			int i = pstmt.executeUpdate();
 			System.out.println("record inserted" + i);
 			conn.commit();
@@ -114,6 +128,12 @@ public class TimeTableModel {
 
 	}
 
+	/**
+	 * Delete a TimeTable
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
 	public void delete(TimeTableBean bean) throws ApplicationException {
 		log.debug("Model delete Started");
 		Connection conn = null;
@@ -140,6 +160,13 @@ public class TimeTableModel {
 		log.debug("Model delete End");
 	}
 
+	/**
+	 * Update a TimeTable
+	 *
+	 * @param bean
+	 * @throws DatabaseException
+	 */
+
 	public void update(TimeTableBean bean) throws ApplicationException, DuplicateRecordException {
 		log.debug("Model update Started");
 		Connection conn = null;
@@ -164,7 +191,7 @@ public class TimeTableModel {
 			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement(
-					"update ST_timetable set course_id=?,course_name=?,subject_id=?,subject_name=?,semester=?,exam_date=?,exam_time=?,created_by=?,modified_by=?,created_datetime=?,modified_datetime=? where ID=?");
+					"update ST_timetable set course_id=?,course_name=?,subject_id=?,subject_name=?,semester=?,exam_date=?,exam_time=?,description=?,created_by=?,modified_by=?,created_datetime=?,modified_datetime=? where ID=?");
 
 			pstmt.setLong(1, bean.getCourseId());
 			pstmt.setString(2, bean.getCourseName());
@@ -173,11 +200,12 @@ public class TimeTableModel {
 			pstmt.setString(5, bean.getSemester());
 			pstmt.setDate(6, new java.sql.Date(bean.getExamDate().getTime()));
 			pstmt.setString(7, bean.getExamTime());
-			pstmt.setString(8, bean.getCreatedBy());
-			pstmt.setString(9, bean.getModifiedBy());
-			pstmt.setTimestamp(10, bean.getCreatedDatetime());
-			pstmt.setTimestamp(11, bean.getModifiedDatetime());
-			pstmt.setLong(12, bean.getId());
+			pstmt.setString(8, bean.getDescription());
+			pstmt.setString(9, bean.getCreatedBy());
+			pstmt.setString(10, bean.getModifiedBy());
+			pstmt.setTimestamp(11, bean.getCreatedDatetime());
+			pstmt.setTimestamp(12, bean.getModifiedDatetime());
+			pstmt.setLong(13, bean.getId());
 
 			pstmt.executeUpdate();
 			System.out.println("timetable update");
@@ -199,6 +227,14 @@ public class TimeTableModel {
 		log.debug("Model update End");
 	}
 
+	/**
+	 * Find TimeTable by PK
+	 *
+	 * @param pk : get parameter
+	 * @return bean
+	 * @throws DatabaseException
+	 */
+
 	public TimeTableBean findByPK(long pk) throws ApplicationException {
 		log.debug("Model findBypk started");
 		StringBuffer sql = new StringBuffer("select * from ST_timetable where id=?");
@@ -219,10 +255,11 @@ public class TimeTableModel {
 				bean.setSemester(rs.getString(6));
 				bean.setExamDate(rs.getDate(7));
 				bean.setExamTime(rs.getString(8));
-				bean.setCreatedBy(rs.getString(9));
-				bean.setModifiedBy(rs.getString(10));
-				bean.setCreatedDatetime(rs.getTimestamp(11));
-				bean.setModifiedDatetime(rs.getTimestamp(12));
+				bean.setDescription(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
 
 			}
 			rs.close();
@@ -236,9 +273,25 @@ public class TimeTableModel {
 		return bean;
 	}
 
+	/**
+	 * Get List of TimeTable
+	 *
+	 * @return list : List of TimeTable
+	 * @throws DatabaseException
+	 */
+
 	public List list() throws Exception {
 		return list(0, 0);
 	}
+
+	/**
+	 * Get List of TimeTable with pagination
+	 *
+	 * @return list : List of TimeTable
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 * @throws DatabaseException
+	 */
 
 	public List list(int pageNo, int pageSize) throws Exception {
 		log.debug("model list Started");
@@ -269,10 +322,11 @@ public class TimeTableModel {
 				bean.setSemester(rs.getString(6));
 				bean.setExamDate(rs.getDate(7));
 				bean.setExamTime(rs.getString(8));
-				bean.setCreatedBy(rs.getString(9));
-				bean.setModifiedBy(rs.getString(10));
-				bean.setCreatedDatetime(rs.getTimestamp(11));
-				bean.setModifiedDatetime(rs.getTimestamp(12));
+				bean.setDescription(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
 				list.add(bean);
 				System.out.println("list");
 
@@ -288,35 +342,54 @@ public class TimeTableModel {
 		return list;
 	}
 
+	/**
+	 * Search TimeTable
+	 *
+	 * @param bean : Search Parameters
+	 * @throws DatabaseException
+	 */
+
 	public List search(TimeTableBean bean) throws ApplicationException {
 		return search(bean, 0, 0);
 	}
+
+	/**
+	 * Search TimeTable with pagination
+	 *
+	 * @return list : List of TimeTable
+	 * @param bean     : Search Parameters
+	 * @param pageNo   : Current Page No.
+	 * @param pageSize : Size of Page
+	 *
+	 * @throws DatabaseException
+	 */
 
 	public List search(TimeTableBean bean, int pageNo, int pageSize) throws ApplicationException {
 		log.debug("Model search started");
 		StringBuffer sql = new StringBuffer("select * from ST_timetable where 1=1 ");
 		if (bean != null) {
 			if (bean.getId() > 0) {
-				sql.append("AND id =" + bean.getId());
+				sql.append("AND id=" + bean.getId());
 			}
 			if (bean.getCourseId() > 0) {
-				sql.append(" AND Course_ID =" + bean.getCourseId());
+				sql.append("AND Course_ID=" + bean.getCourseId());
 			}
 			if (bean.getCourseName() != null && bean.getCourseName().length() > 0) {
 				sql.append("AND courseName like '" + bean.getCourseName() + "%'");
 			}
 			if (bean.getSubjectId() > 0) {
-				sql.append(" AND Subject_ID =" + bean.getSubjectId());
+				sql.append("AND Subject_ID=" + bean.getSubjectId());
 			}
 			if (bean.getSubjectName() != null && bean.getSubjectName().length() > 0) {
 				sql.append("AND subjectName like '" + bean.getSubjectName() + "%'");
 			}
 			if (bean.getExamDate() != null && bean.getExamDate().getTime() > 0) {
 				Date d = new Date(bean.getExamDate().getTime());
-				sql.append("AND Exam_Date = '" + DataUtility.getDateString(d) + "'");
+				System.out.println(d);
+				sql.append("AND EXAM_DATE = '" + DataUtility.getDateString(d) + "'");
 			}
-
 			if (bean.getExamTime() != null && bean.getExamTime().length() > 0) {
+				System.out.println("done");
 				sql.append("AND EXAM_TIME like '" + bean.getExamTime() + "%'");
 			}
 
@@ -344,10 +417,11 @@ public class TimeTableModel {
 				bean.setSemester(rs.getString(6));
 				bean.setExamDate(rs.getDate(7));
 				bean.setExamTime(rs.getString(8));
-				bean.setCreatedBy(rs.getString(9));
-				bean.setModifiedBy(rs.getString(10));
-				bean.setCreatedDatetime(rs.getTimestamp(11));
-				bean.setModifiedDatetime(rs.getTimestamp(12));
+				bean.setDescription(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
 				list.add(bean);
 			}
 			rs.close();
@@ -362,6 +436,12 @@ public class TimeTableModel {
 
 	}
 
+	/**
+	 * check TimeTable by css
+	 *
+	 * @return bean
+	 * @throws DatabaseException
+	 */
 	public TimeTableBean checkBycss(long CourseId, long SubjectId, String semester) throws ApplicationException {
 		Connection conn = null;
 		TimeTableBean bean = null;
@@ -386,10 +466,11 @@ public class TimeTableModel {
 				bean.setSemester(rs.getString(6));
 				bean.setExamDate(rs.getDate(7));
 				bean.setExamTime(rs.getString(8));
-				bean.setCreatedBy(rs.getString(9));
-				bean.setModifiedBy(rs.getString(10));
-				bean.setCreatedDatetime(rs.getTimestamp(11));
-				bean.setModifiedDatetime(rs.getTimestamp(12));
+				bean.setDescription(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
 			}
 			rs.close();
 		} catch (Exception e) {
@@ -403,6 +484,12 @@ public class TimeTableModel {
 		return bean;
 	}
 
+	/**
+	 * check TimeTable by cds
+	 *
+	 * @return bean
+	 * @throws DatabaseException
+	 */
 	public TimeTableBean checkBycds(long CourseId, String Semester, Date ExamDate) throws ApplicationException {
 		StringBuffer sql = new StringBuffer(
 				"SELECT * FROM ST_TIMETABLE WHERE Course_Id=? AND semester=? AND Exam_Date=?");
@@ -429,10 +516,11 @@ public class TimeTableModel {
 				bean.setSemester(rs.getString(6));
 				bean.setExamDate(rs.getDate(7));
 				bean.setExamTime(rs.getString(8));
-				bean.setCreatedBy(rs.getString(9));
-				bean.setModifiedBy(rs.getString(10));
-				bean.setCreatedDatetime(rs.getTimestamp(11));
-				bean.setModifiedDatetime(rs.getTimestamp(12));
+				bean.setDescription(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
 			}
 			rs.close();
 		} catch (Exception e) {
@@ -447,6 +535,12 @@ public class TimeTableModel {
 
 	}
 
+	/**
+	 * check TimeTable by Semester
+	 *
+	 * @return bean
+	 * @throws DatabaseException
+	 */
 	public static TimeTableBean checkBysemester(long CourseId, long SubjectId, String semester,
 			java.util.Date ExamDAte) {
 
@@ -475,10 +569,11 @@ public class TimeTableModel {
 				bean.setSemester(rs.getString(6));
 				bean.setExamDate(rs.getDate(7));
 				bean.setExamTime(rs.getString(8));
-				bean.setCreatedBy(rs.getString(9));
-				bean.setModifiedBy(rs.getString(10));
-				bean.setCreatedDatetime(rs.getTimestamp(11));
-				bean.setModifiedDatetime(rs.getTimestamp(12));
+				bean.setDescription(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -486,6 +581,12 @@ public class TimeTableModel {
 		return bean;
 	}
 
+	/**
+	 * check TimeTable by Course Name
+	 *
+	 * @return bean
+	 * @throws DatabaseException
+	 */
 	public static TimeTableBean checkByCourseName(long CourseId, java.util.Date ExamDate) {
 		Connection conn = null;
 		TimeTableBean bean = null;
@@ -511,10 +612,11 @@ public class TimeTableModel {
 				bean.setSemester(rs.getString(6));
 				bean.setExamDate(rs.getDate(7));
 				bean.setExamTime(rs.getString(8));
-				bean.setCreatedBy(rs.getString(9));
-				bean.setModifiedBy(rs.getString(10));
-				bean.setCreatedDatetime(rs.getTimestamp(11));
-				bean.setModifiedDatetime(rs.getTimestamp(12));
+				bean.setDescription(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,4 +1,4 @@
- package com.rays.pro4.controller;
+package com.rays.pro4.controller;
 
 import java.io.IOException;
 
@@ -17,10 +17,9 @@ import com.rays.pro4.Util.ServletUtility;
  * Base controller class of project. It contain (1) Generic operations (2)
  * Generic constants (3) Generic work flow
  *
- * @author  Anish malviya 
+ * @author Anish Malviya
  *
  */
-
 public abstract class BaseCtl extends HttpServlet {
 
 	public static final String OP_SAVE = "Save";
@@ -36,7 +35,7 @@ public abstract class BaseCtl extends HttpServlet {
 	public static final String OP_BACK = "Back";
 	public static final String OP_LOG_OUT = "Logout";
 	public static final String OP_RESET = "Reset";
-	public static final String OP_UPDATE = "Update";
+	public static final String OP_UPDATE = "update";
 
 	/**
 	 * Success message key constant
@@ -127,11 +126,11 @@ public abstract class BaseCtl extends HttpServlet {
 		System.out.println("Bctl service");
 
 		// Load the preloaded data required to display at HTML form
-		preload(request); 
+		preload(request);
 
-		String op = DataUtility.getString(request.getParameter("operation")); 
+		String op = DataUtility.getString(request.getParameter("operation"));
 		System.out.println("Bctl servi op" + op);
-		// Check if operation is not DELETE, VIEW, CANCEL, and NULL then
+		// Check if operation is not DELETE, VIEW, CANCEL, RESET and NULL then
 		// perform input data validation
 
 		if (DataValidator.isNotNull(op) && !OP_CANCEL.equalsIgnoreCase(op) && !OP_VIEW.equalsIgnoreCase(op)
@@ -141,16 +140,19 @@ public abstract class BaseCtl extends HttpServlet {
 			// messages
 
 			if (!validate(request)) {
+				System.out.println("running not validate>>>>>>>");
 				System.out.println("Bctl validate ");
 				BaseBean bean = (BaseBean) populateBean(request);
-				//wapis se inserted data dikhe jo phle in put kiya tha 
+				// setBean method call for show inserted data
 				ServletUtility.setBean(bean, request);
 				ServletUtility.forward(getView(), request, response);
 				return;
 			}
 		}
-		System.out.println("B ctl Super servi");
 		super.service(request, response);
+		System.out.println("BaseCtl super.service method ==> ");
+		System.out.println("super.service called method ==> " + request.getMethod() + " >> " + " / " + "Submit Operation is = "
+				+ response.encodeURL(op));
 	}
 
 	/**
@@ -159,7 +161,5 @@ public abstract class BaseCtl extends HttpServlet {
 	 * @return
 	 */
 	protected abstract String getView();
-	
-	
 
 }

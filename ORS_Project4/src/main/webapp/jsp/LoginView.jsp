@@ -16,11 +16,13 @@
 
 		<jsp:useBean id="bean" class="com.rays.pro4.Bean.UserBean"
 			scope="request"></jsp:useBean>
+
 		<%
-			String uri = (String) request.getAttribute("URI");
-			System.out.print("uri in jsp" + uri);
+			String URI = (String) request.getAttribute("uri");
 		%>
-		<input type="hidden" name="URI" value="<%=uri%>">
+
+		<input type="hidden" name="URI" value="<%=URI%>">
+
 		<center>
 			<h1>Login</h1>
 

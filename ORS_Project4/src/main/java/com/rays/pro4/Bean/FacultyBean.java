@@ -5,9 +5,10 @@ import java.util.Date;
 /**
  * Faculty JavaBean encapsulates Faculty attributes.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
+
 public class FacultyBean extends BaseBean{
 
 	private String firstName;

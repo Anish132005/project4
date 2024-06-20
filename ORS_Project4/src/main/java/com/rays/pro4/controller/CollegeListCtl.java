@@ -23,7 +23,7 @@ import com.rays.pro4.Util.ServletUtility;
 * College List functionality Controller. Performs operation for list, search
 * and delete operations of College
 * 
-* @author Anish malviya 
+* @author Anish Malviya
 * 
 */
 @WebServlet(name="CollegeListCtl",urlPatterns={"/ctl/CollegeListCtl"})
@@ -58,8 +58,6 @@ private static Logger log = Logger.getLogger(CollegeListCtl.class);
 
        // bean.setName(DataUtility.getString(request.getParameter("name")));
         bean.setCity(DataUtility.getString(request.getParameter("city")));
-        bean.setPhoneNo(DataUtility.getString(request.getParameter("phoneno")));
-
         
         bean.setId(DataUtility.getLong(request.getParameter("collegeid")));
        

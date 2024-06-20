@@ -23,7 +23,7 @@ import com.rays.pro4.Util.PropertyReader;
 import com.rays.pro4.Util.ServletUtility;
 
 /**
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 @WebServlet(name = "SubjectListCtl", urlPatterns = "/ctl/SubjectListCtl")

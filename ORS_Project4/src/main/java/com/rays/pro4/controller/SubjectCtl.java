@@ -24,7 +24,7 @@ import com.rays.pro4.Util.ServletUtility;
 /**
 * The Class SubjectCtl.
 * 
-*  @author Anish malviya 
+*  @author Anish Malviya
 * 
 */
 @WebServlet (name = "SubjectCtl" , urlPatterns = {"/ctl/SubjectCtl"})
@@ -73,7 +73,7 @@ public class SubjectCtl extends BaseCtl{
 			request.setAttribute("name", PropertyReader.getValue("error.require", "Subject Name"));
 			 pass = false;
 		}else if (!DataValidator.isName(request.getParameter("name"))) {
-			request.setAttribute("name", PropertyReader.getValue("error.name", "Subject name"));
+			request.setAttribute("name", "Subject Name contains alphabet only");
 			pass = false;
 		}
 		if(DataValidator.isNull(request.getParameter("description"))){

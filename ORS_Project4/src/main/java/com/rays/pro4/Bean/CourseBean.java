@@ -3,7 +3,7 @@ package com.rays.pro4.Bean;
 /**
  * Course JavaBean encapsulates Course attributes.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class CourseBean extends BaseBean{
@@ -27,15 +27,13 @@ public class CourseBean extends BaseBean{
 		return duration;
 	}
 	public void setDuration(String duration) {
-		this.duration = duration;
+		this.duration = duration; 
 	}
 	@Override
 	public String getkey() {
 		return id+"";
 	}
 	public String getValue() {
-		return name;
-	}
-	
-	
+		return name; 
+	}	
 }

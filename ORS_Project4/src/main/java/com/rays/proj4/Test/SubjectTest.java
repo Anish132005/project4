@@ -16,7 +16,7 @@ import com.rays.pro4.Model.SubjectModel;
 /**
  * Subject Model Test classes.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class SubjectTest {

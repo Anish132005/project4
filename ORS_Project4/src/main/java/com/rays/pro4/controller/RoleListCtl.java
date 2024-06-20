@@ -24,7 +24,7 @@ import com.rays.pro4.Util.ServletUtility;
 * Role List functionality Controller. Performs operation for list, search
 * operations of Role
 * 
-*  @author Anish malviya 
+*  @author Anish Malviya
 */
 @ WebServlet(name="RoleListCtl",urlPatterns={"/ctl/RoleListCtl"})
 public class RoleListCtl extends BaseCtl{

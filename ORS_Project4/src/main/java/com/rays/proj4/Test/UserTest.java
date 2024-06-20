@@ -16,7 +16,7 @@ import com.rays.pro4.Model.UserModel;
 /**
  * User Model Test classes.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class UserTest {
@@ -42,7 +42,7 @@ public class UserTest {
 			bean = model.authenticate(bean.getLogin(), bean.getPassword());
 			if (bean != null) {
 				System.out.println("Successfully login");
-			} else {                        41.p2-
+			} else {
 				System.out.println("Invaliad login Id & password");
 			}
 		} catch (ApplicationException e) {

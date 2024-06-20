@@ -22,10 +22,9 @@ import com.rays.pro4.Util.ServletUtility;
  * application without login.
  * 
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  */
 @WebFilter(filterName = "FrontCtl", urlPatterns = { "/ctl/*", "/doc/*" })
-
 public class FrontControler implements Filter {
 
 	/*
@@ -40,6 +39,7 @@ public class FrontControler implements Filter {
 
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
+		
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("user") == null) {
@@ -47,25 +47,22 @@ public class FrontControler implements Filter {
 			// Login Again");
 			ServletUtility.setErrorMessage(" Your Session has been Expired... Please Login Again", request);
 			// Set the URI
+			String str = request.getRequestURI();
 
-			String uri = request.getRequestURI();
-			request.setAttribute("URI", uri);
-			System.out.println("URI" + uri);
-
+			request.setAttribute("uri", str);
+			System.out.println("URI" + str);
 			ServletUtility.forward(ORSView.LOGIN_VIEW, request, response);
 			return;
 		} else {
-		chain.doFilter(req, resp);
+			chain.doFilter(req, resp);
 		}
 	}
 
 	/*
-	 * 
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */
-		
 	public void init(FilterConfig conf) throws ServletException {
 	}
 

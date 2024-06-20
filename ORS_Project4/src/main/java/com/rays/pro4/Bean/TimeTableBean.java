@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * TimeTable JavaBean encapsulates TimeTable attributes.
  * 
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class TimeTableBean extends BaseBean{
@@ -72,7 +72,7 @@ public class TimeTableBean extends BaseBean{
 	@Override
 	public String getkey() {
 		// TODO Auto-generated method stub
-		return id+"";
+		return id + "";
 	}
 
 	public String getValue() {

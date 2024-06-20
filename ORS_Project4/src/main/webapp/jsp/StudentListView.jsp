@@ -51,18 +51,18 @@
                  <tr>
                  <td align="right">
                  <label> First Name:</label> 
-                 	<input type="text" name="firstName" placeholder="Enter Student Name" Size= "22" value="<%=ServletUtility.getParameter("firstName", request)%>">
-				<!-- 	&nbsp;
-                 --> 	<label>Last Name:</label> 
-    	             <input type="text" name="lastName" placeholder="Enter last Name" Size= "22" value="<%=ServletUtility.getParameter("lastName", request)%>">
-                <!--     &nbsp;
- -->                 	<label>EmailId:</label> 
-    	             <input type="text" name="email" placeholder="Enter Email_id" Size= "22" value="<%=ServletUtility.getParameter("email", request)%>">
-                   <!--  &nbsp; --> 
+                 	<input type="text" name="firstName" placeholder="Enter Student Name" Size= "25" value="<%=ServletUtility.getParameter("firstName", request)%>">
+					&nbsp;
+                 	<label>Last Name:</label> 
+    	             <input type="text" name="lastName" placeholder="Enter last Name" Size= "25" value="<%=ServletUtility.getParameter("lastName", request)%>">
+                    &nbsp;
+                 	<label>EmailId:</label> 
+    	             <input type="text" name="email" placeholder="Enter Email_id" Size= "25" value="<%=ServletUtility.getParameter("email", request)%>">
+                    &nbsp; 
                     <label>College Name:</label> 
     	             <%=HTMLUtility.getList("collegename", String.valueOf(bean.getCollegeId()), clist)%>
-               <!--      &nbsp;   
-        	    -->      <input type="submit" name="operation" value="<%=StudentListCtl.OP_SEARCH%>">
+                    &nbsp;   
+        	         <input type="submit" name="operation" value="<%=StudentListCtl.OP_SEARCH%>">
         	       
         	         <input type="submit" name="operation" value="<%=StudentListCtl.OP_RESET%>">
         	         

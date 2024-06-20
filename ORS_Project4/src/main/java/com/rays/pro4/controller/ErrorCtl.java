@@ -11,11 +11,14 @@ import org.apache.log4j.Logger;
 import com.rays.pro4.Util.ServletUtility;
 
 /**
- * @author Anish malviya 
+ * @author Anish Malviya
  *
  */
 public class ErrorCtl extends BaseCtl {
 
+	
+	
+	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 

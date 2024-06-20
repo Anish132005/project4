@@ -24,7 +24,7 @@ import com.rays.pro4.Util.ServletUtility;
 * User List functionality Controller. Performs operation for list, search and
 * delete operations of User
 * 
-*  @author Anish malviya 
+*  @author Anish Malviya
 */
 @WebServlet(name = "UserListCtl", urlPatterns = { "/ctl/UserListCtl" })
 public class UserListCtl extends BaseCtl{
@@ -37,6 +37,7 @@ public class UserListCtl extends BaseCtl{
 	 * @see in.co.rays.ors.controller.BaseCtl#preload(javax.servlet.http.
 	 * HttpServletRequest)
 	 */
+	
 	@Override
 	protected void preload(HttpServletRequest request) {
 
@@ -60,7 +61,7 @@ public class UserListCtl extends BaseCtl{
 	 * 
 	 * @see in.co.rays.ors.controller.BaseCtl#populateBean(javax.servlet.http.
 	 * HttpServletRequest)
-	 */	
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
 		UserBean bean = new UserBean();
@@ -69,6 +70,8 @@ public class UserListCtl extends BaseCtl{
 
 		bean.setRoleId(DataUtility.getLong(request.getParameter("roleid")));
 		bean.setLogin(DataUtility.getString(request.getParameter("loginid")));
+	
+	//	bean.setMobileNo(DataUtility.getString(request.getParameter("mobile")));
 		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
 
 
@@ -108,15 +111,16 @@ public class UserListCtl extends BaseCtl{
 
 			request.setAttribute("nextlist", nextList.size());
 
-			ServletUtility.setList(list, request);
 			if (list == null || list.size() == 0) {
 				ServletUtility.setErrorMessage("No record found ", request);
 			}
+			
 			ServletUtility.setList(list, request);
 			ServletUtility.setPageNo(pageNo, request);
 			ServletUtility.setPageSize(pageSize, request);
 			//ServletUtility.setBean(bean, request);
 			ServletUtility.forward(getView(), request, response);
+			
 		} catch (ApplicationException e) {
 			log.error(e);
 			ServletUtility.handleException(e, request, response);
@@ -150,6 +154,7 @@ public class UserListCtl extends BaseCtl{
 		UserBean bean = (UserBean) populateBean(request);
 		// get the selected checkbox ids array for delete list
 		String[] ids = request.getParameterValues("ids");
+		
 		UserModel model = new UserModel();
 
 		if (OP_SEARCH.equalsIgnoreCase(op)) {

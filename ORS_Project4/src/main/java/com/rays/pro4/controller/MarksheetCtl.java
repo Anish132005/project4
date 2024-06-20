@@ -23,35 +23,39 @@ import com.rays.pro4.Util.ServletUtility;
 
 //TODO: Auto-generated Javadoc
 /**
-* Marksheet functionality Controller. Performs operation for add, update,
-* delete and get Marksheet
-* 
-*  @author Anish malviya 
-*/
+ * Marksheet functionality Controller. Performs operation for add, update,
+ * delete and get Marksheet
+ * 
+ * @author Anish Malviya
+ */
 @WebServlet(name = "MarksheetCtl", urlPatterns = { "/ctl/MarksheetCtl" })
-public class MarksheetCtl extends BaseCtl{
+public class MarksheetCtl extends BaseCtl {
 
 	private static Logger log = Logger.getLogger(MarksheetCtl.class);
 
-	/* (non-Javadoc)
-	 * @see in.co.rays.ors.controller.BaseCtl#preload(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see in.co.rays.ors.controller.BaseCtl#preload(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
-		
+
 		StudentModel model = new StudentModel();
-		try 
-		{
+		try {
 			List l = model.list();
 			request.setAttribute("studentList", l);
-		} 
-		catch (ApplicationException e) {
+		} catch (ApplicationException e) {
 			log.error(e);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see in.co.rays.ors.controller.BaseCtl#validate(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see in.co.rays.ors.controller.BaseCtl#validate(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
 	@Override
 	protected boolean validate(HttpServletRequest request) {
@@ -61,29 +65,27 @@ public class MarksheetCtl extends BaseCtl{
 		if (DataValidator.isNull(request.getParameter("rollNo"))) {
 			request.setAttribute("rollNo", PropertyReader.getValue("error.require", "Roll Number"));
 			pass = false;
-		}
-			else if (!DataValidator.isRollNo(request.getParameter("rollNo"))) {
+		} else if (!DataValidator.isRollNo(request.getParameter("rollNo"))) {
 			request.setAttribute("rollNo", "Roll No. Should be in Proper Formate");
 			pass = false;
 		}
-	
 		if (DataValidator.isNull(request.getParameter("studentld"))) {
 			request.setAttribute("studentId", PropertyReader.getValue("error.require", "Student Name"));
 			pass = false;
 		}
-		if (DataValidator.isNull(request.getParameter("physics")) && !DataValidator.isInteger(request.getParameter("physics"))) {
+		if (DataValidator.isNull(request.getParameter("physics"))
+				&& !DataValidator.isInteger(request.getParameter("physics"))) {
 			request.setAttribute("physics", PropertyReader.getValue("error.require", "Physics Marks"));
 			pass = false;
-			
+
 		} else if (DataUtility.getInt(request.getParameter("physics")) < 0) {
 			request.setAttribute("physics", "Marks can Not less then 0 ");
 			pass = false;
-		}
-		else if (DataUtility.getInt(request.getParameter("physics")) > 100) {
+		} else if (DataUtility.getInt(request.getParameter("physics")) > 100) {
 			request.setAttribute("physics", "Marks can Not More then 100");
 			pass = false;
-		} else if (DataValidator.isNotNull(request.getParameter("physics"))&& !DataValidator.isInteger(request.getParameter("physics"))) 
-		{
+		} else if (DataValidator.isNotNull(request.getParameter("physics"))
+				&& !DataValidator.isInteger(request.getParameter("physics"))) {
 			request.setAttribute("physics", PropertyReader.getValue("error.integer", "Physics Marks"));
 			pass = false;
 		}
@@ -94,11 +96,12 @@ public class MarksheetCtl extends BaseCtl{
 		} else if (DataUtility.getInt(request.getParameter("chemistry")) > 100) {
 			request.setAttribute("chemistry", "Marks can Not More then 100");
 			pass = false;
-			
+
 		} else if (DataUtility.getInt(request.getParameter("chemistry")) < 0) {
 			request.setAttribute("chemistry", "Marks can Not less then 0 ");
 			pass = false;
-		} else if (DataValidator.isNotNull(request.getParameter("chemistry"))&& !DataValidator.isInteger(request.getParameter("chemistry"))) {
+		} else if (DataValidator.isNotNull(request.getParameter("chemistry"))
+				&& !DataValidator.isInteger(request.getParameter("chemistry"))) {
 			request.setAttribute("chemistry", PropertyReader.getValue("error.integer", "Chemistry Marks"));
 			pass = false;
 		}
@@ -109,11 +112,12 @@ public class MarksheetCtl extends BaseCtl{
 		} else if (DataUtility.getInt(request.getParameter("maths")) > 100) {
 			request.setAttribute("maths", "Marks can Not More then 100");
 			pass = false;
-			
+
 		} else if (DataUtility.getInt(request.getParameter("maths")) < 0) {
 			request.setAttribute("maths", "Marks can Not less then 0 ");
 			pass = false;
-		} else if (DataValidator.isNotNull(request.getParameter("maths"))&& !DataValidator.isInteger(request.getParameter("maths"))) {
+		} else if (DataValidator.isNotNull(request.getParameter("maths"))
+				&& !DataValidator.isInteger(request.getParameter("maths"))) {
 			request.setAttribute("maths", PropertyReader.getValue("error.integer", "Chemistry Marks"));
 			pass = false;
 		}
@@ -122,8 +126,11 @@ public class MarksheetCtl extends BaseCtl{
 		return pass;
 	}
 
-	/* (non-Javadoc)
-	 * @see in.co.rays.ors.controller.BaseCtl#populateBean(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see in.co.rays.ors.controller.BaseCtl#populateBean(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
@@ -139,8 +146,8 @@ public class MarksheetCtl extends BaseCtl{
 		bean.setChemistry(DataUtility.getInt(request.getParameter("chemistry")));
 		bean.setMaths(DataUtility.getInt(request.getParameter("maths")));
 		bean.setStudentld(DataUtility.getLong(request.getParameter("studentld")));
-		
-	//	System.out.println(">>>>>>>>>>>>>" +request.getParameter("studentId"));
+
+		// System.out.println(">>>>>>>>>>>>>" +request.getParameter("studentId"));
 
 		populateDTO(bean, request);
 		System.out.println("Population done");
@@ -152,19 +159,18 @@ public class MarksheetCtl extends BaseCtl{
 	/**
 	 * Contains Display logics.
 	 *
-	 * @param request the request
+	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		log.debug("MarksheetCtl Method doGet Started");
 
-		String op = DataUtility.getString(request.getParameter("operation"));
 		MarksheetModel model = new MarksheetModel();
 		long id = DataUtility.getLong(request.getParameter("id"));
-		if (id > 0 || op != null) {
+		if (id > 0) {
 			MarksheetBean bean;
 			try {
 				bean = model.findByPK(id);
@@ -183,10 +189,10 @@ public class MarksheetCtl extends BaseCtl{
 	/**
 	 * Contains Submit logics.
 	 *
-	 * @param request the request
+	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -196,7 +202,7 @@ public class MarksheetCtl extends BaseCtl{
 		String op = DataUtility.getString(request.getParameter("operation"));
 		long id = DataUtility.getLong(request.getParameter("id"));
 		MarksheetBean bean = (MarksheetBean) populateBean(request);
-		
+
 		// get model
 		MarksheetModel model = new MarksheetModel();
 
@@ -211,9 +217,8 @@ public class MarksheetCtl extends BaseCtl{
 					long pk = model.add(bean);
 					ServletUtility.setBean(bean, request);
 					ServletUtility.setSuccessMessage("Marksheet is Successfully Added ", request);
-			
+
 				}
-				
 
 			} catch (ApplicationException e) {
 				log.error(e);
@@ -240,7 +245,9 @@ public class MarksheetCtl extends BaseCtl{
 		log.debug("MarksheetCtl Method doPost Ended");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see in.co.rays.ors.controller.BaseCtl#getView()
 	 */
 	@Override
@@ -248,5 +255,4 @@ public class MarksheetCtl extends BaseCtl{
 		return ORSView.MARKSHEET_VIEW;
 	}
 
-	
 }
