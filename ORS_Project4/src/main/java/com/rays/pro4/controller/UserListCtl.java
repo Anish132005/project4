@@ -38,24 +38,25 @@ public class UserListCtl extends BaseCtl{
 	 * HttpServletRequest)
 	 */
 	
-	@Override
-	protected void preload(HttpServletRequest request) {
+	
+	  @Override protected void preload(HttpServletRequest request) {
+	  
+	  RoleModel rmodel = new RoleModel(); UserModel umodel = new UserModel();
+	
+	  try { List rlist = rmodel.list(0,0); List ulist = umodel.list(0,0);
+	  
+	  request.setAttribute("RoleList", rlist); request.setAttribute("LoginId",
+	  ulist);
+	  
+	  } catch (ApplicationException e) { e.printStackTrace(); } }
+	   
 
-		RoleModel rmodel = new RoleModel();
-		UserModel umodel = new UserModel();
-
-		try {
-			List rlist = rmodel.list(0,0);
-			List ulist = umodel.list(0,0);
-
-			request.setAttribute("RoleList", rlist);
-			request.setAttribute("LoginId", ulist);
-
-		} catch (ApplicationException e) {
-			e.printStackTrace();
-		}
-	}
-
+	/*
+	 * @Override protected void preload(HttpServletRequest request) {
+	 * System.out.println("uctl preload"); RoleModel model = new RoleModel(); try {
+	 * List l = model.list(); request.setAttribute("roleList", l); } catch
+	 * (ApplicationException e) { log.error(e); } }
+	 */
 	/*
 	 * (non-Javadoc)
 	 * 

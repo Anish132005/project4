@@ -33,9 +33,16 @@ public class VehicleCtl extends BaseCtl {
 			request.setAttribute("VehicleName", " VehicleName contains alphabet only");
 			pass = false;
 		}
+		else if (!DataValidator.isTooLong("VehicleName", 100)) {
+			request.setAttribute("VehicleName", " VehicleName contains 100 words only");
+			pass = false;
+		}
 
 		if (DataValidator.isNull(request.getParameter("VehiclePrice"))) {
 			request.setAttribute("VehiclePrice", PropertyReader.getValue("error.require", "VehiclePrice"));
+			pass = false;
+		}else if (!DataValidator.isInteger(request.getParameter("VehiclePrice"))) {
+			request.setAttribute("VehiclePrice", " VehiclePrice contains only integers values ");
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("dOB"))) {

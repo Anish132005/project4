@@ -81,32 +81,33 @@
 			%>
 			<table width="100%" align="center">
 				<tr>
-				
-					
+
+
 					<td align="center">&emsp;<label>SupplierName</font> :
-					
-					</label> <input type="text" name="SupplierName" placeholder="Enter SupplierName "
-						value="<%=ServletUtility.getParameter("SupplierName", request)%>">	
-						
-					<td align="center">&emsp; <label>ProductName</font> :
+
+					</label> <input type="text" name="SupplierName"
+						placeholder="Enter SupplierName "
+						value="<%=ServletUtility.getParameter("SupplierName", request)%>">
+					<%-- td align="center">&emsp; <label>ProductName</font> :
 					</label> <input type="text" name="ProductName"
 						placeholder="Enter ProductName "
-						value="<%=ServletUtility.getParameter("ProductName ", request)%>">
-						<td align="center">&emsp;<label>Qantity</font> :
-					</label> <input type="text" name="Qantity" placeholder="Enter Qantity "
+						value="<%=ServletUtility.getParameter("ProductName ", request)%>"> --%>
+					<td align="center">&emsp;<label>Qantity</font> :
+					</label> <input type="number" name="Qantity" placeholder="Enter Qantity "
 						value="<%=ServletUtility.getParameter("Qantity", request)%>">
-					 <td align="center"><label>LastupdatedDate</font> :
-					</label> <input type="text" name="LastupdatedDate" placeholder="Enter LastupdatedDate" 
-						id="udate" readonly="readonly"
+					<td align="center"><label>LastupdatedDate</font> :
+					</label> <input type="text" name="LastupdatedDate"
+						placeholder="Enter LastupdatedDate" id="udate" readonly="readonly"
 						value="<%=ServletUtility.getParameter("LastupdatedDate", request)%>">
-				
-			&emsp; <label>Product</font> :
-					</label> <%=HTMLUtility.getList("Product", String.valueOf(bean.getProduct()), plist)%> 
-						
-						
-							&nbsp; <input type="submit" name="operation"
+
+						&emsp; <label>Product</font> :
+					</label> <%=HTMLUtility.getList("Product", String.valueOf(bean.getProduct()), plist)%>
+
+
+						&nbsp; <input type="submit" name="operation"
 						value="<%=InventoryListCtl.OP_SEARCH%>"> &nbsp; <input
-						type="submit" name="operation" value="<%=InventoryListCtl.OP_RESET%>"></td>
+						type="submit" name="operation"
+						value="<%=InventoryListCtl.OP_RESET%>"></td>
 				</tr>
 			</table>
 			<br>

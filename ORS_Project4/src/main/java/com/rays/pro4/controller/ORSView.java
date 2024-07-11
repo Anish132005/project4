@@ -75,6 +75,13 @@ public interface ORSView {
 	public String INVENTORY_VIEW = PAGE_FOLDER + "/InventoryView.jsp";
 	public String INVENTORY_LIST_VIEW = PAGE_FOLDER + "/InventoryListView.jsp";
 
+	public String VICHCLE_TRACKING_VIEW = PAGE_FOLDER + "/VichcleTrackingView.jsp";
+	public String VICHCLE_TRACKING_LIST_VIEW = PAGE_FOLDER + "/VichcleTrackingListView.jsp";
+	
+	public String ATM_VIEW = PAGE_FOLDER + "/AtmView.jsp";
+	public String ATM_LIST_VIEW = PAGE_FOLDER + "/AtmListView.jsp";
+
+
 	// public String ERROR_VIEW5 = PAGE_FOLDER + "/ErrorView5.jsp";
 
 	public String MARKSHEET_CTL = APP_CONTEXT + "/ctl/MarksheetCtl";
@@ -138,5 +145,11 @@ public interface ORSView {
 
 	public String INVENTORY_CTL = APP_CONTEXT + "/ctl/InventoryCtl";
 	public String INVENTORY_LIST_CTL = APP_CONTEXT + "/ctl/InventoryListCtl";
+	
+	public String VICHCLE_TRACKING_CTL = APP_CONTEXT + "/ctl/VichcleTrackingCtl";
+	public String  VICHCLE_TRACKING_LIST_CTL = APP_CONTEXT + "/ctl/VichcleTrackingListCtl";
+	
+	public String ATM_CTL = APP_CONTEXT + "/ctl/AtmCtl";
+	public String  ATM_LIST_CTL = APP_CONTEXT + "/ctl/AtmListCtl";
 
 }

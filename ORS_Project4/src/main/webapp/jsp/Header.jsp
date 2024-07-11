@@ -82,8 +82,8 @@
 					href="<%=ORSView.FACULTY_CTL%>">Add Faculty</b></a> | <a
 					href="<%=ORSView.FACULTY_LIST_CTL%>">Faculty List</b></a> | <a
 					href="<%=ORSView.TIMETABLE_CTL%>">Add TimeTable</b></a> | <a
-					href="<%=ORSView.TIMETABLE_LIST_CTL%>">TimeTable List</b></a> | <a
-					href="<%=ORSView.PRODUCT_CTL%>">Add Product</b></a> | <a
+					href="<%=ORSView.TIMETABLE_LIST_CTL%>">TimeTable List</b></a> <%-- | <a
+					href="<%=ORSView.PRODUCT_CTL%>">Add Product</b></a> |  <a
 					href="<%=ORSView.PRODUCT_LIST_CTL%>">Product List</b></a> |<a
 					href="<%=ORSView.DOCTOR_CTL%>"> ADD Doctor</b></a> |<a
 					href="<%=ORSView.DOCTOR_LIST_CTL%>">Doctor List</b></a> | <a
@@ -103,8 +103,15 @@
 					href="<%=ORSView.VEHICLE_LIST_CTL%>">Vehicle List</b></a>| <a
 					href="<%=ORSView.PAYMENT_CTL%>"> Payment Add</b></a>| <a
 					href="<%=ORSView.INVENTORY_CTL%>"> Inventory Add</b></a>| <a
-					href="<%=ORSView.INVENTORY_LIST_CTL%>"> Inventory List</b></a>
+					href="<%=ORSView.INVENTORY_LIST_CTL%>"> Inventory List</b></a> | <a
+					href="<%=ORSView.VICHCLE_TRACKING_CTL%>"> VichcleTracking Add</b></a> | <a
+					href="<%=ORSView.VICHCLE_TRACKING_LIST_CTL%>"> VichcleTracking List</b></a>  
 					
+					 --%>
+					
+					| <a
+					href="<%=ORSView.ATM_CTL%>"> ATMs ADD</b></a>  | <a
+					href="<%=ORSView.ATM_LIST_CTL%>"> ATMs List</b></a>  
 					
 					
 					

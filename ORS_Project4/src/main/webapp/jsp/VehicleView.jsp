@@ -126,11 +126,15 @@
 					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("RTO", request)%></font></td>
 				</tr>
 				
+				<tr>
+					<th style="padding: 3px"></th>
+				</tr>
+				
 	<tr>
 					<th align="left">MobileNubmer <span style="color: red">*</span> :
 					</th>
-					<td><input type="text" name="MobileNubmer"
-						placeholder="Enter MobileNubmer " size="26" maxlength="10"
+					<td><input type="number" name="MobileNubmer"
+						placeholder="Enter MobileNubmer " size="26" maxlength="10" style="width: 210px"
 						value="<%=DataUtility.getStringData(bean.getMobileNubmer())%>"></td>
 					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("MobileNubmer", request)%></font></td>
 

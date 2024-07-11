@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="com.rays.pro4.Model.RoleModel"%>
 <%@page import="com.rays.pro4.Model.UserModel"%>
 <%@page import="com.rays.pro4.Util.HTMLUtility"%>
@@ -86,10 +87,11 @@
 						<label>LoginId</font> :
 					</label> <input type="text" name="loginid" placeholder="Enter Login-Id"
 						value="<%=ServletUtility.getParameter("login", request)%>">
-						&emsp; <label>Role</font> :
-					</label> <%=HTMLUtility.getList("roleid", String.valueOf(bean.getRoleId()), rlist)%>
-						&nbsp; <%-- <%=HTMLUtility.getList("loginid", String.valueOf(bean.getRoleId()), ulist)%>
- --%> &nbsp; <%-- <label>MobileNo</font> :</label>
+						<%-- &emsp; <label>Role</font> :
+					</label> <%=HTMLUtility.getList("roleid", String.valueOf(bean.getRoleId()), rlist)%> --%>
+					
+						&nbsp;  <%=HTMLUtility.getList("loginid", String.valueOf(bean.getRoleId()), ulist)%>
+  &nbsp; <%-- <label>MobileNo</font> :</label>
  					 <input
 						type="number" name="mobile" placeholder="Enter mobile no"
 						value="<%=ServletUtility.getParameter("mobile", request)%>"> --%>

@@ -48,6 +48,8 @@ public class DataValidator {
 			return false;
 		}
 	}
+	
+	
 
 	public static boolean isEmail(String val) {
 
@@ -135,6 +137,22 @@ public class DataValidator {
 			return false;
 		}
 	}
+	
+	public static boolean isNumber(String val) {
+
+		String phonereg = "^[6-9][0-9]{9}$";
+
+		if (isNotNull(val)) {
+			try {
+				return val.matches(phonereg);
+			} catch (NumberFormatException e) {
+				return false;
+			}
+
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * Checks if value of Mobile No is 10
@@ -192,6 +210,26 @@ public class DataValidator {
 			return false;
 		}
 	}
+	
+	public static boolean isDouble(String val) {
+	    if (val == null || val.isEmpty()) {
+	        return false;
+	    }
+	    try {
+	        Double.parseDouble(val);
+	        return true;
+	    } catch (NumberFormatException e) {
+	        return false;
+	    }
+	}
+	
+	public static boolean isTooLong(String val, int maxLength) {
+	    if (isNotNull(val)) {
+	        return val.length() > maxLength;
+	    } else {
+	        return false;
+	    }
+	}
 
 	public static void main(String[] args) {
 		System.out.println("Not Null 2" + isNotNull("ABC"));
@@ -204,4 +242,5 @@ public class DataValidator {
 		System.out.println("is mobile no " + isMobileNo("9669330519"));
 	}
 
+	
 }
