@@ -1,6 +1,7 @@
 package com.rays.pro4.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import com.rays.pro4.Bean.BaseBean;
 import com.rays.pro4.Bean.OrderBean;
+import com.rays.pro4.Exception.ApplicationException;
 import com.rays.pro4.Model.OrderModel;
 import com.rays.pro4.Util.DataUtility;
 import com.rays.pro4.Util.PropertyReader;
@@ -17,47 +20,41 @@ import com.rays.pro4.Util.ServletUtility;
 
 @WebServlet(name = "OrderListCtl", urlPatterns = { "/ctl/OrderListCtl" })
 public class OrderListCtl extends BaseCtl {
-
 	@Override
 	protected void preload(HttpServletRequest request) {
-
 		OrderModel model = new OrderModel();
 
-		OrderBean bean = new OrderBean();
+		HashMap map = new HashMap();
+		map.put("1", "Mr.Abhishek");
+		map.put("2", "Mr.jay");
+		map.put("3", "Mr.Ankush");
+		map.put("4", "Mr.Anish");
+		map.put("5", "Mr.Uday");
 
-		try {
-
-			List list = model.list();
-			request.setAttribute("proList", list);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		request.setAttribute("prolist", map);
 	}
 
 	@Override
-	protected BaseBean populateBean(HttpServletRequest request) {
+	protected BaseBean populateBean(HttpServletRequest request) {         
 
 		OrderBean bean = new OrderBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setProductName(DataUtility.getString(request.getParameter("ProductName")));
+		bean.setDob(DataUtility.getDate(request.getParameter("Dob")));
 
-		bean.setOrderName(DataUtility.getString(request.getParameter("OrderName")));
+		System.out.println("quantity ===== > " + request.getParameter("Quantity"));
 
-		bean.setOrderPrice(DataUtility.getString(request.getParameter("OrderPrice")));
+		bean.setQuantity(DataUtility.getLong(request.getParameter("Quantity")));
 
-		bean.setOrderDate(DataUtility.getDate(request.getParameter("OrderDate")));
+		System.out.println("quantity bean ===== > " + bean.getQuantity());
 
-		System.out.println(request.getParameter("proList"));
-
-		bean.setId(DataUtility.getLong(request.getParameter("proList")));
-
-		bean.setOrderStatus(DataUtility.getString(request.getParameter("OrderStatus")));
+		bean.setCustomer(DataUtility.getString(request.getParameter("Customer")));
 
 		return bean;
 	}
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -66,43 +63,44 @@ public class OrderListCtl extends BaseCtl {
 
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
-
 		OrderBean bean = (OrderBean) populateBean(request);
+		String op = DataUtility.getString(request.getParameter("operation"));
+		System.out.println(">>>>>>>>>>>>>>>helooo" + bean.getDob());
 
 		OrderModel model = new OrderModel();
 
 		try {
 			list = model.search(bean, pageNo, pageSize);
+			System.out.println("list" + list);
+
 			nextList = model.search(bean, pageNo + 1, pageSize);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			request.setAttribute("nextlist", nextList.size());
+
+			ServletUtility.setList(list, request);
+			ServletUtility.setPageNo(pageNo, request);
+			ServletUtility.setPageSize(pageSize, request);
+			// ServletUtility.setBean(bean, request);
+
+		} catch (ApplicationException e) {
+
+			ServletUtility.handleException(e, request, response);
+			return;
 		}
-		System.out.println("list" + list);
 
-		request.setAttribute("nextlist", nextList.size());
-
-		if (list == null || list.size() == 0) {
-			ServletUtility.setErrorMessage("No record found ", request);
-		}
-
-		ServletUtility.setList(list, request);
-		ServletUtility.setPageNo(pageNo, request);
-		ServletUtility.setPageSize(pageSize, request);
 		ServletUtility.forward(getView(), request, response);
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("PaymentListCtl doPost Start");
 
 		List list;
 		List nextList = null;
 
 		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
 		int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
-
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
@@ -110,7 +108,6 @@ public class OrderListCtl extends BaseCtl {
 		OrderBean bean = (OrderBean) populateBean(request);
 
 		String[] ids = request.getParameterValues("ids");
-
 		OrderModel model = new OrderModel();
 
 		if (OP_SEARCH.equalsIgnoreCase(op)) {
@@ -119,24 +116,27 @@ public class OrderListCtl extends BaseCtl {
 			pageNo++;
 		} else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
 			pageNo--;
+
 		} else if (OP_NEW.equalsIgnoreCase(op)) {
+
 			ServletUtility.redirect(ORSView.ORDER_CTL, request, response);
 			return;
 		} else if (OP_RESET.equalsIgnoreCase(op)) {
 			ServletUtility.redirect(ORSView.ORDER_LIST_CTL, request, response);
 			return;
+
 		} else if (OP_DELETE.equalsIgnoreCase(op)) {
 			pageNo = 1;
 			if (ids != null && ids.length > 0) {
 				OrderBean deletebean = new OrderBean();
 				for (String id : ids) {
 					deletebean.setId(DataUtility.getInt(id));
-
 					try {
 						model.delete(deletebean);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} catch (ApplicationException e) {
+
+						ServletUtility.handleException(e, request, response);
+						return;
 					}
 
 					ServletUtility.setSuccessMessage("Order is Deleted Successfully", request);
@@ -145,7 +145,6 @@ public class OrderListCtl extends BaseCtl {
 				ServletUtility.setErrorMessage("Select at least one record", request);
 			}
 		}
-
 		try {
 
 			list = model.search(bean, pageNo, pageSize);
@@ -154,7 +153,8 @@ public class OrderListCtl extends BaseCtl {
 
 			request.setAttribute("nextlist", nextList.size());
 
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
+
 			ServletUtility.handleException(e, request, response);
 			return;
 		}
@@ -165,16 +165,14 @@ public class OrderListCtl extends BaseCtl {
 		ServletUtility.setBean(bean, request);
 		ServletUtility.setPageNo(pageNo, request);
 		ServletUtility.setPageSize(pageSize, request);
+
 		ServletUtility.forward(getView(), request, response);
 
 	}
 
 	@Override
 	protected String getView() {
-		// TODO Auto-generated method stub
 		return ORSView.ORDER_LIST_VIEW;
 	}
-
-
 
 }

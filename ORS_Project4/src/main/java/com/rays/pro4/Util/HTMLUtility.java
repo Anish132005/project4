@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class HTMLUtility {
             HashMap<String, String> map) {
 
         StringBuffer sb = new StringBuffer(
-                "<select style='width: 211px;  height: 25px;' class='form-control' name='" + name + "'>");
+                "<select style='width: 202	px;  height: 25px;' class='form-control' name='" + name + "'>");
 
         Set<String> keys = map.keySet();
         String val = null;
@@ -31,7 +32,7 @@ public class HTMLUtility {
         boolean select=true;
         if (select)
         {
-        	sb.append("<option style='width: 175px;  height: 30px;' selected value=''>--------------Select-------------------</option>");
+        	sb.append("<option style='width: 195px;  height: 30px;' selected value=''>--------------Select-------------------</option>");
         }
 
         for (String key : keys) {
@@ -47,6 +48,7 @@ public class HTMLUtility {
         sb.append("</select>");
         return sb.toString();
     }
+		
 
     /**
      * Create HTML SELECT List from List parameter
@@ -110,6 +112,33 @@ public class HTMLUtility {
      * @param request
      * @return
      */
+    public static String getList1(String name, String selectedVal, Map<Integer, String> map) {
+
+		StringBuilder sb = new StringBuilder("<select style='width: 211px;  height: 23px;' class='form-control' name='" + name + "''>");
+
+		Set<Integer> keys = map.keySet();
+		String val = null;
+		boolean select = true;
+		if (select) {
+			sb.append("<option class='dropdown-item' selected value=''>----------------Select------------------</option>");
+		}
+
+		for (Integer key : keys) {
+			val = map.get(key)
+;
+			// Convert key to String for comparison and value attribute
+			String keyString = val.toString();
+
+			if (keyString.trim().equals(selectedVal)) {
+				// Mark the option as selected if it matches the selectedVal
+				sb.append("<option selected value='" + val + "'>" + val + "</option>");
+			} else {
+				sb.append("<option value='" + val + "'>" + val + "</option>");
+			}
+		}
+		sb.append("</select>");
+		return sb.toString();
+	}
 
     public static String getSuccessMessage(HttpServletRequest request) {
         String msg = ServletUtility.getSuccessMessage(request);

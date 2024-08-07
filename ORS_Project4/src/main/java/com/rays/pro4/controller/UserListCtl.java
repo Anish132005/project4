@@ -21,13 +21,13 @@ import com.rays.pro4.Util.ServletUtility;
 
 //TODO: Auto-generated Javadoc
 /**
-* User List functionality Controller. Performs operation for list, search and
-* delete operations of User
-* 
-*  @author Anish Malviya
-*/
+ * User List functionality Controller. Performs operation for list, search and
+ * delete operations of User
+ * 
+ * @author Anish Malviya
+ */
 @WebServlet(name = "UserListCtl", urlPatterns = { "/ctl/UserListCtl" })
-public class UserListCtl extends BaseCtl{
+public class UserListCtl extends BaseCtl {
 
 	private static Logger log = Logger.getLogger(UserListCtl.class);
 
@@ -37,19 +37,24 @@ public class UserListCtl extends BaseCtl{
 	 * @see in.co.rays.ors.controller.BaseCtl#preload(javax.servlet.http.
 	 * HttpServletRequest)
 	 */
-	
-	
-	  @Override protected void preload(HttpServletRequest request) {
-	  
-	  RoleModel rmodel = new RoleModel(); UserModel umodel = new UserModel();
-	
-	  try { List rlist = rmodel.list(0,0); List ulist = umodel.list(0,0);
-	  
-	  request.setAttribute("RoleList", rlist); request.setAttribute("LoginId",
-	  ulist);
-	  
-	  } catch (ApplicationException e) { e.printStackTrace(); } }
-	   
+
+	@Override
+	protected void preload(HttpServletRequest request) {
+
+		RoleModel rmodel = new RoleModel();
+		UserModel umodel = new UserModel();
+
+		try {
+			List rlist = rmodel.list(0, 0);
+			List ulist = umodel.list(0, 0);
+
+			request.setAttribute("RoleList", rlist);
+			request.setAttribute("LoginId", ulist);
+
+		} catch (ApplicationException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/*
 	 * @Override protected void preload(HttpServletRequest request) {
@@ -71,10 +76,9 @@ public class UserListCtl extends BaseCtl{
 
 		bean.setRoleId(DataUtility.getLong(request.getParameter("roleid")));
 		bean.setLogin(DataUtility.getString(request.getParameter("loginid")));
-	
-	//	bean.setMobileNo(DataUtility.getString(request.getParameter("mobile")));
-		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
 
+		// bean.setMobileNo(DataUtility.getString(request.getParameter("mobile")));
+		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
 
 		return bean;
 	}
@@ -115,13 +119,13 @@ public class UserListCtl extends BaseCtl{
 			if (list == null || list.size() == 0) {
 				ServletUtility.setErrorMessage("No record found ", request);
 			}
-			
+
 			ServletUtility.setList(list, request);
 			ServletUtility.setPageNo(pageNo, request);
 			ServletUtility.setPageSize(pageSize, request);
-			//ServletUtility.setBean(bean, request);
+			// ServletUtility.setBean(bean, request);
 			ServletUtility.forward(getView(), request, response);
-			
+
 		} catch (ApplicationException e) {
 			log.error(e);
 			ServletUtility.handleException(e, request, response);
@@ -155,7 +159,7 @@ public class UserListCtl extends BaseCtl{
 		UserBean bean = (UserBean) populateBean(request);
 		// get the selected checkbox ids array for delete list
 		String[] ids = request.getParameterValues("ids");
-		
+
 		UserModel model = new UserModel();
 
 		if (OP_SEARCH.equalsIgnoreCase(op)) {

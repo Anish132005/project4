@@ -22,7 +22,7 @@
 		%>
 
 		<input type="hidden" name="URI" value="<%=URI%>">
-
+ 
 		<center>
 			<h1>Login</h1>
 

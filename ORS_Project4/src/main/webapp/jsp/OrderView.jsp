@@ -1,15 +1,11 @@
-
 <%@page import="com.rays.pro4.controller.OrderCtl"%>
-<%@page import="com.rays.pro4.controller.BankCtl"%>
-<%@page import="com.rays.pro4.controller.ProductCtl"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.List"%>
 <%@page import="com.rays.pro4.Util.HTMLUtility"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="com.rays.pro4.Util.DataUtility"%>
 <%@page import="com.rays.pro4.Util.ServletUtility"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="icon" type="image/png"
@@ -20,6 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
@@ -27,9 +24,14 @@
 		$("#udatee").datepicker({
 			changeMonth : true,
 			changeYear : true,
-			yearRange : '1980:2020',
+			yearRange : '1980:2002',
 		});
 	});
+	function limitInputLength(input, maxLength) {
+		if (input.value.length > maxLength) {
+			input.value = input.value.slice(0, maxLength);
+		}
+	}
 </script>
 <body>
 	<jsp:useBean id="bean" class="com.rays.pro4.Bean.OrderBean"
@@ -71,66 +73,64 @@
 
 			<table>
 				<tr>
-					<th align="left">OrderName <span style="color: red">*</span>
+					<th align="left">Product Name <span style="color: red">*</span>
 						:
 					</th>
-					<td><input type="text" name="OrderName"
-						placeholder="Enter OrderName " size="26"
-						value="<%=DataUtility.getStringData(bean.getOrderName())%>"></td>
-					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("OrderName", request)%></font></td>
+					<td><input type="text" name="ProductName"
+						placeholder="Enter ProductName" size="25"
+						value="<%=DataUtility.getStringData(bean.getProductName())%>"></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("ProductName", request)%></font></td>
 
 				</tr>
 
 				<tr>
-					<th style="padding: 3px"></th>
+					<th style="padding: 1px"></th>
+				</tr>
+				<tr>
+					<th align="left">Order Date <span style="color: red">*</span>
+						:
+					</th>
+					<td><input type="text" name="Dob"
+						placeholder="Enter Order Date " size="25" id="udatee"
+						readonly="readonly"
+						value="<%=DataUtility.getDateString(bean.getDob())%>"></td>
+					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("Dob", request)%></font></td>
+				</tr>
+				<tr>
+					<th style="padding: 1px"></th>
+				</tr>
+				<tr>
+					<th align="left">Quantity<span style="color: red">*</span> :
+					</th>
+					<td><input type="number" name="Quantity" id="quantityInput"
+						placeholder="Enter Quantity" style="width: 198px"
+						value="<%=DataUtility.getStringData(bean.getQuantity())%>"
+						oninput="limitInputLength(this, 15)"></td>
+					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("Quantity", request)%></font></td>
+				</tr>
+				<tr>
+					<th style="padding: 1px"></th>
 				</tr>
 
 				<tr>
-					<th align="left">OrderPrice <span style="color: red">*</span>
-						:
-					</th>
-					<td><input type="text" name="OrderPrice"
-						placeholder="Enter OrderPrice " size="26"
-						value="<%=DataUtility.getStringData(bean.getOrderPrice())%>"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("OrderPrice", request)%></font></td>
-				</tr>
-				
-				<tr>
-					<th style="padding: 3px"></th>
-				</tr>
-				
-				<tr>
-					<th align="left">OrderDate <span style="color: red">*</span>
-						:
-					</th>
-					<td><input type="text" name="OrderDate"
-						placeholder="Enter OrderDate" size="26" readonly="readonly"
-						id="udatee"
-						value="<%=DataUtility.getDateString(bean.getOrderDate())%>"></td>
-					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("OrderDate", request)%></font></td>
-				</tr>
-				<tr>
-				<tr>
-					<th style="padding: 3px"></th>
-				</tr>
-				
-				
-				<tr>
-					<th align="left">OrderStatus <span style="color: red">*</span> :
+					<th align="left">Customer<span style="color: red">*</span> :
 					</th>
 					<td>
 						<%
 							HashMap map = new HashMap();
-							map.put("high", "high");
-							map.put("Low", "Low");
+							map.put("Mr.Abhishek", "Mr.Abhishek");
+							map.put("Mr.jay", "Mr.jay");
+							map.put("Mr.Ankush", "Mr.Ankush");
+							map.put("Mr.Anish", "Mr.Anish");
+							map.put("Mr.Uday", "Mr.Uday");
 
-							String hlist = HTMLUtility.getList("OrderStatus", String.valueOf(bean.getOrderStatus()), map);
+							String hlist = HTMLUtility.getList("Customer", String.valueOf(bean.getCustomer()), map);
 						%> <%=hlist%>
 					</td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("OrderStatus", request)%></font></td>
+					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("Customer", request)%></font></td>
 				</tr>
 				<tr>
-					<th style="padding: 3px"></th>
+					<th style="padding: 1px"></th>
 				</tr>
 
 				<tr>
@@ -149,7 +149,6 @@
 
 					<td colspan="2">&nbsp; &emsp; <input type="submit"
 						name="operation" value="<%=OrderCtl.OP_SAVE%>"> &nbsp;
-						
 						&nbsp; <input type="submit" name="operation"
 						value="<%=OrderCtl.OP_RESET%>"></td>
 

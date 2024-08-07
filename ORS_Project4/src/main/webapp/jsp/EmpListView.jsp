@@ -3,8 +3,7 @@
 <%@page import="com.rays.pro4.Bean.EmpBean"%>
 <%@page import="com.rays.pro4.controller.ShopListCtl"%>
 <%@page import="com.rays.pro4.Bean.ShopBean"%>
-<%@page import="com.rays.pro4.controller.OrderListCtl"%>
-<%@page import="com.rays.pro4.Bean.OrderBean"%>
+
 <%@page import="com.rays.pro4.controller.BankListCtl"%>
 <%@page import="com.rays.pro4.Bean.BankBean"%>
 <%@page import="com.rays.pro4.controller.ProductListCtl"%>

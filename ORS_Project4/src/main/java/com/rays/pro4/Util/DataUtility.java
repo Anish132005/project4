@@ -182,6 +182,14 @@ public class DataUtility {
 	public static String getStringFromDouble(Double val) {
 		return val != null ? val.toString() : "";
 	}
+	
+	public static Long getLong2(String val) {
+		if (DataValidator.isLong(val)) {
+			return Long.parseLong(val);
+		} else {
+			return null;
+		}
+	}
 
 	
 

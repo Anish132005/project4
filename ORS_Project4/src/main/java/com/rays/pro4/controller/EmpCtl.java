@@ -6,17 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.rays.pro4.Bean.BaseBean;
 import com.rays.pro4.Bean.EmpBean;
-import com.rays.pro4.Bean.ShopBean;
 import com.rays.pro4.Model.EmpModel;
-import com.rays.pro4.Model.ShopModel;
 import com.rays.pro4.Util.DataUtility;
 import com.rays.pro4.Util.DataValidator;
 import com.rays.pro4.Util.PropertyReader;
 import com.rays.pro4.Util.ServletUtility;
-
 
 @WebServlet(name = "EmpCtl", urlPatterns = { "/ctl/EmpCtl" })
 public class EmpCtl extends BaseCtl {
@@ -42,7 +38,7 @@ public class EmpCtl extends BaseCtl {
 			request.setAttribute("Dob", PropertyReader.getValue("error.date", "Date Of Dob"));
 			pass = false;
 		}
-		
+
 		if (DataValidator.isNull(request.getParameter("Company"))) {
 			request.setAttribute("Company", PropertyReader.getValue("error.require", "Company"));
 			pass = false;
@@ -65,11 +61,11 @@ public class EmpCtl extends BaseCtl {
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
 
 		bean.setEmpName(DataUtility.getString(request.getParameter("EmpName")));
-		
+
 		bean.setDob(DataUtility.getDate(request.getParameter("Dob")));
 
 		bean.setCompany(DataUtility.getString(request.getParameter("Company")));
-		
+
 		bean.setSalary(DataUtility.getString(request.getParameter("Salary")));
 
 		return bean;
@@ -116,7 +112,7 @@ public class EmpCtl extends BaseCtl {
 		System.out.println(">>>><<<<>><<><<><<><>**********" + id + op);
 
 		EmpModel model = new EmpModel();
-		
+
 		if (OP_CANCEL.equalsIgnoreCase(op)) {
 			System.out.println("op cancle === > " + op);
 			ServletUtility.redirect(ORSView.EMP_LIST_CTL, request, response);
@@ -153,7 +149,7 @@ public class EmpCtl extends BaseCtl {
 			}
 
 		}
-		
+
 		ServletUtility.forward(getView(), request, response);
 
 	}
@@ -165,6 +161,4 @@ public class EmpCtl extends BaseCtl {
 	}
 
 }
-
-
 

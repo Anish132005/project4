@@ -1,226 +1,288 @@
 package com.rays.pro4.Model;
 
 import java.sql.Connection;
+
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
-
-import com.rays.pro4.Bean.BankBean;
 import com.rays.pro4.Bean.OrderBean;
+import com.rays.pro4.Exception.ApplicationException;
+import com.rays.pro4.Exception.DatabaseException;
+import com.rays.pro4.Exception.DuplicateRecordException;
 import com.rays.pro4.Util.JDBCDataSource;
 
 public class OrderModel {
-	
-	
-	public Integer nextPK() throws Exception {
 
+	public int nextPK() throws DatabaseException {
+
+		String sql = "SELECT MAX(ID) FROM st_order";
+		Connection conn = null;
 		int pk = 0;
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				pk = rs.getInt(1);
+			}
+			rs.close();
+		} catch (Exception e) {
 
-		Connection conn = JDBCDataSource.getConnection();
-
-		PreparedStatement pstmt = conn.prepareStatement("select max(id) from st_order");
-
-		ResultSet rs = pstmt.executeQuery();
-
-		while (rs.next()) {
-			pk = rs.getInt(1);
+			throw new DatabaseException("Exception : Exception in getting PK");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
 		}
-
-		rs.close();
 
 		return pk + 1;
+
 	}
 
-	public long add(OrderBean bean) throws Exception {
+	public long add(OrderBean bean) throws ApplicationException, DuplicateRecordException {
 
+		String sql = "INSERT INTO st_order VALUES(?,?,?,?,?)";
+
+		Connection conn = null;
 		int pk = 0;
 
-		Connection conn = JDBCDataSource.getConnection();
+		try {
+			conn = JDBCDataSource.getConnection();
+			pk = nextPK();
 
-		pk = nextPK();
+			conn.setAutoCommit(false);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
 
-		conn.setAutoCommit(false);
+			pstmt.setInt(1, pk);
+			pstmt.setString(2, bean.getProductName());
+			pstmt.setDate(3, new java.sql.Date(bean.getDob().getTime()));
+			pstmt.setLong(4, bean.getQuantity());
+			pstmt.setString(5, bean.getCustomer());
 
-		PreparedStatement pstmt = conn.prepareStatement("insert into st_order values(?,?,?,?,?)");
+			int a = pstmt.executeUpdate();
+			System.out.println("ho gyua re" + a);
+			conn.commit();
+			pstmt.close();
 
-		pstmt.setInt(1, pk);
-		pstmt.setString(2, bean.getOrderName());
-		pstmt.setString(3, bean.getOrderPrice());
-		pstmt.setDate(4, new java.sql.Date(bean.getOrderDate().getTime()));
-		pstmt.setString(5, bean.getOrderStatus());
+		} catch (Exception e) {
 
-		int i = pstmt.executeUpdate();
-		System.out.println("Order Add Successfully " + i);
-		conn.commit();
-		pstmt.close();
+			try {
+				e.printStackTrace();
+				conn.rollback();
 
-		return pk;
-	}
+			} catch (Exception e2) {
+				e2.printStackTrace();
 
-	public void delete(OrderBean bean) throws Exception {
-
-		Connection conn = JDBCDataSource.getConnection();
-
-		conn.setAutoCommit(false);
-
-		PreparedStatement pstmt = conn.prepareStatement("delete from st_order where id = ?");
-
-		pstmt.setLong(1, bean.getId());
-
-		int i = pstmt.executeUpdate();
-		System.out.println("Order delete successfully " + i);
-		conn.commit();
-
-		pstmt.close();
-	}
-
-	public void update(OrderBean bean) throws Exception {
-
-		Connection conn = JDBCDataSource.getConnection();
-
-		conn.setAutoCommit(false); // Begin transaction
-
-		PreparedStatement pstmt = conn
-				.prepareStatement("update st_order set OrderName = ?, OrderPrice = ?, OrderDate = ?, OrderStatus = ? where id = ?");
-
-		pstmt.setString(1, bean.getOrderName());
-		pstmt.setString(2, bean.getOrderPrice());
-		pstmt.setDate(3, new java.sql.Date(bean.getOrderDate().getTime()));
-		pstmt.setString(4, bean.getOrderStatus());
-		pstmt.setLong(5, bean.getId());
-
-		int i = pstmt.executeUpdate();
-
-		System.out.println("Order update successfully " + i);
-
-		conn.commit();
-		pstmt.close();
-
-	}
-
-	public OrderBean findByPK(long pk) throws Exception {
-
-		String sql = "select * from st_order where id = ?";
-		OrderBean bean = null;
-
-		Connection conn = JDBCDataSource.getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-
-		pstmt.setLong(1, pk);
-
-		ResultSet rs = pstmt.executeQuery();
-
-		while (rs.next()) {
-
-			bean = new OrderBean();
-			bean.setId(rs.getLong(1));
-			bean.setOrderName((rs.getString(2)));
-			bean.setOrderPrice(rs.getString(3));
-			bean.setOrderDate(rs.getDate(4));
-			bean.setOrderStatus(rs.getString(5));
-
+				throw new ApplicationException("Exception : add rollback exceptionn" + e2.getMessage());
+			}
 		}
 
-		rs.close();
+		finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+
+		return pk;
+
+	}
+
+	public void delete(OrderBean bean) throws ApplicationException {
+
+		String sql = "DELETE FROM st_order WHERE ID=?";
+		Connection conn = null;
+		try {
+			conn = JDBCDataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, bean.getId());
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "data deleted");
+			conn.commit();
+			pstmt.close();
+
+		} catch (Exception e) {
+
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				throw new ApplicationException("Exception: Delete rollback Exception" + e2.getMessage());
+			}
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+
+	}
+
+	public void update(OrderBean bean) throws ApplicationException, DuplicateRecordException {
+
+		String sql = "UPDATE st_order SET ProductName=?,Dob=?,Quantity=?,Customer=? WHERE ID=?";
+		Connection conn = null;
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bean.getProductName());
+			pstmt.setDate(2, new java.sql.Date(bean.getDob().getTime()));
+			pstmt.setLong(3, bean.getQuantity());
+			pstmt.setString(4, bean.getCustomer());
+			pstmt.setLong(5, bean.getId());
+
+			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
+			conn.commit();
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+				throw new ApplicationException("Exception : Update Rollback Exception " + e2.getMessage());
+			}
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+
+	}
+
+	/*
+	 * public List search(OrderBean bean) throws ApplicationException { return
+	 * search(bean); }
+	 */
+
+	public List search(OrderBean bean, int pageNo, int pageSize) throws ApplicationException {
+
+		StringBuffer sql = new StringBuffer("SELECT *FROM st_order WHERE 1=1");
+		if (bean != null) {
+			if (bean != null && bean.getId() > 0) {
+
+				sql.append(" AND id = " + bean.getId());
+
+			}
+			if (bean.getProductName() != null && bean.getProductName().length() > 0) {
+				sql.append(" AND ProductName like '" + bean.getProductName() + "%'");
+			}
+			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
+				Date d = new Date(bean.getDob().getDate());
+				sql.append(" AND Dob like '" + new java.sql.Date(bean.getDob().getTime()) + "%'");
+			}
+			if (bean.getQuantity() > 0) {
+				sql.append(" AND Quantity = " + bean.getQuantity());
+			}
+
+			if (bean.getCustomer() != null && bean.getCustomer().length() > 0) {
+				sql.append(" AND Customer like '" + bean.getCustomer() + "%'");
+			}
+
+			if (pageSize > 0) {
+
+				pageNo = (pageNo - 1) * pageSize;
+
+				sql.append(" Limit " + pageNo + ", " + pageSize);
+
+			}
+		}
+		System.out.println("sql>>>>>>>>>> " + sql.toString());
+
+		List list = new ArrayList();
+		Connection conn = null;
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new OrderBean();
+				bean.setId(rs.getLong(1));
+				bean.setProductName(rs.getString(2));
+				bean.setDob(rs.getDate(3));
+				bean.setQuantity(rs.getLong(4));
+				bean.setCustomer(rs.getString(5));
+
+				list.add(bean);
+
+			}
+			rs.close();
+		} catch (Exception e) {
+
+			throw new ApplicationException("Exception: Exception in Search User");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+
+		return list;
+
+	}
+
+	public OrderBean findByPK(long pk) throws ApplicationException {
+
+		String sql = "SELECT * FROM st_order WHERE ID=?";
+		OrderBean bean = null;
+		Connection conn = null;
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, pk);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new OrderBean();
+				bean.setId(rs.getLong(1));
+				bean.setProductName(rs.getString(2));
+				bean.setDob(rs.getDate(3));
+				bean.setQuantity(rs.getLong(4));
+				bean.setCustomer(rs.getString(5));
+
+			}
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			throw new ApplicationException("Exception : Exception in getting Payment by pk");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
 
 		return bean;
 	}
 
-	public List search(OrderBean bean, int pageNo, int pageSize) throws Exception {
-
-		StringBuffer sql = new StringBuffer("select * from st_order where 1=1");
-		if (bean != null) {
-
-			if (bean.getOrderName() != null && bean.getOrderName().length() > 0) {
-				sql.append(" AND OrderName like '" + bean.getOrderName() + "%'");
-			}
-
-			if (bean.getOrderPrice() != null && bean.getOrderPrice().length() > 0) {
-				sql.append(" AND OrderPrice like '" + bean.getOrderPrice() + "%'");
-			}
-
-			if (bean.getOrderDate() != null && bean.getOrderDate().getTime() > 0) {
-			 Date d = new Date(bean.getOrderDate().getTime());
-				sql.append(" AND OrderDate = '" +d+ "'");
-				System.out.println("done");
-			}
-
-			if (bean.getOrderStatus() != null && bean.getOrderStatus().length() > 0) {
-				sql.append(" AND OrderStatus like '" + bean.getOrderStatus() + "%'");
-			}
-
-			if (bean.getId() > 0) {
-				sql.append(" AND id = " + bean.getId());
-			}
-
-		}
-
-		if (pageSize > 0) {
-
-			pageNo = (pageNo - 1) * pageSize;
-
-			sql.append(" Limit " + pageNo + ", " + pageSize);
-
-		}
-
-		System.out.println("sql query search >>= " + sql.toString());
-		List list = new ArrayList();
-
-		Connection conn = JDBCDataSource.getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-
-		ResultSet rs = pstmt.executeQuery();
-
-		while (rs.next()) {
-
-			bean = new OrderBean();
-			bean.setId(rs.getLong(1));
-			bean.setOrderName(rs.getString(2));
-			bean.setOrderPrice(rs.getString(3));
-			bean.setOrderDate(rs.getDate(4));
-			bean.setOrderStatus((rs.getString(5)));
-
-			list.add(bean);
-
-		}
-		rs.close();
-
-		return list;
-
+	public List list() throws ApplicationException {
+		return list(0, 0);
 	}
 
-	public List list() throws Exception {
+	public List list(int pageNo, int pageSize) throws ApplicationException {
 
 		ArrayList list = new ArrayList();
-
 		StringBuffer sql = new StringBuffer("select * from st_order");
 
-		Connection conn = JDBCDataSource.getConnection();
-
-		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-		ResultSet rs = pstmt.executeQuery();
-
-		while (rs.next()) {
-
-			OrderBean bean = new OrderBean();
-
-			bean.setId(rs.getLong(1));
-			bean.setOrderName(rs.getString(2));
-			bean.setOrderPrice(rs.getString(3));
-			bean.setOrderDate(rs.getDate(4));
-			bean.setOrderStatus(rs.getString(5));
-
-			list.add(bean);
-
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + "," + pageSize);
 		}
 
-		rs.close();
+		Connection conn = null;
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				OrderBean bean = new OrderBean();
+				bean.setId(rs.getLong(1));
+				bean.setProductName(rs.getString(2));
+				bean.setDob(rs.getDate(3));
+				bean.setQuantity(rs.getLong(4));
+				bean.setCustomer(rs.getString(5));
+
+				list.add(bean);
+
+			}
+			rs.close();
+		} catch (Exception e) {
+			throw new ApplicationException("Exception : Exception in getting list of users");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
 
 		return list;
 	}
-
 }
-
-

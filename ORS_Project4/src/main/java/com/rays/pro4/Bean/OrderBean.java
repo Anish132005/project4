@@ -3,44 +3,52 @@ package com.rays.pro4.Bean;
 import java.util.Date;
 
 public class OrderBean extends BaseBean {
-	
-	private String OrderName;
-	private String OrderPrice;
-	private Date OrderDate;
-	private String OrderStatus;
-	
-	public String getOrderName() {
-		return OrderName;
+
+	private String ProductName;
+	private Date Dob;
+	private Long Quantity;
+	private String Customer;
+
+	public String getProductName() {
+		return ProductName;
 	}
-	public void setOrderName(String orderName) {
-		OrderName = orderName;
+
+	public void setProductName(String productName) {
+		ProductName = productName;
 	}
-	public String getOrderPrice() {
-		return OrderPrice;
+
+	public Date getDob() {
+		return Dob;
 	}
-	public void setOrderPrice(String orderPrice) {
-		OrderPrice = orderPrice;
+
+	public void setDob(Date dob) {
+		Dob = dob;
 	}
-	public Date getOrderDate() {
-		return OrderDate;
+
+	public Long getQuantity() {
+		return Quantity;
 	}
-	public void setOrderDate(Date orderDate) {
-		OrderDate = orderDate;
+
+	public void setQuantity(Long quantity) {
+		Quantity = quantity;
 	}
-	public String getOrderStatus() {
-		return OrderStatus;
+
+	public String getCustomer() {
+		return Customer;
 	}
-	public void setOrderStatus(String orderStatus) {
-		OrderStatus = orderStatus;
+
+	public void setCustomer(String customer) {
+		Customer = customer;
 	}
+
 	@Override
 	public String getkey() {
-		return id +"";
+		return null;
 	}
+
 	@Override
 	public String getValue() {
-		return OrderStatus+"";
+		return null;
 	}
-	
 
 }

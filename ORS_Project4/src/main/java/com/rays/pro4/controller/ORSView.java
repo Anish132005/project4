@@ -51,8 +51,6 @@ public interface ORSView {
 	public String BANK_VIEW = PAGE_FOLDER + "/BankView.jsp";
 	public String BANK_LIST_VIEW = PAGE_FOLDER + "/BankListView.jsp";
 
-	public String ORDER_VIEW = PAGE_FOLDER + "/OrderView.jsp";
-	public String ORDER_LIST_VIEW = PAGE_FOLDER + "/OrderListView.jsp";
 
 	public String PATIENT_VIEW = PAGE_FOLDER + "/PatientView.jsp";
 	public String PATIENT_LIST_VIEW = PAGE_FOLDER + "/PatientListView.jsp";
@@ -81,7 +79,26 @@ public interface ORSView {
 	public String ATM_VIEW = PAGE_FOLDER + "/AtmView.jsp";
 	public String ATM_LIST_VIEW = PAGE_FOLDER + "/AtmListView.jsp";
 
+	public String CUSTOMER_VIEW = PAGE_FOLDER + "/CustomerView.jsp";
+	public String CUSTOMER_LIST_VIEW = PAGE_FOLDER + "/CustomerListView.jsp";
 
+	public String LOAN_VIEW = PAGE_FOLDER + "/LoanView.jsp";
+	public String LOAN_LIST_VIEW = PAGE_FOLDER + "/LoanListView.jsp";
+
+	public String TRANSACTION_VIEW = PAGE_FOLDER + "/TransactionView.jsp";
+	public String TRANSACTION_LIST_VIEW = PAGE_FOLDER + "/TransactionListView.jsp";
+
+	public String ORDER_VIEW = PAGE_FOLDER + "/OrderView.jsp";
+	public String  ORDER_LIST_VIEW = PAGE_FOLDER + "/OrderListView.jsp";
+
+	public String SUPPLIER_VIEW = PAGE_FOLDER + "/SupplierView.jsp";
+	public String  SUPPLIER_LIST_VIEW = PAGE_FOLDER + "/SupplierListView.jsp";
+
+	public String PRODUCTS_VIEW = PAGE_FOLDER + "/ProductsView.jsp";
+	public String  PRODUCTS_LIST_VIEW = PAGE_FOLDER + "/ProductsListView.jsp";
+
+
+	
 	// public String ERROR_VIEW5 = PAGE_FOLDER + "/ErrorView5.jsp";
 
 	public String MARKSHEET_CTL = APP_CONTEXT + "/ctl/MarksheetCtl";
@@ -122,9 +139,7 @@ public interface ORSView {
 	public String BANK_CTL = APP_CONTEXT + "/ctl/BankCtl";
 	public String BANK_LIST_CTL = APP_CONTEXT + "/ctl/BankListCtl";
 
-	public String ORDER_CTL = APP_CONTEXT + "/ctl/OrderCtl";
-	public String ORDER_LIST_CTL = APP_CONTEXT + "/ctl/OrderListCtl";
-
+	
 	public String PATIENT_CTL = APP_CONTEXT + "/ctl/PatientCtl";
 	public String PATIENT_LIST_CTL = APP_CONTEXT + "/ctl/PatientListCtl";
 
@@ -151,5 +166,25 @@ public interface ORSView {
 	
 	public String ATM_CTL = APP_CONTEXT + "/ctl/AtmCtl";
 	public String  ATM_LIST_CTL = APP_CONTEXT + "/ctl/AtmListCtl";
+	
+	public String CUSTOMER_CTL = APP_CONTEXT + "/ctl/CustomerCtl";
+	public String  CUSTOMER_LIST_CTL = APP_CONTEXT + "/ctl/CustomerListCtl";
+	
+	public String LOAN_CTL = APP_CONTEXT + "/ctl/LoanCtl";
+	public String  LOAN_LIST_CTL = APP_CONTEXT + "/ctl/LoanListCtl";
+	
+	public String TRANSACTION_CTL = APP_CONTEXT + "/ctl/TransactionCtl";
+	public String  TRANSACTION_LIST_CTL = APP_CONTEXT + "/ctl/TransactionListCtl";
+	
+	public String ORDER_CTL = APP_CONTEXT + "/ctl/OrderCtl";
+	public String  ORDER_LIST_CTL = APP_CONTEXT + "/ctl/OrderListCtl";
+	
+	public String SUPPLIER_CTL = APP_CONTEXT + "/ctl/SupplierCtl";
+	public String  SUPPLIER_LIST_CTL = APP_CONTEXT + "/ctl/SupplierListCtl";
+	
+
+	public String PRODUCTS_CTL = APP_CONTEXT + "/ctl/ProductsCtl";
+	public String  PRODUCTS_LIST_CTL = APP_CONTEXT + "/ctl/ProductsListCtl";
+	
 
 }
