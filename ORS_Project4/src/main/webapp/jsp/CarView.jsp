@@ -33,6 +33,30 @@
 			input.value = input.value.slice(0, maxLength);
 		}
 	}
+	
+     function validateAndSave() {
+         const inputField = document.getElementById('numberInput');
+         const value = parseFloat(inputField.value);
+
+         // Check if the value is a positive number
+         if (isNaN(value) || value <= 0) {
+             alert('Please enter a valid positive number.');
+             inputField.focus();
+             return false;
+         }
+
+         // Save the positive number
+         saveNumber(value);
+         alert('Number saved: ' + value);
+         return false; // Prevent form submission for demonstration
+     }
+
+     function saveNumber(number) {
+         // Implement your saving logic here (e.g., sending to server or storing locally)
+         console.log('Saving the number:', number);
+     }
+
+
 </script>
 </head>
 <body>
@@ -107,7 +131,8 @@
 					<td><input type="number" name="Price" id="quantityInput"
 						placeholder="Enter Price" style="width: 205px"
 						value="<%=DataUtility.getStringData(bean.getPrice())%>"
-						oninput="limitInputLength(this, 9)"></td>
+						<form onsubmit="return validateAndSave()"></form>
+						></td>
 					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("Price", request)%></font></td>
 				</tr>
 

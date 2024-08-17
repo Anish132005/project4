@@ -46,7 +46,7 @@ public class ProductsCtl extends BaseCtl {
 			pass = false;
 		} else if (!DataValidator.isName(request.getParameter("Name"))) {
 			request.setAttribute("Name", "Name  must contains alphabet only");
-			pass = false;
+			pass = false; 
 		} else if (DataValidator.isTooLong(request.getParameter("Name"), 45)) {
 			request.setAttribute("Name", "Name contain 45 words");
 			pass = false;

@@ -98,6 +98,10 @@ public interface ORSView {
 
 	public String CAR_VIEW = PAGE_FOLDER + "/CarView.jsp";
 	public String CAR_LIST_VIEW = PAGE_FOLDER + "/CarListView.jsp";
+	
+	public String STOCK_VIEW = PAGE_FOLDER + "/StockView.jsp";
+	public String STOCK_LIST_VIEW = PAGE_FOLDER + "/StockListView.jsp";
+
 
 	// public String ERROR_VIEW5 = PAGE_FOLDER + "/ErrorView5.jsp";
 
@@ -186,5 +190,9 @@ public interface ORSView {
 
 	public String CAR_CTL = APP_CONTEXT + "/ctl/CarCtl";
 	public String CAR_LIST_CTL = APP_CONTEXT + "/ctl/CarListCtl";
+	
+	public String STOCK_CTL = APP_CONTEXT + "/ctl/StockCtl";
+	public String STOCK_LIST_CTL = APP_CONTEXT + "/ctl/StockListCtl";
+
 
 }

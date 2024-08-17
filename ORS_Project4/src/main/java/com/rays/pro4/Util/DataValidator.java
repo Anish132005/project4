@@ -6,6 +6,7 @@ import java.util.Date;
  * This class validates input data.
  * 
  * @author Anish Malviya
+
  *
  */
 public class DataValidator {
@@ -48,12 +49,16 @@ public class DataValidator {
 			return false;
 		}
 	}
-	
-	
+
+	public static boolean isPositveNumber(int value) {
+
+		return value > 0;
+
+	}
 
 	public static boolean isEmail(String val) {
 
-		String emailreg = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		String emailreg = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)(\\.[A-Za-z]{2,})$";
 
 		if (isNotNull(val)) {
 			try {
@@ -93,7 +98,7 @@ public class DataValidator {
 
 	public static boolean isPassword(String val) {
 
-		String passreg = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,12}";
+		String passreg = "(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=])(?=\\S+$).{8,12}";
 
 		if (isNotNull(val)) {
 			try {
@@ -137,22 +142,6 @@ public class DataValidator {
 			return false;
 		}
 	}
-	
-	public static boolean isNumber(String val) {
-
-		String phonereg = "^[6-9][0-9]{9}$";
-
-		if (isNotNull(val)) {
-			try {
-				return val.matches(phonereg);
-			} catch (NumberFormatException e) {
-				return false;
-			}
-
-		} else {
-			return false;
-		}
-	}
 
 	/**
 	 * Checks if value of Mobile No is 10
@@ -168,6 +157,20 @@ public class DataValidator {
 			return false;
 		}
 	}
+
+	/**
+	 * Checks if value is Date
+	 * 
+	 * @param val
+	 * @return
+	 */
+
+	/**
+	 * Checks if Date is on Sunday
+	 * 
+	 * @param val
+	 * @return
+	 */
 
 	public static boolean isRollNo(String val) {
 
@@ -210,37 +213,16 @@ public class DataValidator {
 			return false;
 		}
 	}
-	
-	public static boolean isDouble(String val) {
-	    if (val == null || val.isEmpty()) {
-	        return false;
-	    }
-	    try {
-	        Double.parseDouble(val);
-	        return true;
-	    } catch (NumberFormatException e) {
-	        return false;
-	    }
-	}
-	
-	public static boolean isTooLong(String val, int maxLength) {
-	    if (isNotNull(val)) {
-	        return val.length() > maxLength;
-	    } else {
-	        return false;
-	    }
-	}
 
 	public static void main(String[] args) {
 		System.out.println("Not Null 2" + isNotNull("ABC"));
 		System.out.println("Not Null 3" + isNotNull(null));
 		System.out.println("Not Null 4" + isNull("123"));
+
 		System.out.println("is int" + isInteger(null));
 		System.out.println("Is int" + isInteger("ABC1"));
 		System.out.println("Is Int" + isInteger("123"));
 		System.out.println("is Int" + isNotNull("123"));
-		System.out.println("is mobile no " + isMobileNo("9669330519"));
 	}
 
-	
 }

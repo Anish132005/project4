@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class StockBean extends BaseBean {
 
-	private int quantity;
+	private Integer quantity;
 	private Double purchasePrice;
 	private Date purchaseDate;
 	private String orderType;
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 

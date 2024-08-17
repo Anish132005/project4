@@ -23,29 +23,28 @@ import com.rays.pro4.Util.ServletUtility;
 @WebServlet(name = "CarCtl", urlPatterns = { "/ctl/CarCtl" })
 public class CarCtl extends BaseCtl {
 
+	
+
 	@Override
 	protected void preload(HttpServletRequest request) {
 		CarModel model = new CarModel();
 
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		
+
 		map.put(1, "Sizuki");
 		map.put(2, "Toyta");
 		map.put(3, "Mahindra");
 
 		request.setAttribute("prolist", map);
 
-		
-			Map<Integer, String> map1 = new HashMap<Integer, String>();
-			
-			map1.put(1, "2018, Swift");
-			map1.put(2, "2019, Fortuner");
-			map1.put(3, "2019 ,Thar");
+		Map<Integer, String> map1 = new HashMap<Integer, String>();
 
+		map1.put(1, "2018, Swift");
+		map1.put(2, "2019, Fortuner");
+		map1.put(3, "2019 ,Thar");
 
-			request.setAttribute("prolist1", map1);
-		}
-
+		request.setAttribute("prolist1", map1);
+	}
 
 	@Override
 	protected boolean validate(HttpServletRequest request) {
@@ -69,6 +68,9 @@ public class CarCtl extends BaseCtl {
 
 			request.setAttribute("Price", PropertyReader.getValue("error.require", "Price"));
 			pass = false;
+		}else if (!DataValidator.isPositveNumber(Integer.parseInt(request.getParameter("Price")))) {
+			request.setAttribute("Price", "Price contain only pos");
+			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("dob"))) {
 			request.setAttribute("dob", PropertyReader.getValue("error.require", "dob"));
@@ -81,13 +83,14 @@ public class CarCtl extends BaseCtl {
 
 			request.setAttribute("OwnerName", PropertyReader.getValue("error.require", "OwnerName"));
 			pass = false;
-		} else if (!DataValidator.isName(request.getParameter("OwnerName"))) {
-			System.out.println("in ownername isname");
-			request.setAttribute("OwnerName", "OwnerName  must contains alphabet only");
-			pass = false;
-		} else if (DataValidator.isTooLong(request.getParameter("OwnerName"), 45)) {
-			request.setAttribute("OwnerName", "OwnerName contain 45 words");
-			pass = false;
+			/*
+			 * } else if (!DataValidator.isAlphanumeric(request.getParameter("OwnerName")))
+			 * { request.setAttribute("OwnerName",
+			 * "Please enter  letters and numbers both"); pass = false; } else if
+			 * (DataValidator.isTooLong(request.getParameter("OwnerName"), 45)) {
+			 * request.setAttribute("OwnerName", "OwnerName contain 1-45 Characters"); pass
+			 * = false;
+			 */
 		}
 		return pass;
 
