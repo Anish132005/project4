@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rays.pro4.Bean.OrderBean;
-import com.rays.pro4.Bean.StockBean;
+import com.rays.pro4.Bean.PortfolioBean;
+import com.rays.pro4.Bean.StaffBean;
 import com.rays.pro4.Exception.ApplicationException;
 import com.rays.pro4.Exception.DatabaseException;
 import com.rays.pro4.Exception.DuplicateRecordException;
 import com.rays.pro4.Util.JDBCDataSource;
 
-public class StockModel {
-
+public class StaffModel {
 	public int nextPK() throws DatabaseException {
 
-		String sql = "SELECT MAX(ID) FROM st_stock";
+		String sql = "SELECT MAX(ID) FROM st_staff";
 		Connection conn = null;
 		int pk = 0;
 		try {
@@ -40,9 +40,9 @@ public class StockModel {
 
 	}
 
-	public long add(StockBean bean) throws ApplicationException, DuplicateRecordException {
+	public long add(StaffBean bean) throws ApplicationException, DuplicateRecordException {
 
-		String sql = "INSERT INTO st_stock VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO st_staff VALUES(?,?,?,?,?,?)";
 
 		Connection conn = null;
 		int pk = 0;
@@ -55,10 +55,11 @@ public class StockModel {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, pk);
-			pstmt.setInt(2, bean.getQuantity());
-			pstmt.setDouble(3, bean.getPurchasePrice());
-			pstmt.setDate(4, new java.sql.Date(bean.getPurchaseDate().getTime()));
-			pstmt.setString(5, bean.getOrderType());
+			pstmt.setInt(2, bean.getIdentifier());
+			pstmt.setString(3, bean.getFullName());
+			pstmt.setDate(4, new java.sql.Date(bean.getDob().getTime()));
+			pstmt.setString(5, bean.getDivision());
+			pstmt.setString(6, bean.getPreviousEmployer());
 
 			int a = pstmt.executeUpdate();
 			System.out.println("ho gyua re" + a);
@@ -86,9 +87,9 @@ public class StockModel {
 
 	}
 
-	public void delete(StockBean bean) throws ApplicationException {
+	public void delete(StaffBean bean) throws ApplicationException {
 
-		String sql = "DELETE FROM st_stock WHERE ID=?";
+		String sql = "DELETE FROM st_staff WHERE ID=?";
 		Connection conn = null;
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -113,20 +114,21 @@ public class StockModel {
 
 	}
 
-	public void update(StockBean bean) throws ApplicationException, DuplicateRecordException {
+	public void update(StaffBean bean) throws ApplicationException, DuplicateRecordException {
 
-		String sql = "UPDATE st_stock SET quantity=?,purchasePrice=?,puchaseDate=?,orderType=? WHERE ID=?";
+		String sql = "UPDATE st_staff SET identifier=?,fullname=?,dob=?,division=?,previousemployer=? WHERE ID=?";
 		Connection conn = null;
 
 		try {
 			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, bean.getQuantity());
-			pstmt.setDouble(2, bean.getPurchasePrice());
-			pstmt.setDate(3, new java.sql.Date(bean.getPurchaseDate().getTime()));
-			pstmt.setString(4, bean.getOrderType());
-			pstmt.setLong(5, bean.getId());
+			pstmt.setInt(1, bean.getIdentifier());
+			pstmt.setString(2, bean.getFullName());
+			pstmt.setDate(3, new java.sql.Date(bean.getDob().getTime()));
+			pstmt.setString(4, bean.getDivision());
+			pstmt.setString(5, bean.getPreviousEmployer());
+			pstmt.setLong(6, bean.getId());
 
 			pstmt.executeUpdate();
 			int i = pstmt.executeUpdate();
@@ -152,30 +154,31 @@ public class StockModel {
 	 * search(bean); }
 	 */
 
-	public List search(StockBean bean, int pageNo, int pageSize) throws ApplicationException {
+	public List search(StaffBean bean, int pageNo, int pageSize) throws ApplicationException {
 
-		StringBuffer sql = new StringBuffer("SELECT *FROM st_stock WHERE 1=1");
+		StringBuffer sql = new StringBuffer("SELECT *FROM st_staff WHERE 1=1");
 		if (bean != null) {
 			if (bean != null && bean.getId() > 0) {
 
 				sql.append(" AND id = " + bean.getId());
 
 			}
-			if (bean.getQuantity() != null && bean.getQuantity() > 0) {
-				sql.append(" AND quantity  = '" + bean.getQuantity() + "%'");
+			if (bean.getIdentifier() != null && bean.getIdentifier() > 0) {
+				sql.append(" AND identifier = '" + bean.getIdentifier() + "%'");
+			}
+			if (bean.getFullName() != null && bean.getFullName().length() > 0) {
+				sql.append(" AND fullName like '" + bean.getFullName() + "%'");
+			}
+			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
+				Date d = new Date(bean.getDob().getDate());
+				sql.append(" AND dob like '" + new java.sql.Date(bean.getDob().getTime()) + "%'");
 			}
 
-			if (bean.getPurchasePrice() != null && bean.getPurchasePrice() > 0) {
-				sql.append(" AND purchasePrice  = '" + bean.getPurchasePrice() + "%'");
+			if (bean.getDivision() != null && bean.getDivision().length() > 0) {
+				sql.append(" AND division like '" + bean.getDivision() + "%'");
 			}
-
-			if (bean.getPurchaseDate() != null && bean.getPurchaseDate().getTime() > 0) {
-				Date d = new Date(bean.getPurchaseDate().getTime());
-				sql.append(" AND puchaseDate = '" + d + "'");
-				System.out.println("done");
-			}
-			if (bean.getOrderType() != null && bean.getOrderType().length() > 0) {
-				sql.append(" AND orderType like '" + bean.getOrderType() + "%'");
+			if (bean.getPreviousEmployer() != null && bean.getPreviousEmployer().length() > 0) {
+				sql.append(" AND previousEmployer like '" + bean.getPreviousEmployer() + "%'");
 			}
 
 			if (pageSize > 0) {
@@ -195,12 +198,13 @@ public class StockModel {
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				bean = new StockBean();
+				bean = new StaffBean();
 				bean.setId(rs.getLong(1));
-				bean.setQuantity(rs.getInt(2));
-				bean.setPurchasePrice(rs.getDouble(3));
-				bean.setPurchaseDate(rs.getDate(4));
-				bean.setOrderType(rs.getString(5));
+				bean.setIdentifier(rs.getInt(2));
+				bean.setFullName(rs.getString(3));
+				bean.setDob(rs.getDate(4));
+				bean.setDivision(rs.getString(5));
+				bean.setPreviousEmployer(rs.getString(6));
 
 				list.add(bean);
 
@@ -217,10 +221,10 @@ public class StockModel {
 
 	}
 
-	public StockBean findByPK(long pk) throws ApplicationException {
+	public StaffBean findByPK(long pk) throws ApplicationException {
 
-		String sql = "SELECT * FROM st_stock WHERE ID=?";
-		StockBean bean = null;
+		String sql = "SELECT * FROM st_staff WHERE ID=?";
+		StaffBean bean = null;
 		Connection conn = null;
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -228,12 +232,13 @@ public class StockModel {
 			pstmt.setLong(1, pk);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				bean = new StockBean();
+				bean = new StaffBean();
 				bean.setId(rs.getLong(1));
-				bean.setQuantity(rs.getInt(2));
-				bean.setPurchasePrice(rs.getDouble(3));
-				bean.setPurchaseDate(rs.getDate(4));
-				bean.setOrderType(rs.getString(5));
+				bean.setIdentifier(rs.getInt(2));
+				bean.setFullName(rs.getString(3));
+				bean.setDob(rs.getDate(4));
+				bean.setDivision(rs.getString(5));
+				bean.setPreviousEmployer(rs.getString(6));
 
 			}
 			rs.close();
@@ -255,7 +260,7 @@ public class StockModel {
 	public List list(int pageNo, int pageSize) throws ApplicationException {
 
 		ArrayList list = new ArrayList();
-		StringBuffer sql = new StringBuffer("select * from st_stock");
+		StringBuffer sql = new StringBuffer("select * from st_staff");
 
 		if (pageSize > 0) {
 			pageNo = (pageNo - 1) * pageSize;
@@ -269,13 +274,13 @@ public class StockModel {
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				StockBean bean = new StockBean();
+				StaffBean bean = new StaffBean();
 				bean.setId(rs.getLong(1));
-				bean.setQuantity(rs.getInt(2));
-				bean.setPurchasePrice(rs.getDouble(3));
-				bean.setPurchaseDate(rs.getDate(4));
-				bean.setOrderType(rs.getString(5));
-
+				bean.setIdentifier(rs.getInt(2));
+				bean.setFullName(rs.getString(3));
+				bean.setDob(rs.getDate(4));
+				bean.setDivision(rs.getString(5));
+				bean.setPreviousEmployer(rs.getString(6));
 				list.add(bean);
 
 			}

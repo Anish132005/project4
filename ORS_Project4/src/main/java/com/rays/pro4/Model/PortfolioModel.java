@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rays.pro4.Bean.OrderBean;
-import com.rays.pro4.Bean.StockBean;
+import com.rays.pro4.Bean.PortfolioBean;
 import com.rays.pro4.Exception.ApplicationException;
 import com.rays.pro4.Exception.DatabaseException;
 import com.rays.pro4.Exception.DuplicateRecordException;
 import com.rays.pro4.Util.JDBCDataSource;
 
-public class StockModel {
+public class PortfolioModel {
 
 	public int nextPK() throws DatabaseException {
 
-		String sql = "SELECT MAX(ID) FROM st_stock";
+		String sql = "SELECT MAX(ID) FROM st_portfolio";
 		Connection conn = null;
 		int pk = 0;
 		try {
@@ -40,9 +40,9 @@ public class StockModel {
 
 	}
 
-	public long add(StockBean bean) throws ApplicationException, DuplicateRecordException {
+	public long add(PortfolioBean bean) throws ApplicationException, DuplicateRecordException {
 
-		String sql = "INSERT INTO st_stock VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO st_portfolio VALUES(?,?,?,?,?)";
 
 		Connection conn = null;
 		int pk = 0;
@@ -55,10 +55,10 @@ public class StockModel {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, pk);
-			pstmt.setInt(2, bean.getQuantity());
-			pstmt.setDouble(3, bean.getPurchasePrice());
-			pstmt.setDate(4, new java.sql.Date(bean.getPurchaseDate().getTime()));
-			pstmt.setString(5, bean.getOrderType());
+			pstmt.setString(2, bean.getPortfolioName());
+			pstmt.setInt(3, bean.getAmount());
+			pstmt.setString(4, bean.getLevel());
+			pstmt.setString(5, bean.getStrategy());
 
 			int a = pstmt.executeUpdate();
 			System.out.println("ho gyua re" + a);
@@ -86,9 +86,9 @@ public class StockModel {
 
 	}
 
-	public void delete(StockBean bean) throws ApplicationException {
+	public void delete(PortfolioBean bean) throws ApplicationException {
 
-		String sql = "DELETE FROM st_stock WHERE ID=?";
+		String sql = "DELETE FROM st_portfolio WHERE ID=?";
 		Connection conn = null;
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -113,19 +113,19 @@ public class StockModel {
 
 	}
 
-	public void update(StockBean bean) throws ApplicationException, DuplicateRecordException {
+	public void update(PortfolioBean bean) throws ApplicationException, DuplicateRecordException {
 
-		String sql = "UPDATE st_stock SET quantity=?,purchasePrice=?,puchaseDate=?,orderType=? WHERE ID=?";
+		String sql = "UPDATE st_portfolio SET portfolioName=?,Amount=?,level=?,Strategy=? WHERE ID=?";
 		Connection conn = null;
 
 		try {
 			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, bean.getQuantity());
-			pstmt.setDouble(2, bean.getPurchasePrice());
-			pstmt.setDate(3, new java.sql.Date(bean.getPurchaseDate().getTime()));
-			pstmt.setString(4, bean.getOrderType());
+			pstmt.setString(1, bean.getPortfolioName());
+			pstmt.setInt(2, bean.getAmount());
+			pstmt.setString(3, bean.getLevel());
+			pstmt.setString(4, bean.getStrategy());
 			pstmt.setLong(5, bean.getId());
 
 			pstmt.executeUpdate();
@@ -152,30 +152,28 @@ public class StockModel {
 	 * search(bean); }
 	 */
 
-	public List search(StockBean bean, int pageNo, int pageSize) throws ApplicationException {
+	public List search(PortfolioBean bean, int pageNo, int pageSize) throws ApplicationException {
 
-		StringBuffer sql = new StringBuffer("SELECT *FROM st_stock WHERE 1=1");
+		StringBuffer sql = new StringBuffer("SELECT *FROM st_portfolio WHERE 1=1");
 		if (bean != null) {
 			if (bean != null && bean.getId() > 0) {
 
 				sql.append(" AND id = " + bean.getId());
 
 			}
-			if (bean.getQuantity() != null && bean.getQuantity() > 0) {
-				sql.append(" AND quantity  = '" + bean.getQuantity() + "%'");
+			if (bean.getPortfolioName() != null && bean.getPortfolioName().length() > 0) {
+				sql.append(" AND portfolioName like '" + bean.getPortfolioName() + "%'");
 			}
 
-			if (bean.getPurchasePrice() != null && bean.getPurchasePrice() > 0) {
-				sql.append(" AND purchasePrice  = '" + bean.getPurchasePrice() + "%'");
+			if ( bean.getAmount() != null && bean.getAmount() > 0) {
+				sql.append(" AND Amount =" + bean.getAmount());
 			}
 
-			if (bean.getPurchaseDate() != null && bean.getPurchaseDate().getTime() > 0) {
-				Date d = new Date(bean.getPurchaseDate().getTime());
-				sql.append(" AND puchaseDate = '" + d + "'");
-				System.out.println("done");
+			if (bean.getLevel() != null && bean.getLevel().length() > 0) {
+				sql.append(" AND level like '" + bean.getLevel() + "%'");
 			}
-			if (bean.getOrderType() != null && bean.getOrderType().length() > 0) {
-				sql.append(" AND orderType like '" + bean.getOrderType() + "%'");
+			if (bean.getStrategy() != null && bean.getStrategy().length() > 0) {
+				sql.append(" AND Strategy like '" + bean.getStrategy() + "%'");
 			}
 
 			if (pageSize > 0) {
@@ -195,12 +193,12 @@ public class StockModel {
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				bean = new StockBean();
+				bean = new PortfolioBean();
 				bean.setId(rs.getLong(1));
-				bean.setQuantity(rs.getInt(2));
-				bean.setPurchasePrice(rs.getDouble(3));
-				bean.setPurchaseDate(rs.getDate(4));
-				bean.setOrderType(rs.getString(5));
+				bean.setPortfolioName(rs.getString(2));
+				bean.setAmount(rs.getInt(3));
+				bean.setLevel(rs.getString(4));
+				bean.setStrategy(rs.getString(5));
 
 				list.add(bean);
 
@@ -217,10 +215,10 @@ public class StockModel {
 
 	}
 
-	public StockBean findByPK(long pk) throws ApplicationException {
+	public PortfolioBean findByPK(long pk) throws ApplicationException {
 
-		String sql = "SELECT * FROM st_stock WHERE ID=?";
-		StockBean bean = null;
+		String sql = "SELECT * FROM st_portfolio WHERE ID=?";
+		PortfolioBean bean = null;
 		Connection conn = null;
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -228,12 +226,12 @@ public class StockModel {
 			pstmt.setLong(1, pk);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				bean = new StockBean();
+				bean = new PortfolioBean();
 				bean.setId(rs.getLong(1));
-				bean.setQuantity(rs.getInt(2));
-				bean.setPurchasePrice(rs.getDouble(3));
-				bean.setPurchaseDate(rs.getDate(4));
-				bean.setOrderType(rs.getString(5));
+				bean.setPortfolioName(rs.getString(2));
+				bean.setAmount(rs.getInt(3));
+				bean.setLevel(rs.getString(4));
+				bean.setStrategy(rs.getString(5));
 
 			}
 			rs.close();
@@ -255,7 +253,7 @@ public class StockModel {
 	public List list(int pageNo, int pageSize) throws ApplicationException {
 
 		ArrayList list = new ArrayList();
-		StringBuffer sql = new StringBuffer("select * from st_stock");
+		StringBuffer sql = new StringBuffer("select * from st_portfolio");
 
 		if (pageSize > 0) {
 			pageNo = (pageNo - 1) * pageSize;
@@ -269,13 +267,12 @@ public class StockModel {
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				StockBean bean = new StockBean();
+				PortfolioBean bean = new PortfolioBean();
 				bean.setId(rs.getLong(1));
-				bean.setQuantity(rs.getInt(2));
-				bean.setPurchasePrice(rs.getDouble(3));
-				bean.setPurchaseDate(rs.getDate(4));
-				bean.setOrderType(rs.getString(5));
-
+				bean.setPortfolioName(rs.getString(2));
+				bean.setAmount(rs.getInt(3));
+				bean.setLevel(rs.getString(4));
+				bean.setStrategy(rs.getString(5));
 				list.add(bean);
 
 			}

@@ -1,8 +1,8 @@
-<%@page import="com.rays.pro4.controller.StockCtl"%>
-<%@page import="com.rays.pro4.Util.DataUtility"%>
 <%@page import="com.rays.pro4.Util.HTMLUtility"%>
 <%@page import="com.rays.pro4.Util.ServletUtility"%>
 <%@page import="java.util.Map"%>
+<%@page import="com.rays.pro4.Util.DataUtility"%>
+<%@page import="com.rays.pro4.controller.PortfolioCtl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -58,12 +58,12 @@
 </script>
 </head>
 <body>
-	<jsp:useBean id="bean" class="com.rays.pro4.Bean.StockBean"
+	<jsp:useBean id="bean" class="com.rays.pro4.Bean.PortfolioBean"
 		scope="request"></jsp:useBean>
 	<%@ include file="Header.jsp"%>
 
 	<center>
-		<form action="<%=ORSView.STOCK_CTL%>" method="post">
+		<form action="<%=ORSView.PORTFOLIO_CTL%>" method="post">
 
 			<div align="center">
 				<h1>
@@ -71,20 +71,20 @@
 						if (bean != null && bean.getId() > 0) {
 					%>
 					<tr>
-						<th><font size="5px"> Update StockPurchase </font></th>
+						<th><font size="5px"> Update Portfolio </font></th>
 					</tr>
 					<%
 						} else {
 					%>
 					<tr>
-						<th><font size="5px"> Add StockPurchase </font></th>
+						<th><font size="5px"> Add Portfolio </font></th>
 					</tr>
 					<%
 						}
 					%>
 
 					<%
-						Map map = (Map) request.getAttribute("prolist");
+						Map<Integer, String> map = (Map<Integer, String>) request.getAttribute("prolist");
 					%>
 				</h1>
 
@@ -99,12 +99,13 @@
 
 			<table>
 				<tr>
-					<th align="left">orderType<span style="color: red">*</span> :
+					<th align="left">RiskTolranceLevel<span style="color: red">*</span>
+						:
 					</th>
-					<td></label> <%=HTMLUtility.getList1("orderType", String.valueOf(bean.getOrderType()), map)%>
+					<td></label> <%=HTMLUtility.getList2("level", String.valueOf(bean.getLevel()), map)%>
 
 					</td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("orderType", request)%></font></td>
+					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("level", request)%></font></td>
 				</tr>
 				<tr>
 					<th style="padding: 1px"></th>
@@ -116,43 +117,46 @@
 					<th style="padding: 1px"></th>
 				</tr>
 				<tr>
-					<th align="left">quantity<span style="color: red">*</span> :
+					<th align="left">IntialInvestmentAmount<span
+						style="color: red">*</span> :
 					</th>
-					<td><input type="number" name="quantity" id="quantityInput"
-						placeholder="Enter quantity" style="width: 205px"
-						value="<%=DataUtility.getStringData(bean.getQuantity())%>"
-						 oninput="limitInputLength(this, 9)"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("quantity", request)%></font></td>
-				</tr>
-				
-				<tr>
-					<th style="padding: 1px"></th>
-				</tr>
-				
-				
-				<tr>
-					<th align="left">purchasePrice<span style="color: red">*</span> :
-					</th>
-					<td><input type="number" name="purchasePrice" id="quantityInput"
-						placeholder="Enter purchasePrice" style="width: 205px"
-						value="<%=DataUtility.getStringData(bean.getPurchasePrice())%>"
-						 oninput="limitInputLength(this, 20)"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("purchasePrice", request)%></font></td>
+					<td><input type="number" name="Amount" id="quantityInput"
+						placeholder="Enter Amount" style="width: 205px"
+						value="<%=DataUtility.getStringData(bean.getAmount())%>"
+						oninput="limitInputLength(this, 9)"></td>
+					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("Amount", request)%></font></td>
 				</tr>
 
 				<tr>
 					<th style="padding: 1px"></th>
 				</tr>
 
+
 				<tr>
-					<th align="left">purchaseDate <span style="color: red">*</span> :
+					<th align="left">portfolioName <span style="color: red">*</span>
+						:
 					</th>
-					<td><input type="text" name="purchaseDate" placeholder="Enter purchaseDate "
-						size="26" id="udatee" readonly="readonly"
-						value="<%=DataUtility.getDateString(bean.getPurchaseDate())%>"></td>
-					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("purchaseDate", request)%></font></td>
+					<td><input type="text" name="portfolioName"
+						placeholder="Enter portfolioName" size="26"
+						value="<%=DataUtility.getStringData(bean.getPortfolioName())%>"></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("portfolioName", request)%></font></td>
+
 				</tr>
 
+				<tr>
+					<th style="padding: 1px"></th>
+				</tr>
+
+				<tr>
+					<th align="left">InvestmentStrategy<span style="color: red">*</span>
+						:
+					</th>
+					<td><textarea name="Strategy" placeholder="Enter Strategy"
+							rows="5" cols="25" oninput="limitWords(this, 200)"><%=DataUtility.getStringData(bean.getStrategy())%></textarea>
+					</td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("Strategy", request)%></font>
+					</td>
+				</tr>
 				<tr>
 					<th style="padding: 1px"></th>
 				</tr>
@@ -164,17 +168,18 @@
 					if (bean.getId() > 0) {
 				%>
 				<td colspan="2">&nbsp; &emsp; <input type="submit"
-					name="operation" value="<%=StockCtl.OP_UPDATE%>"> &nbsp;
-					&nbsp; <input type="submit" name="operation"
-					value="<%=StockCtl.OP_CANCEL%>"></td>
+					name="operation" value="<%=PortfolioCtl.OP_UPDATE%>">
+					&nbsp; &nbsp; <input type="submit" name="operation"
+					value="<%=PortfolioCtl.OP_CANCEL%>"></td>
 
 				<%
 					} else {
 				%>
 
 				<td colspan="2">&nbsp; &emsp; <input type="submit"
-					name="operation" value="<%=StockCtl.OP_SAVE%>"> &nbsp; &nbsp;
-					<input type="submit" name="operation" value="<%=StockCtl.OP_RESET%>"></td>
+					name="operation" value="<%=PortfolioCtl.OP_SAVE%>"> &nbsp;
+					&nbsp; <input type="submit" name="operation"
+					value="<%=PortfolioCtl.OP_RESET%>"></td>
 
 				<%
 					}

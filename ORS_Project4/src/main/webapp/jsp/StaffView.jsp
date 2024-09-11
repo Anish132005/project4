@@ -1,8 +1,8 @@
-<%@page import="com.rays.pro4.controller.StockCtl"%>
+<%@page import="java.util.Map"%>
+<%@page import="com.rays.pro4.controller.StaffCtl"%>
 <%@page import="com.rays.pro4.Util.DataUtility"%>
 <%@page import="com.rays.pro4.Util.HTMLUtility"%>
 <%@page import="com.rays.pro4.Util.ServletUtility"%>
-<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -58,12 +58,12 @@
 </script>
 </head>
 <body>
-	<jsp:useBean id="bean" class="com.rays.pro4.Bean.StockBean"
+	<jsp:useBean id="bean" class="com.rays.pro4.Bean.StaffBean"
 		scope="request"></jsp:useBean>
 	<%@ include file="Header.jsp"%>
 
 	<center>
-		<form action="<%=ORSView.STOCK_CTL%>" method="post">
+		<form action="<%=ORSView.STAFF_CTL%>" method="post">
 
 			<div align="center">
 				<h1>
@@ -71,20 +71,20 @@
 						if (bean != null && bean.getId() > 0) {
 					%>
 					<tr>
-						<th><font size="5px"> Update StockPurchase </font></th>
+						<th><font size="5px"> Update Staff </font></th>
 					</tr>
 					<%
 						} else {
 					%>
 					<tr>
-						<th><font size="5px"> Add StockPurchase </font></th>
+						<th><font size="5px"> Add Staff </font></th>
 					</tr>
 					<%
 						}
 					%>
 
 					<%
-						Map map = (Map) request.getAttribute("prolist");
+						Map<Integer, String> map = (Map<Integer, String>) request.getAttribute("prolist");
 					%>
 				</h1>
 
@@ -99,12 +99,12 @@
 
 			<table>
 				<tr>
-					<th align="left">orderType<span style="color: red">*</span> :
+					<th align="left">division<span size<%=100%> style="color: red">*</span> :
 					</th>
-					<td></label> <%=HTMLUtility.getList1("orderType", String.valueOf(bean.getOrderType()), map)%>
+					<td></label> <%=HTMLUtility.getList2("division", String.valueOf(bean.getDivision()), map)%>
 
 					</td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("orderType", request)%></font></td>
+					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("division", request)%></font></td>
 				</tr>
 				<tr>
 					<th style="padding: 1px"></th>
@@ -116,43 +116,54 @@
 					<th style="padding: 1px"></th>
 				</tr>
 				<tr>
-					<th align="left">quantity<span style="color: red">*</span> :
+					<th align="left">identifier<span style="color: red">*</span> :
 					</th>
-					<td><input type="number" name="quantity" id="quantityInput"
-						placeholder="Enter quantity" style="width: 205px"
-						value="<%=DataUtility.getStringData(bean.getQuantity())%>"
-						 oninput="limitInputLength(this, 9)"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("quantity", request)%></font></td>
-				</tr>
-				
-				<tr>
-					<th style="padding: 1px"></th>
-				</tr>
-				
-				
-				<tr>
-					<th align="left">purchasePrice<span style="color: red">*</span> :
-					</th>
-					<td><input type="number" name="purchasePrice" id="quantityInput"
-						placeholder="Enter purchasePrice" style="width: 205px"
-						value="<%=DataUtility.getStringData(bean.getPurchasePrice())%>"
-						 oninput="limitInputLength(this, 20)"></td>
-					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("purchasePrice", request)%></font></td>
+					<td><input type="number" name="identifier" id="quantityInput"
+						placeholder="Enter identifier" style="width: 199px"
+						value="<%=DataUtility.getStringData(bean.getIdentifier())%>"
+						oninput="limitInputLength(this, 9)"></td>
+					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("identifier", request)%></font></td>
 				</tr>
 
 				<tr>
 					<th style="padding: 1px"></th>
 				</tr>
 
+
 				<tr>
-					<th align="left">purchaseDate <span style="color: red">*</span> :
+					<th align="left">fullName <span style="color: red">*</span> :
 					</th>
-					<td><input type="text" name="purchaseDate" placeholder="Enter purchaseDate "
-						size="26" id="udatee" readonly="readonly"
-						value="<%=DataUtility.getDateString(bean.getPurchaseDate())%>"></td>
-					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("purchaseDate", request)%></font></td>
+					<td><input type="text" name="fullName"
+						placeholder="Enter fullName" size="26"
+						value="<%=DataUtility.getStringData(bean.getFullName())%>"></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("fullName", request)%></font></td>
+
 				</tr>
 
+				<tr>
+					<th align="left">previousEmployer <span style="color: red">*</span>
+						:
+					</th>
+					<td><input type="text" name="previousEmployer"
+						placeholder="Enter previousEmployer" size="26"
+						value="<%=DataUtility.getStringData(bean.getPreviousEmployer())%>"></td>
+					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("previousEmployer", request)%></font></td>
+
+				</tr>
+
+				<tr>
+					<th style="padding: 1px"></th>
+				</tr>
+
+				<tr>
+					<th align="left">JoiningDate <span style="color: red">*</span>
+						:
+					</th>
+					<td><input type="text" name="dob"
+						placeholder="Enter JoiningDate" size="26" readonly="readonly"
+						id="udatee" value="<%=DataUtility.getDateString(bean.getDob())%>"></td>
+					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("dob", request)%></font></td>
+				</tr>
 				<tr>
 					<th style="padding: 1px"></th>
 				</tr>
@@ -164,17 +175,18 @@
 					if (bean.getId() > 0) {
 				%>
 				<td colspan="2">&nbsp; &emsp; <input type="submit"
-					name="operation" value="<%=StockCtl.OP_UPDATE%>"> &nbsp;
+					name="operation" value="<%=StaffCtl.OP_UPDATE%>"> &nbsp;
 					&nbsp; <input type="submit" name="operation"
-					value="<%=StockCtl.OP_CANCEL%>"></td>
+					value="<%=StaffCtl.OP_CANCEL%>"></td>
 
 				<%
 					} else {
 				%>
 
 				<td colspan="2">&nbsp; &emsp; <input type="submit"
-					name="operation" value="<%=StockCtl.OP_SAVE%>"> &nbsp; &nbsp;
-					<input type="submit" name="operation" value="<%=StockCtl.OP_RESET%>"></td>
+					name="operation" value="<%=StaffCtl.OP_SAVE%>"> &nbsp;
+					&nbsp; <input type="submit" name="operation"
+					value="<%=StaffCtl.OP_RESET%>"></td>
 
 				<%
 					}

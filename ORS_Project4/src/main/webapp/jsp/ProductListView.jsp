@@ -86,6 +86,7 @@
 					</label> <input type="text" name="productPrice"
 						placeholder="Enter productPrice "
 						value="<%=ServletUtility.getParameter("productPrice", request)%>">
+						
 					 <td align="center"><label>productDate</font> :
 					</label> <input type="text" name="productDate" placeholder="Enter productDate" 
 						id="udate" readonly="readonly"

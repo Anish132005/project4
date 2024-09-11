@@ -48,8 +48,6 @@ public class DataValidator {
 			return false;
 		}
 	}
-	
-	
 
 	public static boolean isEmail(String val) {
 
@@ -137,7 +135,7 @@ public class DataValidator {
 			return false;
 		}
 	}
-	
+
 	public static boolean isNumber(String val) {
 
 		String phonereg = "^[6-9][0-9]{9}$";
@@ -153,6 +151,34 @@ public class DataValidator {
 			return false;
 		}
 	}
+
+	public static boolean isPositiveNumber(int value) {
+
+		if (value > 0) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+	
+	 public static boolean isStringLengthValid(String input, int minLength) {
+	        return input != null && input.length() >= minLength;
+	    }
+	
+	 public static boolean isvalidateStringLength(String input, int minLength) {
+	        if (input == null) {
+	            System.out.println("Input cannot be null.");
+	            return false;
+	        }
+
+	        if (input.length() < minLength) {
+	            System.out.println("Input must be at least " + minLength + " characters long.");
+	            return false;
+	        }
+
+	        return true;
+	    }
 
 	/**
 	 * Checks if value of Mobile No is 10
@@ -210,25 +236,55 @@ public class DataValidator {
 			return false;
 		}
 	}
-	
+
 	public static boolean isDouble(String val) {
-	    if (val == null || val.isEmpty()) {
-	        return false;
-	    }
-	    try {
-	        Double.parseDouble(val);
-	        return true;
-	    } catch (NumberFormatException e) {
-	        return false;
-	    }
+		if (val == null || val.isEmpty()) {
+			return false;
+		}
+		try {
+			Double.parseDouble(val);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
-	
+
+	// Method to check if a string is alphanumeric
+	public static boolean isAlphanumeric(String s) {
+		if (s == null) {
+			return false;
+		}
+
+		// Check if the string is alphanumeric
+		if (!s.matches("[a-zA-Z0-9]+")) {
+			return false;
+		}
+
+		// Check if the string contains both letters and numbers
+		boolean hasLetter = false;
+		boolean hasDigit = false;
+
+		for (char c : s.toCharArray()) {
+			if (Character.isLetter(c)) {
+				hasLetter = true;
+			} else if (Character.isDigit(c)) {
+				hasDigit = true;
+			}
+			// If both letter and digit are found, no need to check further
+			if (hasLetter && hasDigit) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean isTooLong(String val, int maxLength) {
-	    if (isNotNull(val)) {
-	        return val.length() > maxLength;
-	    } else {
-	        return false;
-	    }
+		if (isNotNull(val)) {
+			return val.length() > maxLength;
+		} else {
+			return false;
+		}
 	}
 
 	public static void main(String[] args) {
@@ -242,5 +298,4 @@ public class DataValidator {
 		System.out.println("is mobile no " + isMobileNo("9669330519"));
 	}
 
-	
 }

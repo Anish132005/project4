@@ -1,6 +1,7 @@
 package com.rays.pro4.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,18 @@ import com.rays.pro4.Util.ServletUtility;
 public class OrderCtl extends BaseCtl {
 
 	@Override
+	protected void preload(HttpServletRequest request) {
+		HashMap map1 = new HashMap();
+
+		map1.put("1997-08-06", "1998-08-06");
+		map1.put("1997-08-07", "1998-08-07");
+		map1.put("1997-08-08", "1998-08-08");
+		map1.put("1997-08-09", "1998-08-09");
+
+		request.setAttribute("map1", map1);
+	}
+
+	@Override
 	protected boolean validate(HttpServletRequest request) {
 		System.out.println("uctl Validate");
 
@@ -28,12 +41,16 @@ public class OrderCtl extends BaseCtl {
 		if (DataValidator.isNull(request.getParameter("ProductName"))) {
 			request.setAttribute("ProductName", PropertyReader.getValue("error.require", "ProductName"));
 			pass = false;
-		} else if (!DataValidator.isName(request.getParameter("ProductName"))) {
-			request.setAttribute("ProductName", "ProductName  must contains alphabet only");
+		} else if (!DataValidator.isAlphanumeric(request.getParameter("ProductName"))) {
+			request.setAttribute("ProductName", "ProductName  must contains Alphanumeric Character only");
 			pass = false;
-		}else if (DataValidator.isTooLong(request.getParameter("ProductName"), 100)) {
-		    request.setAttribute("ProductName", "ProductName contain 100 words");
-		    pass = false;
+
+		} else if (DataValidator.isTooLong(request.getParameter("ProductName"), 30)) {
+			request.setAttribute("ProductName", "ProductName contain 30 characters");
+			pass = false;
+		} else if (!DataValidator.isStringLengthValid(request.getParameter("ProductName"), 3)) {
+			request.setAttribute("ProductName", "ProductName  must be at least 3 characters long.");
+			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("Dob"))) {
 			request.setAttribute("Dob", PropertyReader.getValue("error.require", "Order Date"));

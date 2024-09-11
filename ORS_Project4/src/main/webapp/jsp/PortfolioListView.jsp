@@ -1,6 +1,6 @@
-<%@page import="com.rays.pro4.controller.StockListCtl"%>
+<%@page import="com.rays.pro4.controller.PortfolioListCtl"%>
 <%@page import="com.rays.pro4.Util.HTMLUtility"%>
-<%@page import="com.rays.pro4.Bean.StockBean"%>
+<%@page import="com.rays.pro4.Bean.PortfolioBean"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
 <%@page import="com.rays.pro4.Util.DataUtility"%>
@@ -39,14 +39,14 @@
 	}
 </script>
 <body>
-	<jsp:useBean id="bean" class="com.rays.pro4.Bean.StockBean"
+	<jsp:useBean id="bean" class="com.rays.pro4.Bean.PortfolioBean"
 		scope="request"></jsp:useBean>
 	<%@include file="Header.jsp"%>
-	<form action="<%=ORSView.STOCK_LIST_CTL%>" method="post">
+	<form action="<%=ORSView.PORTFOLIO_LIST_CTL%>" method="post">
 		<center>
 
 			<div align="center">
-				<h1>StockPurchase List</h1>
+				<h1>Portfolio List</h1>
 				<h3>
 					<font color="red"><%=ServletUtility.getErrorMessage(request)%></font>
 					<font color="green"><%=ServletUtility.getSuccessMessage(request)%></font>
@@ -54,7 +54,7 @@
 
 			</div>
 			<%
-				Map map = (Map) request.getAttribute("prolist");
+				Map<Integer, String> map = (Map<Integer, String>) request.getAttribute("prolist");
 				int next = DataUtility.getInt(request.getAttribute("nextlist").toString());
 			%>
 			<%
@@ -63,32 +63,34 @@
 				int index = ((pageNo - 1) * pageSize) + 1;
 
 				List list = ServletUtility.getList(request);
-				Iterator<StockBean> it = list.iterator();
+				Iterator<PortfolioBean> it = list.iterator();
 				if (list.size() != 0) {
 			%>
 			<table width="100%" align="center">
 
-				<td align="center"><label>purchasePrice</font> :
+				<td align="center"><label>IntialInvestmentAmount</font> :
+				</label> <input type="number" name="Amount"
+					oninput="limitInputLength(this, 9)" placeholder="Enter Amount"
+					value="<%=ServletUtility.getParameter("Amount", request)%>">
+				<td align="center"><label>portfolioName</font> :
 
-				</label> <input type="number" name="purchasePrice"
-					placeholder="Enter number"
-					value="<%=ServletUtility.getParameter("purchasePrice", request)%>">
-				<td align="center"><label>purchaseDate</font> :
-				</label> <input type="text" name="purchaseDate" id="Udate"
-					placeholder="Enter purchaseDate" readonly="readonly"
-					value="<%=ServletUtility.getParameter("purchaseDate", request)%>">
-				<td align="center"><label>quantity</label> <input type="number"
-					name="quantity" id="quantityInput" placeholder="Enter quantity"
-					value="<%=ServletUtility.getParameter("quantity", request)%>"
-					oninput="limitInputLength(this, 9)">
-				<th align="left">orderType<span style="color: red">*</span> :
+				</label> <input type="text" name="portfolioName"
+					placeholder="Enter portfolioName"
+					value="<%=ServletUtility.getParameter("portfolioName", request)%>">
+				<td align="center"><label>InvestmentStrategy</font> :
+
+				</label> <input type="text" name="Strategy" placeholder="Enter Strategy"
+					value="<%=ServletUtility.getParameter("Strategy", request)%>">
+				<th align="left">RiskTolranceLevel<span style="color: red">*</span>
+					:
 				</th>
-				<td></label> <%=HTMLUtility.getList1("orderType", String.valueOf(bean.getOrderType()), map)%>
+				<td></label> <%=HTMLUtility.getList1("level", String.valueOf(bean.getLevel()), map)%>
 
 
 					<input type="submit" name="operation"
-					value="<%=StockListCtl.OP_RESET%>"> <input type="submit"
-					name="operation" value="<%=StockListCtl.OP_SEARCH%>"></td>
+					value="<%=PortfolioListCtl.OP_RESET%>"> <input
+					type="submit" name="operation"
+					value="<%=PortfolioListCtl.OP_SEARCH%>"></td>
 			</table>
 
 			<br>
@@ -102,10 +104,10 @@
 						All</th>
 
 					<th>S.No.</th>
-					<th>quantity</th>
-					<th>purchasePrice</th>
-					<th>purchaseDate</th>
-					<th>orderType</th>
+					<th>portfolioName</th>
+					<th>Amount</th>
+					<th>level</th>
+					<th>Strategy</th>
 					<th>Edit</th>
 				</tr>
 				<%
@@ -117,11 +119,11 @@
 						value="<%=bean.getId()%>"></td>
 
 					<td><%=index++%></td>
-					<td><%=bean.getQuantity()%></td>
-					<td><%=bean.getPurchasePrice()%></td>
-					<td><%=bean.getPurchaseDate()%></td>
-					<td><%=bean.getOrderType()%></td>
-					<td><a href="StockCtl?id=<%=bean.getId()%>">Edit</td>
+					<td><%=bean.getPortfolioName()%></td>
+					<td><%=bean.getAmount()%></td>
+					<td><%=map.get(Integer.parseInt(bean.getLevel()))%></td>
+					<td><%=bean.getStrategy()%></td>
+					<td><a href="PortfolioCtl?id=<%=bean.getId()%>">Edit</td>
 				</tr>
 				<%
 					}
@@ -135,23 +137,23 @@
 							if (pageNo == 1) {
 						%>
 						<td><input type="submit" name="operation" disabled="disabled"
-							value="<%=StockListCtl.OP_PREVIOUS%>"></td>
+							value="<%=PortfolioListCtl.OP_PREVIOUS%>"></td>
 						<%
 							} else {
 						%>
 						<td><input type="submit" name="operation"
-							value="<%=StockListCtl.OP_PREVIOUS%>"></td>
+							value="<%=PortfolioListCtl.OP_PREVIOUS%>"></td>
 						<%
 							}
 						%>
 
 						<td><input type="submit" name="operation"
-							value="<%=StockListCtl.OP_DELETE%>"></td>
+							value="<%=PortfolioListCtl.OP_DELETE%>"></td>
 						<td align="center"><input type="submit" name="operation"
-							value="<%=StockListCtl.OP_NEW%>"></td>
+							value="<%=PortfolioListCtl.OP_NEW%>"></td>
 
 						<td align="right"><input type="submit" name="operation"
-							value="<%=StockListCtl.OP_NEXT%>"
+							value="<%=PortfolioListCtl.OP_NEXT%>"
 							<%=(list.size() < pageSize || next == 0) ? "disabled" : ""%>></td>
 
 
@@ -163,7 +165,7 @@
 					if (list.size() == 0) {
 				%>
 				<td align="center"><input type="submit" name="operation"
-					value="<%=StockListCtl.OP_BACK%>"></td>
+					value="<%=PortfolioListCtl.OP_BACK%>"></td>
 
 
 				<%

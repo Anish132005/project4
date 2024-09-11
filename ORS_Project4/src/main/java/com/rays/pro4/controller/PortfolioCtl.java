@@ -10,26 +10,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.rays.pro4.Bean.BaseBean;
-import com.rays.pro4.Bean.StockBean;
+import com.rays.pro4.Bean.PortfolioBean;
 import com.rays.pro4.Exception.ApplicationException;
 import com.rays.pro4.Exception.DuplicateRecordException;
-import com.rays.pro4.Model.StockModel;
+import com.rays.pro4.Model.PortfolioModel;
+
 import com.rays.pro4.Util.DataUtility;
 import com.rays.pro4.Util.DataValidator;
 import com.rays.pro4.Util.PropertyReader;
 import com.rays.pro4.Util.ServletUtility;
 
-@WebServlet(name = "StockCtl", urlPatterns = { "/ctl/StockCtl" })
-public class StockCtl extends BaseCtl {
+@WebServlet(name = "PortfolioCtl", urlPatterns = { "/ctl/PortfolioCtl" })
+public class PortfolioCtl extends BaseCtl {
 
 	@Override
 	protected void preload(HttpServletRequest request) {
-		StockModel model = new StockModel();
+		PortfolioModel model = new PortfolioModel();
 
 		Map<Integer, String> map = new HashMap<Integer, String>();
 
-		map.put(1, "Market");
-		map.put(2, "Limit");
+		map.put(1, "Low");
+		map.put(2, "Medium");
+		map.put(3, "high");
 
 		request.setAttribute("prolist", map);
 
@@ -41,45 +43,57 @@ public class StockCtl extends BaseCtl {
 
 		boolean pass = true;
 
-		if (DataValidator.isNull(request.getParameter("quantity"))) {
-			request.setAttribute("quantity", PropertyReader.getValue("error.require", "quantity"));
+		if (DataValidator.isNull(request.getParameter("portfolioName"))) {
+			request.setAttribute("portfolioName", PropertyReader.getValue("error.require", "portfolioName"));
 			pass = false;
-		} else if (!DataValidator.isPositiveNumber(Integer.parseInt(request.getParameter("quantity")))) {
-
-			request.setAttribute("quantity", "quantity must contain positive number");
+		} else if (!DataValidator.isAlphanumeric(request.getParameter("portfolioName"))) {
+			request.setAttribute("portfolioName", "portfolioName  must contains Alphanumeric Character only");
 			pass = false;
-
-		}
-		if (DataValidator.isNull(request.getParameter("purchasePrice"))) {
-
-			request.setAttribute("purchasePrice", PropertyReader.getValue("error.require", "purchasePrice"));
+		} else if (DataValidator.isTooLong(request.getParameter("portfolioName"), 30)) {
+			request.setAttribute("portfolioName", "portfolioName contain 30 characters");
 			pass = false;
-		} 
-
-		if (DataValidator.isNull(request.getParameter("purchaseDate"))) {
-			request.setAttribute("purchaseDate", PropertyReader.getValue("error.require", "purchaseDate"));
-
+		} else if (!DataValidator.isStringLengthValid(request.getParameter("portfolioName"), 3)) {
+			request.setAttribute("portfolioName", "portfolioName  must be at least 3 characters long.");
 			pass = false;
 		}
-		if (DataValidator.isNull(request.getParameter("orderType"))) {
+		if (DataValidator.isNull(request.getParameter("Amount"))) {
 
-			request.setAttribute("orderType", PropertyReader.getValue("error.require", "orderType"));
+			request.setAttribute("Amount", PropertyReader.getValue("error.require", "Amount"));
 			pass = false;
+		} else if (!DataValidator.isPositiveNumber(Integer.parseInt(request.getParameter("Amount")))) {
+
+			request.setAttribute("Amount", "Amount must contain positive number");
+			pass = false;
+		}
+		if (DataValidator.isNull(request.getParameter("level"))) {
+			request.setAttribute("level", PropertyReader.getValue("error.require", "level"));
+
+			pass = false;
+		}
+		if (DataValidator.isNull(request.getParameter("Strategy"))) {
+			request.setAttribute("Strategy", PropertyReader.getValue("error.require", "Strategy"));
+			pass = false;
+		} else if (DataValidator.isTooLong(request.getParameter("Strategy"), 200)) {
+			request.setAttribute("Strategy", "Strategy contain 200 characters");
+			pass = false;
+		} else if (!DataValidator.isStringLengthValid(request.getParameter("Strategy"), 10)) {
+			request.setAttribute("Strategy", "Strategy  must be at least 10 characters long.");
+			pass = false;
+			return pass;
 
 		}
 		return pass;
-
 	}
 
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
-		StockBean bean = new StockBean();
+		PortfolioBean bean = new PortfolioBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
-		bean.setQuantity(DataUtility.getInt(request.getParameter("quantity")));
-		bean.setPurchasePrice(DataUtility.getDouble(request.getParameter("purchasePrice")));
-		bean.setPurchaseDate(DataUtility.getDate(request.getParameter("purchaseDate")));
-		bean.setOrderType(DataUtility.getString(request.getParameter("orderType")));
+		bean.setPortfolioName(DataUtility.getString(request.getParameter("portfolioName")));
+		bean.setAmount(DataUtility.getInt(request.getParameter("Amount")));
+		bean.setLevel(DataUtility.getString(request.getParameter("level")));
+		bean.setStrategy(DataUtility.getString(request.getParameter("Strategy")));
 
 		return bean;
 	}
@@ -89,7 +103,7 @@ public class StockCtl extends BaseCtl {
 			throws ServletException, IOException {
 		String op = DataUtility.getString(request.getParameter("operation"));
 
-		StockModel model = new StockModel();
+		PortfolioModel model = new PortfolioModel();
 
 		long id = DataUtility.getLong(request.getParameter("id"));
 
@@ -98,7 +112,7 @@ public class StockCtl extends BaseCtl {
 		if (id != 0 && id > 0) {
 
 			System.out.println("in id > 0  condition " + id);
-			StockBean bean;
+			PortfolioBean bean;
 
 			try {
 				bean = model.findByPK(id);
@@ -116,20 +130,17 @@ public class StockCtl extends BaseCtl {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("fdghjkhgfhjkhgfhjkhh");
 		String op = DataUtility.getString(request.getParameter("operation"));
-		System.out.println("fdghjkhgfhjkhgfhjkhh" + op);
 		long id = DataUtility.getLong(request.getParameter("id"));
-		System.out.println("millll gyaaa" + id);
 
 		System.out.println(">>>><<<<>><<><<><<><>" + id + op);
 
-		StockModel model = new StockModel();
+		PortfolioModel model = new PortfolioModel();
 
 		if (OP_SAVE.equalsIgnoreCase(op) || OP_UPDATE.equalsIgnoreCase(op)) {
 
 			System.out.println("milll gyaaaaaaaa iski ");
-			StockBean bean = (StockBean) populateBean(request);
+			PortfolioBean bean = (PortfolioBean) populateBean(request);
 
 			try {
 				if (id > 0) {
@@ -137,14 +148,14 @@ public class StockCtl extends BaseCtl {
 					model.update(bean);
 					ServletUtility.setBean(bean, request);
 
-					ServletUtility.setSuccessMessage("Stock  is successfully Updated", request);
+					ServletUtility.setSuccessMessage("Portfolio  is successfully Updated", request);
 				} else {
 					System.out.println(" U ctl DoPost 33333");
 					long pk = model.add(bean);
 					// ServletUtility.setBean(bean, request);
 					ServletUtility.setBean(bean, request);
 
-					ServletUtility.setSuccessMessage("Stock is successfully Added", request);
+					ServletUtility.setSuccessMessage("Portfolio is successfully Added", request);
 
 					bean.setId(pk);
 				}
@@ -159,11 +170,11 @@ public class StockCtl extends BaseCtl {
 			}
 		} else if (OP_DELETE.equalsIgnoreCase(op)) {
 
-			StockBean bean = (StockBean) populateBean(request);
+			PortfolioBean bean = (PortfolioBean) populateBean(request);
 			try {
 				model.delete(bean);
 
-				ServletUtility.redirect(ORSView.STOCK_CTL, request, response);
+				ServletUtility.redirect(ORSView.PORTFOLIO_CTL, request, response);
 				return;
 			} catch (ApplicationException e) {
 				ServletUtility.handleException(e, request, response);
@@ -172,7 +183,7 @@ public class StockCtl extends BaseCtl {
 		} else if (OP_CANCEL.equalsIgnoreCase(op)) {
 			System.out.println(" U  ctl Do post 77777");
 
-			ServletUtility.redirect(ORSView.STOCK_LIST_CTL, request, response);
+			ServletUtility.redirect(ORSView.PORTFOLIO_LIST_CTL, request, response);
 			return;
 		}
 		ServletUtility.forward(getView(), request, response);
@@ -180,8 +191,8 @@ public class StockCtl extends BaseCtl {
 
 	@Override
 	protected String getView() {
-		// TODO Auto-generated method stub
-		return ORSView.STOCK_VIEW;
+
+		return ORSView.PORTFOLIO_VIEW;
 	}
 
 }

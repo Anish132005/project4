@@ -42,6 +42,10 @@
 
 		<form action="<%=ORSView.ORDER_CTL%>" method="post">
 
+			<%
+				HashMap map1 = (HashMap) request.getAttribute("map1");
+			%>
+
 			<div align="center">
 				<h1>
 
@@ -87,17 +91,12 @@
 					<th style="padding: 1px"></th>
 				</tr>
 				<tr>
-					<th align="left">Order Date <span style="color: red">*</span>
-						:
-					</th>
-					<td><input type="text" name="Dob"
-						placeholder="Enter Order Date " size="25" id="udatee"
-						readonly="readonly"
-						value="<%=DataUtility.getDateString(bean.getDob())%>"></td>
-					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("Dob", request)%></font></td>
-				</tr>
+				<th align="left"> Date <span style="color: red">*</span>
+					<%=HTMLUtility.getList("Dob", DataUtility.getDateString(bean.getDob()), map1)%>
 				<tr>
 					<th style="padding: 1px"></th>
+					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("Dob", request)%></font></td>
+
 				</tr>
 				<tr>
 					<th align="left">Quantity<span style="color: red">*</span> :

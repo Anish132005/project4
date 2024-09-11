@@ -139,30 +139,33 @@ public class HTMLUtility {
 
 	public static String getList2(String name, String selectedVal, Map<Integer, String> map) {
 
-		StringBuilder sb = new StringBuilder(
-				"<select style='width: 211px;  height: 23px;' class='form-control' name='" + name + "''>");
+		StringBuffer sb = new StringBuffer("<select class='form-control' name='" + name + "'>");
+
+		System.out.println("selectedVal ===> " + selectedVal);
 
 		Set<Integer> keys = map.keySet();
 		String val = null;
 		boolean select = true;
 		if (select) {
-			sb.append(
-					"<option class='dropdown-item' selected value=''>----------------Select------------------</option>");
+			sb.append("<option class='dropdown-item' selected value=''>------Select a " + name + "--------</option>");
 		}
 
 		for (Integer key : keys) {
 			val = map.get(key);
-			// Convert key to String for comparison and value attribute
-			String keyString = val.toString();
-
-			if (keyString.trim().equals(selectedVal)) {
-				// Mark the option as selected if it matches the selectedVal
-				sb.append("<option selected value='" + val + "'>" + val + "</option>");
+			System.out.println("key ==>> " + key);
+			System.out.println("val ==>> " + val);
+			if (key.toString().trim().equals(selectedVal)) {
+				System.out.println("if ==>> " + val);
+				sb.append("<option selected value='" + key + "'>" + val + "</option>");
 			} else {
-				sb.append("<option value='" + val + "'>" + val + "</option>");
+				System.out.println("else ==>> " + val);
+				sb.append("<option value='" + key + "'>" + val + "</option>");
 			}
 		}
+
 		sb.append("</select>");
+		System.out.println("get list 1=========" + sb.toString());
+
 		return sb.toString();
 	}
 

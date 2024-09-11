@@ -10,26 +10,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.rays.pro4.Bean.BaseBean;
-import com.rays.pro4.Bean.StockBean;
+import com.rays.pro4.Bean.ClientBean;
 import com.rays.pro4.Exception.ApplicationException;
 import com.rays.pro4.Exception.DuplicateRecordException;
-import com.rays.pro4.Model.StockModel;
+import com.rays.pro4.Model.ClientModel;
 import com.rays.pro4.Util.DataUtility;
 import com.rays.pro4.Util.DataValidator;
 import com.rays.pro4.Util.PropertyReader;
 import com.rays.pro4.Util.ServletUtility;
 
-@WebServlet(name = "StockCtl", urlPatterns = { "/ctl/StockCtl" })
-public class StockCtl extends BaseCtl {
+@WebServlet(name = "ClientCtl", urlPatterns = { "/ctl/ClientCtl" })
+public class ClientCtl extends BaseCtl {
 
 	@Override
 	protected void preload(HttpServletRequest request) {
-		StockModel model = new StockModel();
+		ClientModel model = new ClientModel();
 
 		Map<Integer, String> map = new HashMap<Integer, String>();
 
-		map.put(1, "Market");
-		map.put(2, "Limit");
+		map.put(1, "indore");
+		map.put(2, "Bhopal");
+		map.put(3, "devash");
 
 		request.setAttribute("prolist", map);
 
@@ -41,45 +42,48 @@ public class StockCtl extends BaseCtl {
 
 		boolean pass = true;
 
-		if (DataValidator.isNull(request.getParameter("quantity"))) {
-			request.setAttribute("quantity", PropertyReader.getValue("error.require", "quantity"));
+		if (DataValidator.isNull(request.getParameter("identifier"))) {
+			request.setAttribute("identifier", PropertyReader.getValue("error.require", "identifier"));
 			pass = false;
-		} else if (!DataValidator.isPositiveNumber(Integer.parseInt(request.getParameter("quantity")))) {
+		}
+		if (DataValidator.isNull(request.getParameter("contactName"))) {
+			request.setAttribute("contactName", PropertyReader.getValue("error.require", "contactName"));
+			pass = false;
+		} else if (!DataValidator.isName(request.getParameter("contactName"))) {
+			request.setAttribute("contactName", " contactName must contains alphabet only");
+			pass = false;
 
-			request.setAttribute("quantity", "quantity must contain positive number");
+		} else if (DataValidator.isTooLong(request.getParameter("contactName"), 45)) {
+			request.setAttribute("contactName", "contactName contain 45 characters");
+			pass = false;
+		}
+		if (DataValidator.isNull(request.getParameter("dob"))) {
+			request.setAttribute("dob", PropertyReader.getValue("error.require", "dob"));
+			pass = false;
+		}
+		if (DataValidator.isNull(request.getParameter("location"))) {
+			request.setAttribute("location", PropertyReader.getValue("error.require", "location"));
+			pass = false;
+		}
+		if (DataValidator.isNull(request.getParameter("phoneNumber"))) {
+			request.setAttribute("phoneNumber", PropertyReader.getValue("error.require", "phoneNumber"));
 			pass = false;
 
 		}
-		if (DataValidator.isNull(request.getParameter("purchasePrice"))) {
 
-			request.setAttribute("purchasePrice", PropertyReader.getValue("error.require", "purchasePrice"));
-			pass = false;
-		} 
-
-		if (DataValidator.isNull(request.getParameter("purchaseDate"))) {
-			request.setAttribute("purchaseDate", PropertyReader.getValue("error.require", "purchaseDate"));
-
-			pass = false;
-		}
-		if (DataValidator.isNull(request.getParameter("orderType"))) {
-
-			request.setAttribute("orderType", PropertyReader.getValue("error.require", "orderType"));
-			pass = false;
-
-		}
 		return pass;
-
 	}
 
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
-		StockBean bean = new StockBean();
+		ClientBean bean = new ClientBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
-		bean.setQuantity(DataUtility.getInt(request.getParameter("quantity")));
-		bean.setPurchasePrice(DataUtility.getDouble(request.getParameter("purchasePrice")));
-		bean.setPurchaseDate(DataUtility.getDate(request.getParameter("purchaseDate")));
-		bean.setOrderType(DataUtility.getString(request.getParameter("orderType")));
+		bean.setIdentifier(DataUtility.getInt(request.getParameter("identifier")));
+		bean.setContactName(DataUtility.getString(request.getParameter("contactName")));
+		bean.setLocation(DataUtility.getString(request.getParameter("location")));
+		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
+		bean.setPhoneNumber(DataUtility.getString(request.getParameter("phoneNumber")));
 
 		return bean;
 	}
@@ -89,7 +93,7 @@ public class StockCtl extends BaseCtl {
 			throws ServletException, IOException {
 		String op = DataUtility.getString(request.getParameter("operation"));
 
-		StockModel model = new StockModel();
+		ClientModel model = new ClientModel();
 
 		long id = DataUtility.getLong(request.getParameter("id"));
 
@@ -98,7 +102,7 @@ public class StockCtl extends BaseCtl {
 		if (id != 0 && id > 0) {
 
 			System.out.println("in id > 0  condition " + id);
-			StockBean bean;
+			ClientBean bean;
 
 			try {
 				bean = model.findByPK(id);
@@ -116,35 +120,33 @@ public class StockCtl extends BaseCtl {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("fdghjkhgfhjkhgfhjkhh");
 		String op = DataUtility.getString(request.getParameter("operation"));
-		System.out.println("fdghjkhgfhjkhgfhjkhh" + op);
 		long id = DataUtility.getLong(request.getParameter("id"));
-		System.out.println("millll gyaaa" + id);
 
 		System.out.println(">>>><<<<>><<><<><<><>" + id + op);
 
-		StockModel model = new StockModel();
+		ClientModel model = new ClientModel();
 
 		if (OP_SAVE.equalsIgnoreCase(op) || OP_UPDATE.equalsIgnoreCase(op)) {
 
 			System.out.println("milll gyaaaaaaaa iski ");
-			StockBean bean = (StockBean) populateBean(request);
-
+			ClientBean bean = (ClientBean) populateBean(request);
+			System.out.println("data populate ho gyaaaa ");
 			try {
 				if (id > 0) {
 
 					model.update(bean);
 					ServletUtility.setBean(bean, request);
 
-					ServletUtility.setSuccessMessage("Stock  is successfully Updated", request);
+					ServletUtility.setSuccessMessage("client  is successfully Updated", request);
 				} else {
 					System.out.println(" U ctl DoPost 33333");
 					long pk = model.add(bean);
+					System.out.println("aaajjajajajjajja");
 					// ServletUtility.setBean(bean, request);
 					ServletUtility.setBean(bean, request);
-
-					ServletUtility.setSuccessMessage("Stock is successfully Added", request);
+					System.out.println("sdfghjkhgfdsfghjkljhgfds");
+					ServletUtility.setSuccessMessage("client is successfully Added", request);
 
 					bean.setId(pk);
 				}
@@ -156,23 +158,30 @@ public class StockCtl extends BaseCtl {
 
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setErrorMessage("Login id already exists", request);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
 			}
 		} else if (OP_DELETE.equalsIgnoreCase(op)) {
 
-			StockBean bean = (StockBean) populateBean(request);
+			ClientBean bean = (ClientBean) populateBean(request);
 			try {
 				model.delete(bean);
 
-				ServletUtility.redirect(ORSView.STOCK_CTL, request, response);
+				ServletUtility.redirect(ORSView.CLIENT_CTL, request, response);
 				return;
 			} catch (ApplicationException e) {
 				ServletUtility.handleException(e, request, response);
 				return;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		} else if (OP_CANCEL.equalsIgnoreCase(op)) {
 			System.out.println(" U  ctl Do post 77777");
 
-			ServletUtility.redirect(ORSView.STOCK_LIST_CTL, request, response);
+			ServletUtility.redirect(ORSView.CLIENT_LIST_CTL, request, response);
 			return;
 		}
 		ServletUtility.forward(getView(), request, response);
@@ -181,7 +190,7 @@ public class StockCtl extends BaseCtl {
 	@Override
 	protected String getView() {
 		// TODO Auto-generated method stub
-		return ORSView.STOCK_VIEW;
+		return ORSView.CLIENT_VIEW;
 	}
 
 }
