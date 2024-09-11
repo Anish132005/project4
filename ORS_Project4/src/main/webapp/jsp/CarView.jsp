@@ -131,8 +131,13 @@
 					<td><input type="number" name="Price" id="quantityInput"
 						placeholder="Enter Price" style="width: 205px"
 						value="<%=DataUtility.getStringData(bean.getPrice())%>"
+<<<<<<< HEAD
 						>
 						</td>
+=======
+						<form onsubmit="return validateAndSave()"></form>
+						></td>
+>>>>>>> origin/main
 					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("Price", request)%></font></td>
 				</tr>
 

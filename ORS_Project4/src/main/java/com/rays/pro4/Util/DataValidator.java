@@ -6,6 +6,7 @@ import java.util.Date;
  * This class validates input data.
  * 
  * @author Anish Malviya
+
  *
  */
 public class DataValidator {
@@ -48,10 +49,19 @@ public class DataValidator {
 			return false;
 		}
 	}
+<<<<<<< HEAD
+=======
+
+	public static boolean isPositveNumber(int value) {
+
+		return value > 0;
+
+	}
+>>>>>>> origin/main
 
 	public static boolean isEmail(String val) {
 
-		String emailreg = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		String emailreg = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)(\\.[A-Za-z]{2,})$";
 
 		if (isNotNull(val)) {
 			try {
@@ -91,7 +101,7 @@ public class DataValidator {
 
 	public static boolean isPassword(String val) {
 
-		String passreg = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,12}";
+		String passreg = "(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=])(?=\\S+$).{8,12}";
 
 		if (isNotNull(val)) {
 			try {
@@ -135,6 +145,7 @@ public class DataValidator {
 			return false;
 		}
 	}
+<<<<<<< HEAD
 
 	public static boolean isNumber(String val) {
 
@@ -151,6 +162,8 @@ public class DataValidator {
 			return false;
 		}
 	}
+=======
+>>>>>>> origin/main
 
 	public static boolean isPositiveNumber(int value) {
 
@@ -195,6 +208,20 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value is Date
+	 * 
+	 * @param val
+	 * @return
+	 */
+
+	/**
+	 * Checks if Date is on Sunday
+	 * 
+	 * @param val
+	 * @return
+	 */
+
 	public static boolean isRollNo(String val) {
 
 		String rollreg = "[a-zA-Z]{2}[0-9]{3}";
@@ -236,6 +263,7 @@ public class DataValidator {
 			return false;
 		}
 	}
+<<<<<<< HEAD
 
 	public static boolean isDouble(String val) {
 		if (val == null || val.isEmpty()) {
@@ -286,16 +314,22 @@ public class DataValidator {
 			return false;
 		}
 	}
+=======
+>>>>>>> origin/main
 
 	public static void main(String[] args) {
 		System.out.println("Not Null 2" + isNotNull("ABC"));
 		System.out.println("Not Null 3" + isNotNull(null));
 		System.out.println("Not Null 4" + isNull("123"));
+
 		System.out.println("is int" + isInteger(null));
 		System.out.println("Is int" + isInteger("ABC1"));
 		System.out.println("Is Int" + isInteger("123"));
 		System.out.println("is Int" + isNotNull("123"));
-		System.out.println("is mobile no " + isMobileNo("9669330519"));
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/main

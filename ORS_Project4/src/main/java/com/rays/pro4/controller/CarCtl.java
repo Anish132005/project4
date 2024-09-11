@@ -70,7 +70,13 @@ public class CarCtl extends BaseCtl {
 
 			request.setAttribute("Price", PropertyReader.getValue("error.require", "Price"));
 			pass = false;
+<<<<<<< HEAD
 		
+=======
+		}else if (!DataValidator.isPositveNumber(Integer.parseInt(request.getParameter("Price")))) {
+			request.setAttribute("Price", "Price contain only pos");
+			pass = false;
+>>>>>>> origin/main
 		}
 		if (DataValidator.isNull(request.getParameter("dob"))) {
 			request.setAttribute("dob", PropertyReader.getValue("error.require", "dob"));

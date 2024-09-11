@@ -30,6 +30,10 @@ public class StockCtl extends BaseCtl {
 
 		map.put(1, "Market");
 		map.put(2, "Limit");
+<<<<<<< HEAD
+=======
+		
+>>>>>>> origin/main
 
 		request.setAttribute("prolist", map);
 
@@ -41,6 +45,7 @@ public class StockCtl extends BaseCtl {
 
 		boolean pass = true;
 
+<<<<<<< HEAD
 		if (DataValidator.isNull(request.getParameter("quantity"))) {
 			request.setAttribute("quantity", PropertyReader.getValue("error.require", "quantity"));
 			pass = false;
@@ -66,6 +71,42 @@ public class StockCtl extends BaseCtl {
 			request.setAttribute("orderType", PropertyReader.getValue("error.require", "orderType"));
 			pass = false;
 
+=======
+		if (DataValidator.isNull(request.getParameter("CarName"))) {
+			System.out.println("in carname valdate");
+			request.setAttribute("CarName", PropertyReader.getValue("error.require", "CarName"));
+			pass = false;
+		}
+		if (DataValidator.isNull(request.getParameter("CarModel"))) {
+			System.out.println("in  CarModel");
+
+			request.setAttribute("CarModel", PropertyReader.getValue("error.require", "CarModel"));
+			pass = false;
+		}
+		if (DataValidator.isNull(request.getParameter("Price"))) {
+			System.out.println("in  price");
+
+			request.setAttribute("Price", PropertyReader.getValue("error.require", "Price"));
+			pass = false;
+		}
+		if (DataValidator.isNull(request.getParameter("dob"))) {
+			request.setAttribute("dob", PropertyReader.getValue("error.require", "dob"));
+			System.out.println("in  dob");
+
+			pass = false;
+		}
+		if (DataValidator.isNull(request.getParameter("OwnerName"))) {
+			System.out.println("in  OwnerName");
+
+			request.setAttribute("OwnerName", PropertyReader.getValue("error.require", "OwnerName"));
+			pass = false;
+		} else if (!DataValidator.isName(request.getParameter("OwnerName"))) {
+			request.setAttribute("OwnerName", "OwnerName  must contains alphabet only");
+			pass = false;
+		} else if (DataValidator.isTooLong(request.getParameter("OwnerName"), 45)) {
+			request.setAttribute("OwnerName", "OwnerName contain 45 words");
+			pass = false;
+>>>>>>> origin/main
 		}
 		return pass;
 
@@ -73,6 +114,7 @@ public class StockCtl extends BaseCtl {
 
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+<<<<<<< HEAD
 		StockBean bean = new StockBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
@@ -80,6 +122,16 @@ public class StockCtl extends BaseCtl {
 		bean.setPurchasePrice(DataUtility.getDouble(request.getParameter("purchasePrice")));
 		bean.setPurchaseDate(DataUtility.getDate(request.getParameter("purchaseDate")));
 		bean.setOrderType(DataUtility.getString(request.getParameter("orderType")));
+=======
+		CarBean bean = new CarBean();
+
+		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setCarName(DataUtility.getString(request.getParameter("CarName")));
+		bean.setCarModel(DataUtility.getString(request.getParameter("CarModel")));
+		bean.setPrice(DataUtility.getInt(request.getParameter("Price")));
+		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
+		bean.setOwnerName(DataUtility.getString(request.getParameter("OwnerName")));
+>>>>>>> origin/main
 
 		return bean;
 	}
@@ -89,7 +141,11 @@ public class StockCtl extends BaseCtl {
 			throws ServletException, IOException {
 		String op = DataUtility.getString(request.getParameter("operation"));
 
+<<<<<<< HEAD
 		StockModel model = new StockModel();
+=======
+		CarModel model = new CarModel();
+>>>>>>> origin/main
 
 		long id = DataUtility.getLong(request.getParameter("id"));
 
@@ -98,7 +154,11 @@ public class StockCtl extends BaseCtl {
 		if (id != 0 && id > 0) {
 
 			System.out.println("in id > 0  condition " + id);
+<<<<<<< HEAD
 			StockBean bean;
+=======
+			CarBean bean;
+>>>>>>> origin/main
 
 			try {
 				bean = model.findByPK(id);
@@ -124,12 +184,20 @@ public class StockCtl extends BaseCtl {
 
 		System.out.println(">>>><<<<>><<><<><<><>" + id + op);
 
+<<<<<<< HEAD
 		StockModel model = new StockModel();
+=======
+		CarModel model = new CarModel();
+>>>>>>> origin/main
 
 		if (OP_SAVE.equalsIgnoreCase(op) || OP_UPDATE.equalsIgnoreCase(op)) {
 
 			System.out.println("milll gyaaaaaaaa iski ");
+<<<<<<< HEAD
 			StockBean bean = (StockBean) populateBean(request);
+=======
+			CarBean bean = (CarBean) populateBean(request);
+>>>>>>> origin/main
 
 			try {
 				if (id > 0) {
@@ -137,14 +205,22 @@ public class StockCtl extends BaseCtl {
 					model.update(bean);
 					ServletUtility.setBean(bean, request);
 
+<<<<<<< HEAD
 					ServletUtility.setSuccessMessage("Stock  is successfully Updated", request);
+=======
+					ServletUtility.setSuccessMessage("CarDetails  is successfully Updated", request);
+>>>>>>> origin/main
 				} else {
 					System.out.println(" U ctl DoPost 33333");
 					long pk = model.add(bean);
 					// ServletUtility.setBean(bean, request);
 					ServletUtility.setBean(bean, request);
 
+<<<<<<< HEAD
 					ServletUtility.setSuccessMessage("Stock is successfully Added", request);
+=======
+					ServletUtility.setSuccessMessage("CarDetails is successfully Added", request);
+>>>>>>> origin/main
 
 					bean.setId(pk);
 				}
@@ -163,7 +239,11 @@ public class StockCtl extends BaseCtl {
 			try {
 				model.delete(bean);
 
+<<<<<<< HEAD
 				ServletUtility.redirect(ORSView.STOCK_CTL, request, response);
+=======
+				ServletUtility.redirect(ORSView.CAR_CTL, request, response);
+>>>>>>> origin/main
 				return;
 			} catch (ApplicationException e) {
 				ServletUtility.handleException(e, request, response);
@@ -172,7 +252,11 @@ public class StockCtl extends BaseCtl {
 		} else if (OP_CANCEL.equalsIgnoreCase(op)) {
 			System.out.println(" U  ctl Do post 77777");
 
+<<<<<<< HEAD
 			ServletUtility.redirect(ORSView.STOCK_LIST_CTL, request, response);
+=======
+			ServletUtility.redirect(ORSView.CAR_LIST_CTL, request, response);
+>>>>>>> origin/main
 			return;
 		}
 		ServletUtility.forward(getView(), request, response);
@@ -181,7 +265,11 @@ public class StockCtl extends BaseCtl {
 	@Override
 	protected String getView() {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		return ORSView.STOCK_VIEW;
+=======
+		return ORSView.CAR_VIEW;
+>>>>>>> origin/main
 	}
 
 }

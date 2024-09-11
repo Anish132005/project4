@@ -112,6 +112,7 @@
 					href="<%=ORSView.PRODUCTS_CTL%>"> product add</b></a> | <a
 					href="<%=ORSView.PRODUCTS_LIST_CTL%>">product List</b></a> | <a
 					href="<%=ORSView.CAR_CTL%>">Car add</b></a>| <a
+<<<<<<< HEAD
 					href="<%=ORSView.CAR_LIST_CTL%>">Car List</b></a> | <a
 					href="<%=ORSView.STOCK_CTL%>">Stock add</b></a>| <a
 					href="<%=ORSView.STOCK_LIST_CTL%>">Stock List</b></a> | <a
@@ -126,6 +127,25 @@
 					href="<%=ORSView.CUSTOMER_CTL%>"> Customer ADD</b></a> | <a
 					href="<%=ORSView.CUSTOMER_LIST_CTL%>"> Customer List</b></a> | <a
 					href="<%=ORSView.ORDER_CTL%>"> Order ADD</b></a> | <a
+=======
+					href="<%=ORSView.CAR_LIST_CTL%>">Car List</b></a>
+					| <a
+					href="<%=ORSView.STOCK_CTL%>">Stock add</b></a>| <a
+					href="<%=ORSView.STOCK_LIST_CTL%>">Stock List</b></a>
+					
+					
+					  <%-- 		
+					| <a
+					href="<%=ORSView.ATM_CTL%>"> ATM ADD</b></a>  | <a
+					href="<%=ORSView.ATM_LIST_CTL%>"> ATM List</b></a>  
+					
+					| <a
+					href="<%=ORSView.CUSTOMER_CTL%>"> Customer ADD</b></a>  | <a
+					href="<%=ORSView.CUSTOMER_LIST_CTL%>"> Customer List</b></a>  
+					
+					
+ --%> | <a href="<%=ORSView.ORDER_CTL%>"> Order ADD</b></a> | <a
+>>>>>>> origin/main
 					href="<%=ORSView.ORDER_LIST_CTL%>"> Order List</b></a> |<a
 					target="blank" href="<%=ORSView.JAVA_DOC_VIEW%>">Java Doc</b></a> <%
  	}

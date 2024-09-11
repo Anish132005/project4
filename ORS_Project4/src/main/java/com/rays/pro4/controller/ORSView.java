@@ -102,6 +102,7 @@ public interface ORSView {
 	public String STOCK_VIEW = PAGE_FOLDER + "/StockView.jsp";
 	public String STOCK_LIST_VIEW = PAGE_FOLDER + "/StockListView.jsp";
 
+<<<<<<< HEAD
 	public String PORTFOLIO_VIEW = PAGE_FOLDER + "/PortfolioView.jsp";
 	public String PORTFOLIO_LIST_VIEW = PAGE_FOLDER + "/PortfolioListView.jsp";
 
@@ -110,6 +111,8 @@ public interface ORSView {
 
 	public String CLIENT_VIEW = PAGE_FOLDER + "/ClientView.jsp";
 	public String CLIENT_LIST_VIEW = PAGE_FOLDER + "/ClientListView.jsp";
+=======
+>>>>>>> origin/main
 
 	// public String ERROR_VIEW5 = PAGE_FOLDER + "/ErrorView5.jsp";
 
@@ -202,6 +205,7 @@ public interface ORSView {
 	public String STOCK_CTL = APP_CONTEXT + "/ctl/StockCtl";
 	public String STOCK_LIST_CTL = APP_CONTEXT + "/ctl/StockListCtl";
 
+<<<<<<< HEAD
 	public String PORTFOLIO_CTL = APP_CONTEXT + "/ctl/PortfolioCtl";
 	public String PORTFOLIO_LIST_CTL = APP_CONTEXT + "/ctl/PortfolioListCtl";
 
@@ -211,5 +215,7 @@ public interface ORSView {
 	public String CLIENT_CTL = APP_CONTEXT + "/ctl/ClientCtl";
 	public String CLIENT_LIST_CTL = APP_CONTEXT + "/ctl/ClientListCtl";
 
+=======
+>>>>>>> origin/main
 
 }

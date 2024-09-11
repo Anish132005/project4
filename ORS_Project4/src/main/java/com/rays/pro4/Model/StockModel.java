@@ -115,7 +115,11 @@ public class StockModel {
 
 	public void update(StockBean bean) throws ApplicationException, DuplicateRecordException {
 
+<<<<<<< HEAD
 		String sql = "UPDATE st_stock SET quantity=?,purchasePrice=?,puchaseDate=?,orderType=? WHERE ID=?";
+=======
+		String sql = "UPDATE st_stock SET quantity=?,purchasePrice=?,purchaseDate=?,orderType=? WHERE ID=?";
+>>>>>>> origin/main
 		Connection conn = null;
 
 		try {
@@ -170,10 +174,17 @@ public class StockModel {
 			}
 
 			if (bean.getPurchaseDate() != null && bean.getPurchaseDate().getTime() > 0) {
+<<<<<<< HEAD
 				Date d = new Date(bean.getPurchaseDate().getTime());
 				sql.append(" AND puchaseDate = '" + d + "'");
 				System.out.println("done");
 			}
+=======
+				Date d = new Date(bean.getPurchaseDate().getDate());
+				sql.append(" AND purchaseDate like '" + new java.sql.Date(bean.getPurchaseDate().getTime()) + "%'");
+			}
+
+>>>>>>> origin/main
 			if (bean.getOrderType() != null && bean.getOrderType().length() > 0) {
 				sql.append(" AND orderType like '" + bean.getOrderType() + "%'");
 			}
